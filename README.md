@@ -34,6 +34,10 @@ GOAL: to communicate the knowledge aspect of the network
 - [ ] Synthetic power grid (As demo. replaceable by actual power grid)
 - [ ] what else?
 
+#### Model
+
+[Where's the Flood?](https://docs.google.com/drawings/d/1qy4F-sDJV9n2Gcr8EKZwDhq3PtmYEDeXaIi4MtWeQJ4/edit?folder=1nThJj8Qw2QVnPf-eV2h-cu1bHqkO7M7-)
+
 ### Logical Model 
 
 Build a working ontology for the graph data (@torsten)
