@@ -4,8 +4,8 @@ Keeps track of concepts, models, and axioms for the data
 ## Pitch
 
 - [ ] Computational Capability
-- [ ] Persona development
-- [ ] How Personnas innteract w/ system
+- [x] Persona development
+- [ ] How Personas innteract w/ system
 
 
 ## Prototypes
