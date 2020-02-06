@@ -1,0 +1,272 @@
+@prefix : <http://schema.ufokn.org/pattern/agent/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<http://schema.ufokn.org/pattern/agent/> a owl:Ontology ;
+  owl:versionIRI <http://schema.ufokn.org/pattern/agent/> ;
+  owl:imports time:2016 ;
+  rdfs:label "Pattern - Agent"@en-us ;
+  dcterms:created "2020-02-04"@en-us ;
+  dcterms:modified "2020-02-04"^^xsd:date ;
+  owl:versionInfo "1"@en-us ;
+  dcterms:title "Pattern - Agent"@en-us ;
+  dcterms:issued "2020-02-04"^^xsd:date ;
+  dcterms:source "https://github.com/UFOKN/Knowledge-Graph/ontologies/patterns/agent.owl"^^<xsd:anyURI> ;
+  dcterms:description "An ontology for describing agents such as people and organizations and the roles they play."@en-us ;
+  dcterms:creator <http://orcid.org/0000-0003-4486-9448> ;
+  vann:preferredNamespaceUri "http://schema.ufokn.org/pattern/agent/"^^xsd:anyURI .
+#
+#
+# #################################################################
+# #
+# #    Annotation properties
+# #
+# #################################################################
+#
+#
+# http://purl.org/dc/terms/alternative
+
+dcterms:alternative a owl:AnnotationProperty .
+#
+# http://purl.org/dc/terms/created
+
+dcterms:created a owl:AnnotationProperty .
+#
+# http://purl.org/dc/terms/creator
+
+dcterms:creator a owl:AnnotationProperty .
+#
+# http://purl.org/dc/terms/description
+
+dcterms:description a owl:AnnotationProperty .
+#
+# http://purl.org/dc/terms/issued
+
+dcterms:issued a owl:AnnotationProperty .
+#
+# http://purl.org/dc/terms/modified
+
+dcterms:modified a owl:AnnotationProperty .
+#
+# http://purl.org/dc/terms/publisher
+
+dcterms:publisher a owl:AnnotationProperty .
+#
+# http://purl.org/dc/terms/source
+
+dcterms:source a owl:AnnotationProperty .
+#
+# http://purl.org/dc/terms/title
+
+dcterms:title a owl:AnnotationProperty .
+#
+# http://purl.org/vocab/vann/preferredNamespaceUri
+
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+#
+#
+#
+# #################################################################
+# #
+# #    Object Properties
+# #
+# #################################################################
+#
+#
+# http://schema.ufokn.org/pattern/agent/childOrganization
+
+:childOrganization a owl:ObjectProperty ;
+  owl:inverseOf :parentOrganization ;
+  a owl:FunctionalProperty , owl:IrreflexiveProperty ;
+  rdfs:domain :Organization ;
+  rdfs:range :Organization ;
+  owl:propertyDisjointWith :parentOrganization ;
+  rdfs:comment "Refers to an Organization which is wholly owned, operated, or managed by another Organization"@en-us ;
+  rdfs:label "childOrganization"@en-us .
+#
+# http://schema.ufokn.org/pattern/agent/hasAgentWithRole
+
+:hasAgentWithRole a owl:ObjectProperty ;
+  rdfs:domain :AgentRole ;
+  rdfs:range owl:Thing ;
+  rdfs:comment "The entity in which this agent played a certain role"@en-us ;
+  rdfs:label "hasAgentWithRole"@en-us .
+#
+# http://schema.ufokn.org/pattern/agent/parentOrganization
+
+:parentOrganization a owl:ObjectProperty , owl:FunctionalProperty , owl:IrreflexiveProperty ;
+  rdfs:domain :Organization ;
+  rdfs:range :Organization ;
+  rdfs:comment "Refers to some other Organization to which this Organization is wholly a part of."@en-us ;
+  rdfs:label "parentOrganization"@en-us .
+#
+# http://schema.ufokn.org/pattern/agent/performedBy
+
+:performedBy a owl:ObjectProperty ;
+  rdfs:domain :AgentRole ;
+  rdfs:range :Agent ;
+  rdfs:comment "The agent performing the role."@en-us ;
+  rdfs:label "performedBy"@en-us .
+#
+# http://schema.ufokn.org/pattern/agent/performs
+
+:performs a owl:ObjectProperty , owl:FunctionalProperty ;
+  rdfs:domain :AgentRole ;
+  rdfs:range :Role ;
+  rdfs:comment "The Role being performed by an Agent."@en-us ;
+  rdfs:label "performs"@en-us .
+#
+# http://schema.ufokn.org/pattern/agent/providesRole
+
+:providesRole a owl:ObjectProperty ;
+  rdfs:domain owl:Thing ;
+  rdfs:range :Role ;
+  rdfs:comment "Some thing provides the related Roles that could be associated to the thing. Ex: CreativeWork provides the Roles of Author, Contributor, Publisher, Provider, etc."@en-us ;
+  rdfs:label "providesRole"@en-us .
+#
+# http://schema.ufokn.org/pattern/agent/temporalExtent
+
+:temporalExtent a owl:ObjectProperty ;
+  rdfs:domain :AgentRole ;
+  rdfs:range time:TemporalEntity ;
+  rdfs:comment "The temporal extent bounding the role in which the agent performed."@en-us ;
+  rdfs:label "temporalExtent"@en-us .
+#
+#
+#
+# #################################################################
+# #
+# #    Classes
+# #
+# #################################################################
+#
+#
+# http://schema.ufokn.org/pattern/agent/Agent
+
+:Agent a owl:Class ;
+  rdfs:comment "Represents agents, e.g., persons, organizations, etc."@en-us ;
+  rdfs:label "Agent"@en-us .
+#
+# http://schema.ufokn.org/pattern/agent/AgentRole
+
+:AgentRole a owl:Class ;
+  rdfs:subClassOf _:genid1 .
+
+_:genid1 a owl:Restriction ;
+  owl:onProperty :performedBy ;
+  owl:allValuesFrom :Agent .
+
+:AgentRole rdfs:subClassOf _:genid2 .
+
+_:genid2 a owl:Restriction ;
+  owl:onProperty :performs ;
+  owl:allValuesFrom :Role .
+
+:AgentRole rdfs:subClassOf _:genid3 .
+
+_:genid3 a owl:Restriction ;
+  owl:onProperty :temporalExtent ;
+  owl:allValuesFrom time:TemporalEntity .
+
+:AgentRole rdfs:subClassOf _:genid4 .
+
+_:genid4 a owl:Restriction ;
+  owl:onProperty :hasAgentWithRole ;
+  owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+:AgentRole rdfs:subClassOf _:genid5 .
+
+_:genid5 a owl:Restriction ;
+  owl:onProperty :performedBy ;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+  owl:onClass :Agent .
+
+:AgentRole rdfs:subClassOf _:genid6 .
+
+_:genid6 a owl:Restriction ;
+  owl:onProperty :performs ;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+  owl:onClass :Role .
+
+:AgentRole rdfs:subClassOf _:genid7 .
+
+_:genid7 a owl:Restriction ;
+  owl:onProperty :temporalExtent ;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+  owl:onClass time:TemporalEntity .
+
+:AgentRole rdfs:comment "An instance of AgentRole represents a role performed by an agent, which can be temporally restricted. Every agent role is performed by exactly one agent. One can create a subclass of AgentRole to model a particular kind of roles."@en-us ;
+  rdfs:label "AgentRole"@en-us .
+#
+# http://schema.ufokn.org/pattern/agent/Organization
+
+:Organization a owl:Class ;
+  rdfs:subClassOf :Agent , _:genid8 .
+
+_:genid8 a owl:Restriction ;
+  owl:onProperty :childOrganization ;
+  owl:allValuesFrom :Organization .
+
+:Organization rdfs:subClassOf _:genid9 .
+
+_:genid9 a owl:Restriction ;
+  owl:onProperty :parentOrganization ;
+  owl:allValuesFrom :Organization .
+
+:Organization owl:disjointWith :Person ;
+  rdfs:comment "An organization"@en-us ;
+  rdfs:label "Organization"@en-us .
+#
+# http://schema.ufokn.org/pattern/agent/Person
+
+:Person a owl:Class ;
+  rdfs:subClassOf :Agent ;
+  rdfs:comment "A person"@en-us ;
+  rdfs:label "Person"@en-us .
+#
+# http://schema.ufokn.org/pattern/agent/Role
+
+:Role a owl:Class ;
+  rdfs:comment "The role being performed by a certain Agent."@en-us ;
+  rdfs:label "Role"@en-us .
+#
+# http://www.w3.org/2006/time#TemporalEntity
+
+time:TemporalEntity a owl:Class .
+#
+#
+#
+# #################################################################
+# #
+# #    General axioms
+# #
+# #################################################################
+#
+#
+
+_:genid10 a owl:AllDisjointClasses ;
+  owl:members _:genid14 .
+
+_:genid14 a rdf:List ;
+  rdf:first :Agent ;
+  rdf:rest _:genid13 .
+
+_:genid13 a rdf:List ;
+  rdf:first :AgentRole ;
+  rdf:rest _:genid12 .
+
+_:genid12 a rdf:List ;
+  rdf:first :Role ;
+  rdf:rest _:genid11 .
+
+_:genid11 a rdf:List ;
+  rdf:first time:TemporalEntity ;
+  rdf:rest rdf:nil .
+#
+# Generated by the OWL API (version 4.2.6.20160910-2108) https://github.com/owlcs/owlapi
