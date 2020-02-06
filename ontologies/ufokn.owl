@@ -9,7 +9,7 @@
 
 <http://schema.ufokn.org/v1/> a owl:Ontology ;
 	owl:versionIRI <http://schema.ufokn.org/v1/> ;
-	owl:imports <http://www.w3.org/2006/time#2016> , <http://www.w3.org/ns/sosa/> , <http://schema.ufokn.org/pattern/identifier/> , <http://schema.ufokn.org/pattern/agent/> ;
+	owl:imports <http://www.w3.org/2006/time#2016> , <http://www.w3.org/ns/sosa/> , <https://ufokn.github.io/Knowledge-Graph/ontologies/pattern/agent.owl> , <https://ufokn.github.io/Knowledge-Graph/ontologies/pattern/identifier.owl> ;
 	owl:versionInfo "1"@en-us ;
 	dcterms:issued "2020-02-04"^^xsd:date ;
 	dcterms:description "An ontology for describing UFOKN."@en-us ;
@@ -21,268 +21,268 @@
 	dcterms:created "2020-02-04"@en-us ;
 	dcterms:creator <http://orcid.org/0000-0003-4486-9448> ;
 	dcterms:modified "2020-02-04"^^xsd:date .
-# 
-# 
+#
+#
 # #################################################################
 # #
 # #    Annotation properties
 # #
 # #################################################################
-# 
-# 
+#
+#
 # http://purl.org/dc/terms/alternative
 
 dcterms:alternative a owl:AnnotationProperty .
-# 
+#
 # http://purl.org/dc/terms/created
 
 dcterms:created a owl:AnnotationProperty .
-# 
+#
 # http://purl.org/dc/terms/creator
 
 dcterms:creator a owl:AnnotationProperty .
-# 
+#
 # http://purl.org/dc/terms/description
 
 dcterms:description a owl:AnnotationProperty .
-# 
+#
 # http://purl.org/dc/terms/issued
 
 dcterms:issued a owl:AnnotationProperty .
-# 
+#
 # http://purl.org/dc/terms/modified
 
 dcterms:modified a owl:AnnotationProperty .
-# 
+#
 # http://purl.org/dc/terms/publisher
 
 dcterms:publisher a owl:AnnotationProperty .
-# 
+#
 # http://purl.org/dc/terms/source
 
 dcterms:source a owl:AnnotationProperty .
-# 
+#
 # http://purl.org/dc/terms/title
 
 dcterms:title a owl:AnnotationProperty .
-# 
+#
 # http://purl.org/vocab/vann/preferredNamespaceUri
 
 vann:preferredNamespaceUri a owl:AnnotationProperty .
-# 
-# 
-# 
+#
+#
+#
 # #################################################################
 # #
 # #    Datatypes
 # #
 # #################################################################
-# 
-# 
+#
+#
 # http://schema.ufokn.org/v1/powerLawRelation
 
 :powerLawRelation a rdfs:Datatype .
-# 
+#
 # http://schema.ufokn.org/v1/wktLiteral
 
 :wktLiteral a rdfs:Datatype ;
 	rdfs:comment "A Well-Known Text representation. See geosparql:wktLiteral"@en-us ;
 	rdfs:label "wktLiteral"@en-us .
-# 
-# 
-# 
+#
+#
+#
 # #################################################################
 # #
 # #    Object Properties
 # #
 # #################################################################
-# 
-# 
+#
+#
 # http://schema.ufokn.org/v1/affectsElement
 
 :affectsElement a owl:ObjectProperty ;
 	rdfs:domain :RiskPoint ;
 	rdfs:range :ElementAtRisk .
-# 
+#
 # http://schema.ufokn.org/v1/affectsRiskPoint
 
 :affectsRiskPoint a owl:ObjectProperty ;
 	rdfs:domain :RiskEvent ;
 	rdfs:range :RiskPoint .
-# 
+#
 # http://schema.ufokn.org/v1/assertsRiskEvent
 
 :assertsRiskEvent a owl:ObjectProperty ;
 	rdfs:domain :RiskEventQualification ;
 	rdfs:range :RiskEvent ;
 	owl:propertyDisjointWith :deniesRiskEvent .
-# 
+#
 # http://schema.ufokn.org/v1/comid
 
 :comid a owl:ObjectProperty , owl:FunctionalProperty ;
 	rdfs:domain :RiskPoint ;
 	rdfs:range :ComID .
-# 
+#
 # http://schema.ufokn.org/v1/containedInDataSource
 
 :containedInDataSource a owl:ObjectProperty , owl:FunctionalProperty ;
 	rdfs:domain owl:Thing ;
 	rdfs:range :DataSource .
-# 
+#
 # http://schema.ufokn.org/v1/definedByGeometry
 
 :definedByGeometry a owl:ObjectProperty ;
 	rdfs:domain :SpatialFeature ;
 	rdfs:range :Geometry .
-# 
+#
 # http://schema.ufokn.org/v1/definesCriticalDepth
 
 :definesCriticalDepth a owl:ObjectProperty , owl:FunctionalProperty ;
 	rdfs:domain :RiskEvent , :RiskPoint ;
 	rdfs:range :CriticalDepth .
-# 
+#
 # http://schema.ufokn.org/v1/deniesRiskEvent
 
 :deniesRiskEvent a owl:ObjectProperty ;
 	rdfs:domain :RiskEventQualification ;
 	rdfs:range :RiskEvent .
-# 
+#
 # http://schema.ufokn.org/v1/hasICPRRIskPointNode
 
 :hasICPRRIskPointNode a owl:ObjectProperty ;
 	rdfs:domain :ICPRNodeSet ;
 	rdfs:range :ICPRRiskPointNode .
-# 
+#
 # http://schema.ufokn.org/v1/obsoletesICPRNodeSet
 
 :obsoletesICPRNodeSet a owl:ObjectProperty ;
 	rdfs:domain :ICPRNodeSet ;
 	rdfs:range :ICPRNodeSet .
-# 
+#
 # http://schema.ufokn.org/v1/parentRiskEvent
 
 :parentRiskEvent a owl:ObjectProperty ;
 	rdfs:domain :RiskEvent ;
 	rdfs:range :RiskEvent .
-# 
+#
 # http://schema.ufokn.org/v1/predictedRiskEvent
 
 :predictedRiskEvent a owl:ObjectProperty ;
 	rdfs:domain :ModelOutput ;
 	rdfs:range :RiskEvent .
-# 
+#
 # http://schema.ufokn.org/v1/qualifiedByAgent
 
 :qualifiedByAgent a owl:ObjectProperty ;
 	rdfs:domain :RiskEventQualification ;
 	rdfs:range <http://schema.ufokn.org/pattern/agent/Agent> .
-# 
+#
 # http://schema.ufokn.org/v1/spatialReferenceFrame
 
 :spatialReferenceFrame a owl:ObjectProperty , owl:FunctionalProperty ;
 	rdfs:domain :SpatialFeature ;
 	rdfs:range :SpatialReferenceSystem .
-# 
+#
 # http://schema.ufokn.org/v1/storedInDataSource
 
 :storedInDataSource a owl:ObjectProperty , owl:FunctionalProperty ;
 	rdfs:domain owl:Thing ;
 	rdfs:range :DataSource .
-# 
+#
 # http://schema.ufokn.org/v1/temporalCoverage
 
 :temporalCoverage a owl:ObjectProperty , owl:FunctionalProperty ;
 	rdfs:domain owl:Thing ;
 	rdfs:range <http://www.w3.org/2006/time#TemporalEntity> .
-# 
+#
 # http://schema.ufokn.org/v1/usedModel
 
 :usedModel a owl:ObjectProperty ;
 	rdfs:domain :ModelOutput ;
 	rdfs:range :Model .
-# 
+#
 # http://schema.ufokn.org/v1/usedObservation
 
 :usedObservation a owl:ObjectProperty ;
 	rdfs:domain :RiskEventQualification ;
 	rdfs:range <http://www.w3.org/ns/sosa/Observation> .
-# 
+#
 # http://schema.ufokn.org/v1/withinNodeSet
 
 :withinNodeSet a owl:ObjectProperty ;
 	rdfs:domain :ICPRRiskPoint ;
 	rdfs:range :ICPRNodeSet .
-# 
-# 
-# 
+#
+#
+#
 # #################################################################
 # #
 # #    Data properties
 # #
 # #################################################################
-# 
-# 
+#
+#
 # http://schema.ufokn.org/v1/coefficient
 
 :coefficient a owl:DatatypeProperty ;
 	rdfs:domain :RiskPoint ;
 	rdfs:range xsd:float .
-# 
+#
 # http://schema.ufokn.org/v1/depthValueInMeters
 
 :depthValueInMeters a owl:DatatypeProperty , owl:FunctionalProperty ;
 	rdfs:domain :CriticalDepth .
-# 
+#
 # http://schema.ufokn.org/v1/exponent
 
 :exponent a owl:DatatypeProperty ;
 	rdfs:domain :RiskPoint ;
 	rdfs:range :powerLawRelation .
-# 
+#
 # http://schema.ufokn.org/v1/heightAboveNearestDrainage
 
 :heightAboveNearestDrainage a owl:DatatypeProperty ;
 	rdfs:domain :RiskPoint ;
 	<http://www.w3.org/2004/02/skos/core#prefLabel> "HAND" .
-# 
+#
 # http://schema.ufokn.org/v1/latitudeInDecimalDegrees
 
 :latitudeInDecimalDegrees a owl:DatatypeProperty ;
 	rdfs:range xsd:float ;
 	owl:propertyDisjointWith :longitudeInDecimalDegrees .
-# 
+#
 # http://schema.ufokn.org/v1/longitudeInDecimalDegrees
 
 :longitudeInDecimalDegrees a owl:DatatypeProperty ;
 	rdfs:domain :RiskPoint ;
 	rdfs:range xsd:float .
-# 
+#
 # http://schema.ufokn.org/v1/rankInNodeSet
 
 :rankInNodeSet a owl:DatatypeProperty , owl:FunctionalProperty ;
 	rdfs:domain :ICPRRiskPointNode ;
 	rdfs:range xsd:int .
-# 
+#
 # http://schema.ufokn.org/v1/wellKnownText
 
 :wellKnownText a owl:DatatypeProperty ;
 	rdfs:domain :RiskPoint ;
 	rdfs:range :wktLiteral .
-# 
-# 
-# 
+#
+#
+#
 # #################################################################
 # #
 # #    Classes
 # #
 # #################################################################
-# 
-# 
+#
+#
 # http://schema.ufokn.org/v1/Bridge
 
 :Bridge a owl:Class ;
 	rdfs:subClassOf :ElementAtRisk .
-# 
+#
 # http://schema.ufokn.org/v1/ComID
 
 :ComID a owl:Class ;
@@ -298,12 +298,12 @@ _:genid2 a owl:Restriction ;
 	owl:onProperty <http://schema.ufokn.org/pattern/identifier/identifierScheme> ;
 	owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :ComIDScheme .
-# 
+#
 # http://schema.ufokn.org/v1/ComIDScheme
 
 :ComIDScheme a owl:Class ;
 	rdfs:subClassOf <http://schema.ufokn.org/pattern/identifier/IdentifierScheme> .
-# 
+#
 # http://schema.ufokn.org/v1/CriticalDepth
 
 :CriticalDepth a owl:Class ;
@@ -313,11 +313,11 @@ _:genid3 a owl:Restriction ;
 	owl:onProperty :depthValueInMeters ;
 	owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onDataRange rdf:PlainLiteral .
-# 
+#
 # http://schema.ufokn.org/v1/DataSource
 
 :DataSource a owl:Class .
-# 
+#
 # http://schema.ufokn.org/v1/ElementAtRisk
 
 :ElementAtRisk a owl:Class ;
@@ -326,26 +326,26 @@ _:genid3 a owl:Restriction ;
 _:genid4 a owl:Restriction ;
 	owl:onProperty <http://schema.ufokn.org/pattern/identifier/identifiedBy> ;
 	owl:allValuesFrom <http://schema.ufokn.org/pattern/identifier/Identifier> .
-# 
+#
 # http://schema.ufokn.org/v1/FloodInundation
 
 :FloodInundation a owl:Class ;
 	rdfs:subClassOf :RiskEvent .
-# 
+#
 # http://schema.ufokn.org/v1/Geometry
 
 :Geometry a owl:Class .
-# 
+#
 # http://schema.ufokn.org/v1/HEC-RAS
 
 :HEC-RAS a owl:Class ;
 	rdfs:subClassOf :Model .
-# 
+#
 # http://schema.ufokn.org/v1/ICPR
 
 :ICPR a owl:Class ;
 	rdfs:subClassOf :Model .
-# 
+#
 # http://schema.ufokn.org/v1/ICPRNodeSet
 
 :ICPRNodeSet a owl:Class ;
@@ -374,7 +374,7 @@ _:genid8 a owl:Restriction ;
 	owl:onProperty :obsoletesICPRNodeSet ;
 	owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :ICPRNodeSet .
-# 
+#
 # http://schema.ufokn.org/v1/ICPRRiskPoint
 
 :ICPRRiskPoint a owl:Class ;
@@ -390,15 +390,15 @@ _:genid10 a owl:Restriction ;
 	owl:onProperty :withinNodeSet ;
 	owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :ICPRNodeSet .
-# 
+#
 # http://schema.ufokn.org/v1/ICPRRiskPointNode
 
 :ICPRRiskPointNode a owl:Class .
-# 
+#
 # http://schema.ufokn.org/v1/Model
 
 :Model a owl:Class .
-# 
+#
 # http://schema.ufokn.org/v1/ModelOutput
 
 :ModelOutput a owl:Class ;
@@ -426,17 +426,17 @@ _:genid14 a owl:Restriction ;
 	owl:onProperty :usedModel ;
 	owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :Model .
-# 
+#
 # http://schema.ufokn.org/v1/NOAANationalWaterModel
 
 :NOAANationalWaterModel a owl:Class ;
 	rdfs:subClassOf :Model .
-# 
+#
 # http://schema.ufokn.org/v1/PowerOutage
 
 :PowerOutage a owl:Class ;
 	rdfs:subClassOf :RiskEvent .
-# 
+#
 # http://schema.ufokn.org/v1/RiskEvent
 
 :RiskEvent a owl:Class ;
@@ -464,7 +464,7 @@ _:genid18 a owl:Restriction ;
 	owl:onProperty :affectsRiskPoint ;
 	owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :RiskPoint .
-# 
+#
 # http://schema.ufokn.org/v1/RiskEventQualification
 
 :RiskEventQualification a owl:Class ;
@@ -498,7 +498,7 @@ _:genid23 a owl:Restriction ;
 	owl:onProperty :qualifiedByAgent ;
 	owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass <http://schema.ufokn.org/pattern/agent/Agent> .
-# 
+#
 # http://schema.ufokn.org/v1/RiskPoint
 
 :RiskPoint a owl:Class ;
@@ -552,12 +552,12 @@ _:genid31 a owl:Restriction ;
 	owl:onProperty :definesCriticalDepth ;
 	owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :CriticalDepth .
-# 
+#
 # http://schema.ufokn.org/v1/Road
 
 :Road a owl:Class ;
 	rdfs:subClassOf :ElementAtRisk .
-# 
+#
 # http://schema.ufokn.org/v1/SpatialFeature
 
 :SpatialFeature a owl:Class ;
@@ -585,16 +585,16 @@ _:genid35 a owl:Restriction ;
 	owl:onProperty :definedByGeometry ;
 	owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
 	owl:onClass :Geometry .
-# 
+#
 # http://schema.ufokn.org/v1/SpatialReferenceSystem
 
 :SpatialReferenceSystem a owl:Class .
-# 
+#
 # http://schema.ufokn.org/v1/StreamFlowPrediction
 
 :StreamFlowPrediction a owl:Class ;
 	rdfs:subClassOf :ModelOutput .
-# 
+#
 # http://schema.ufokn.org/v1/Substation
 
 :Substation a owl:Class ;
@@ -603,37 +603,37 @@ _:genid35 a owl:Restriction ;
 _:genid36 a owl:Restriction ;
 	owl:onProperty <http://schema.ufokn.org/pattern/identifier/identifiedBy> ;
 	owl:allValuesFrom <http://schema.ufokn.org/pattern/identifier/Identifier> .
-# 
+#
 # http://schema.ufokn.org/v1/WaterQualityImpact
 
 :WaterQualityImpact a owl:Class ;
 	rdfs:subClassOf :RiskEvent .
-# 
+#
 # http://schema.ufokn.org/v1/WaterSurfaceElevationPredictionn
 
 :WaterSurfaceElevationPredictionn a owl:Class ;
 	rdfs:subClassOf :ModelOutput .
-# 
+#
 # http://schema.ufokn.org/v1/Well
 
 :Well a owl:Class ;
 	rdfs:subClassOf :ElementAtRisk .
-# 
-# 
-# 
+#
+#
+#
 # #################################################################
 # #
 # #    Individuals
 # #
 # #################################################################
-# 
-# 
+#
+#
 # http://schema.ufokn.org/v1/SRS_EPGS-4326
 
 :SRS_EPGS-4326 a owl:NamedIndividual , :SpatialReferenceSystem .
-# 
+#
 # http://schema.ufokn.org/v1/SRS_WGS84
 
 :SRS_WGS84 a owl:NamedIndividual , :SpatialReferenceSystem .
-# 
+#
 # Generated by the OWL API (version 4.2.6.20160910-2108) https://github.com/owlcs/owlapi
