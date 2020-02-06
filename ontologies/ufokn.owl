@@ -9,7 +9,7 @@
 
 <http://schema.ufokn.org/v1/> a owl:Ontology ;
 	owl:versionIRI <http://schema.ufokn.org/v1/> ;
-	owl:imports <http://www.w3.org/2006/time#2016> , <http://www.w3.org/ns/sosa/> , <https://ufokn.github.io/Knowledge-Graph/ontologies/pattern/agent.owl> , <https://ufokn.github.io/Knowledge-Graph/ontologies/pattern/identifier.owl> ;
+	owl:imports <http://www.w3.org/2006/time#2016> , <http://www.w3.org/ns/sosa/> , <http://schema.ufokn.org/ontologies/pattern/agent.owl> , <http://schema.ufokn.org/ontologies/pattern/identifier.owl> ;
 	owl:versionInfo "1"@en-us ;
 	dcterms:issued "2020-02-04"^^xsd:date ;
 	dcterms:description "An ontology for describing UFOKN."@en-us ;
