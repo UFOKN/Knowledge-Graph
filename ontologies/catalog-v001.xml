@@ -3,5 +3,7 @@
     <uri id="Imports Wizard Entry" name="http://schema.ufokn.org/pattern/agent/" uri="patterns/agent.owl"/>
     <uri id="Identifier" name="http://schema.ufokn.org/pattern/identifier/" uri="patterns/identifier.owl"/>
     <uri id="OWL-Time" name="http://www.w3.org/2006/time#2016" uri="http://www.w3.org/2006/time"/>
-    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base=""/>
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
+        <uri id="Automatically generated entry, Timestamp=1581017214222" name="http://schema.ufokn.org/v1/" uri="docs/ontology.xml"/>
+    </group>
 </catalog>
