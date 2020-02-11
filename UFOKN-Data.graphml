@@ -473,7 +473,6 @@
 			</port>
 			<port name="p1"/>
 			<port name="p2"/>
-			<port name="p3"/>
 		</node>
 		<node id="n9">
 			<data key="d3">
@@ -504,6 +503,7 @@
 				</yjs:ShapeNodeStyle>
 			</data>
 			<port name="p0"/>
+			<port name="p1"/>
 		</node>
 		<node id="n10">
 			<data key="d3">
@@ -544,7 +544,7 @@
 			<data key="d3">
 				<x:List>
 					<y:Label>
-						<y:Label.Text>ufokn:wktLiteral</y:Label.Text>
+						<y:Label.Text>geosparql:wktLiteral</y:Label.Text>
 						<y:Label.LayoutParameter>
 							<y:RatioAnchoredLabelModelParameter LayoutOffset="7,7.93359375"/>
 						</y:Label.LayoutParameter>
@@ -559,7 +559,7 @@
 				</x:List>
 			</data>
 			<data key="d4">
-				<y:RectD X="2568.609375" Y="477.5" Width="108.283203125" Height="30"/>
+				<y:RectD X="2568.609375" Y="477.5" Width="130.75390625" Height="30"/>
 			</data>
 			<data key="d6">
 				<yjs:ShapeNodeStyle fill="#FF00CCFF" shape="ELLIPSE">
@@ -1897,7 +1897,7 @@ comid (==1)]]></y:Label.Text>
 				</yjs:PolylineEdgeStyle>
 			</data>
 		</edge>
-		<edge id="e7" source="n8" target="n7" sourceport="p1" targetport="p0">
+		<edge id="e7" source="n9" target="n7" sourceport="p1" targetport="p0">
 			<data key="d10">
 				<x:List>
 					<y:Label>
@@ -1926,7 +1926,7 @@ comid (==1)]]></y:Label.Text>
 				</yjs:PolylineEdgeStyle>
 			</data>
 		</edge>
-		<edge id="e8" source="n8" target="n9" sourceport="p2" targetport="p0">
+		<edge id="e8" source="n8" target="n9" sourceport="p1" targetport="p0">
 			<data key="d10">
 				<x:List>
 					<y:Label>
@@ -2988,7 +2988,7 @@ node3]]></y:Label.Text>
 				<y:GraphMLReference ResourceKey="16"/>
 			</data>
 		</edge>
-		<edge id="e48" source="n15" target="n8" sourceport="p8" targetport="p3">
+		<edge id="e48" source="n15" target="n8" sourceport="p8" targetport="p2">
 			<data key="d10">
 				<x:List>
 					<y:Label LayoutParameter="{y:GraphMLReference 50}" Style="{y:GraphMLReference 51}"/>
