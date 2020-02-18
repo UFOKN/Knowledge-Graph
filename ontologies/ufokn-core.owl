@@ -1,0 +1,252 @@
+@prefix : <http://schema.ufokn.org/core/v1/> .
+@prefix geo: <http://www.opengis.net/spec/geosparql/1.0/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix ufokn: <http://schema.ufokn.org/ufokn/v1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ufokn-geo: <http://schema.ufokn.org/geo/v1/> .
+@base <http://schema.ufokn.org/core/v1/> .
+
+<http://schema.ufokn.org/core/v1/> rdf:type owl:Ontology ;
+                                    owl:versionIRI <http://schema.ufokn.org/core/v1/> ;
+                                    dcterms:created "2020-02-04"@en-us ;
+                                    dcterms:creator <http://orcid.org/0000-0002-5331-5052> ,
+                                                    <http://orcid.org/0000-0003-4486-9448> ;
+                                    dcterms:description "Part of the UFOKN ontology for describing infrastructure at risk due to flooding events."@en-us ;
+                                    dcterms:issued "2020-02-04"^^xsd:date ;
+                                    dcterms:modified "2020-02-11"^^xsd:date ;
+                                    dcterms:publisher <http://ufokn.org> ;
+                                    dcterms:source "https://github.com/UFOKN/Knowledge-Graph/ontologies/ufokn-cpre.owl"^^<xsd:anyURI> ;
+                                    dcterms:title "Core of the UFOKN Ontology"@en-us ;
+                                    rdfs:label "Risk points and events of the UFOKN Ontology"@en-us ;
+                                    owl:versionInfo "1"@en-us .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/created
+dcterms:created rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/issued
+dcterms:issued rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/modified
+dcterms:modified rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/publisher
+dcterms:publisher rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/source
+dcterms:source rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+dcterms:title rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://schema.ufokn.org/core/v1/depth
+:depth rdf:type rdfs:Datatype .
+
+
+###  http://schema.ufokn.org/core/v1/elevation
+:elevation rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://schema.ufokn.org/core/v1/associatedDataSource
+:associatedDataSource rdf:type owl:ObjectProperty ;
+                      rdfs:domain owl:Thing ;
+                      rdfs:range :DataSource ;
+                      rdfs:comment "A representation of a data source that contains things like model outputs, spatial features, risk points, or similar."@en ;
+                      rdfs:label "associatedDataSource"@en .
+
+
+###  http://schema.ufokn.org/core/v1/comid
+:comid rdf:type owl:ObjectProperty .
+
+
+###  http://schema.ufokn.org/core/v1/hasRelativeRiskPointLocation
+:hasRelativeRiskPointLocation rdf:type owl:ObjectProperty ;
+                              owl:inverseOf :locationForRiskPoint ;
+                              rdfs:domain :RiskPointFeature ;
+                              rdfs:range :RelativeRiskPointLocation ;
+                              rdfs:comment "Relationship between a RiskPointFeature and its Localication Relative to the Spatial Model used by a Specific Modeling or Observation System. The relative location allows associating different elevations with a RiskPoint based on different spatial interpolation methods."@en ;
+                              rdfs:label "hasRelativeRiskPointLocation"@en .
+
+
+###  http://schema.ufokn.org/core/v1/hasRiskPointOfInterest
+:hasRiskPointOfInterest rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf sosa:hasFeatureOfInterest ;
+                        rdfs:range [ rdf:type owl:Restriction ;
+                                     owl:onProperty :hasRiskPointOfInterest ;
+                                     owl:someValuesFrom :RiskPointFeature
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty :hasRiskPointOfInterest ;
+                                     owl:allValuesFrom :RiskPointFeature
+                                   ] .
+
+
+###  http://schema.ufokn.org/core/v1/identifiedBy
+:identifiedBy rdf:type owl:ObjectProperty .
+
+
+###  http://schema.ufokn.org/core/v1/locationForRiskPoint
+:locationForRiskPoint rdf:type owl:ObjectProperty .
+
+
+###  http://www.opengis.net/spec/geosparql/1.0/hasGeometry
+geo:hasGeometry rdf:type owl:ObjectProperty .
+
+
+###  http://www.w3.org/ns/sosa/hasFeatureOfInterest
+sosa:hasFeatureOfInterest rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://schema.ufokn.org/core/v1/criticalDepth
+:criticalDepth rdf:type owl:DatatypeProperty ;
+               rdfs:domain :RiskPointFeature ;
+               rdfs:range :depth .
+
+
+###  http://schema.ufokn.org/core/v1/heightAboveNearestDrainage
+:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
+                            rdfs:domain :RelativeRiskPointLocation ;
+                            rdfs:range :elevation .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://schema.ufokn.org/core/v1/DataSource
+:DataSource rdf:type owl:Class ;
+            rdfs:subClassOf owl:Thing ;
+            owl:disjointWith geo:Feature ,
+                             geo:Geometry .
+
+
+###  http://schema.ufokn.org/core/v1/FeatureAtRisk
+:FeatureAtRisk rdf:type owl:Class ;
+               rdfs:subClassOf geo:Feature ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :identifiedBy ;
+                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                 owl:onClass :Identifier
+                               ] .
+
+
+###  http://schema.ufokn.org/core/v1/Forecast
+:Forecast rdf:type owl:Class ;
+          owl:disjointWith sosa:Observation .
+
+
+###  http://schema.ufokn.org/core/v1/Identifier
+:Identifier rdf:type owl:Class ;
+            rdfs:subClassOf [ rdf:type owl:Restriction ;
+                              owl:onProperty :identifiedBy ;
+                              owl:cardinality "1"^^xsd:nonNegativeInteger
+                            ] .
+
+
+###  http://schema.ufokn.org/core/v1/RelativeRiskPointLocation
+:RelativeRiskPointLocation rdf:type owl:Class ;
+                           rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                             owl:onProperty :locationForRiskPoint ;
+                                             owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                             owl:onClass :RiskPointFeature
+                                           ] .
+
+
+###  http://schema.ufokn.org/core/v1/RiskPointFeature
+:RiskPointFeature rdf:type owl:Class ;
+                  rdfs:subClassOf geo:Feature ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty geo:hasGeometry ;
+                                    owl:allValuesFrom geo:Point
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty :associatedDataSource ;
+                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onClass :DataSource
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty :comid ;
+                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onClass :Identifier
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty :identifiedBy ;
+                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onClass :Identifier
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty geo:hasGeometry ;
+                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onClass geo:Point
+                                  ] .
+
+
+###  http://schema.ufokn.org/core/v1/RiskPointForecast
+:RiskPointForecast rdf:type owl:Class ;
+                   rdfs:subClassOf :Forecast ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty sosa:hasFeatureOfInterest ;
+                                     owl:someValuesFrom :RiskPointFeature
+                                   ] .
+
+
+###  http://schema.ufokn.org/core/v1/RiskPointObservation
+:RiskPointObservation rdf:type owl:Class ;
+                      rdfs:subClassOf sosa:Observation ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty sosa:hasFeatureOfInterest ;
+                                        owl:someValuesFrom :RiskPointFeature
+                                      ] .
+
+
+###  http://www.opengis.net/spec/geosparql/1.0/Feature
+geo:Feature rdf:type owl:Class .
+
+
+###  http://www.opengis.net/spec/geosparql/1.0/Geometry
+geo:Geometry rdf:type owl:Class .
+
+
+###  http://www.opengis.net/spec/geosparql/1.0/Point
+geo:Point rdf:type owl:Class .
+
+
+###  http://www.w3.org/ns/sosa/Observation
+sosa:Observation rdf:type owl:Class .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
