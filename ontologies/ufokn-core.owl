@@ -20,7 +20,7 @@
                                     dcterms:issued "2020-02-04"^^xsd:date ;
                                     dcterms:modified "2020-02-11"^^xsd:date ;
                                     dcterms:publisher <http://ufokn.org> ;
-                                    dcterms:source "https://github.com/UFOKN/Knowledge-Graph/ontologies/ufokn-cpre.owl"^^<xsd:anyURI> ;
+                                    dcterms:source "https://github.com/UFOKN/Knowledge-Graph/ontologies/ufokn-core.owl"^^<xsd:anyURI> ;
                                     dcterms:title "Core of the UFOKN Ontology"@en-us ;
                                     rdfs:label "Risk points and events of the UFOKN Ontology"@en-us ;
                                     owl:versionInfo "1"@en-us .
