@@ -7,7 +7,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix sosa: <http://www.w3.org/ns/sosa/> .
 @prefix time: <http://www.w3.org/2006/time#> .
-@prefix ufokn: <http://schema.ufokn.org/ufokn/v1/> .
+@prefix ufokn: <http://schema.ufokn.org/core/v1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix ufokn-geo: <http://schema.ufokn.org/geo/v1/> .
 @base <http://schema.ufokn.org/core/v1/> .
