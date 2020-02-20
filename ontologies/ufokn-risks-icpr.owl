@@ -1,0 +1,133 @@
+@prefix : <http://schema.ufokn.org/risks-icpr/v1/> .
+@prefix geo: <http://www.opengis.net/spec/geosparql/1.0> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ufokn: <http://schema.ufokn.org/core/v1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ufokn-f: <http://schema.ufokn.org/features/v1/> .
+@prefix ufokn-icpr: <http://schema.ufokn.org/risks-icpr/v1/> .
+@base <http://schema.ufokn.org/risks-icpr/v1/> .
+
+<http://schema.ufokn.org/risks-icpr/v1/> rdf:type owl:Ontology ;
+                                          owl:versionIRI <http://schema.ufokn.org/risks-icpr/v1/> ;
+                                          owl:imports ufokn: ,
+                                                      <http://schema.ufokn.org/geo/v1/> ;
+                                          dcterms:created "2020-02-04"@en-us ;
+                                          dcterms:creator <http://orcid.org/0000-0002-5331-5052> ,
+                                                          <http://orcid.org/0000-0003-4486-9448> ;
+                                          dcterms:description "Risk points of the UFOKN Ontology in relationship to the ICPR spatial model"@en-us ;
+                                          dcterms:issued "2020-02-11"^^xsd:date ;
+                                          dcterms:modified "2020-02-20"^^xsd:date ;
+                                          dcterms:publisher <http://ufokn.org> ;
+                                          dcterms:source "https://github.com/UFOKN/Knowledge-Graph/ontologies/ufokn-risks-icpr.owl"^^<xsd:anyURI> ;
+                                          dcterms:title "Risk points related to ICPR spatial model"@en-us ;
+                                          rdfs:label "Risk points related to ICPR spatial model"@en-us ;
+                                          owl:versionInfo "1"@en-us .
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://schema.ufokn.org/risks-icpr/v1/distance
+ufokn-icpr:distance rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://schema.ufokn.org/risks-icpr/v1/hasICPRNodeDistance
+ufokn-icpr:hasICPRNodeDistance rdf:type owl:ObjectProperty ;
+                               rdfs:domain ufokn-icpr:ICPRLocation ;
+                               rdfs:range ufokn-icpr:ICPRNodeDistance .
+
+
+###  http://schema.ufokn.org/risks-icpr/v1/inICPRTriangulation
+ufokn-icpr:inICPRTriangulation rdf:type owl:ObjectProperty ;
+                               rdfs:domain ufokn-icpr:ICPRLocation ;
+                               rdfs:range ufokn-icpr:ICPRTriangulation .
+
+
+###  http://schema.ufokn.org/risks-icpr/v1/toICPRTriangleNode
+ufokn-icpr:toICPRTriangleNode rdf:type owl:ObjectProperty ;
+                              rdfs:domain ufokn-icpr:ICPRNodeDistance ;
+                              rdfs:range ufokn-icpr:ICPRTriangleNode .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://schema.ufokn.org/risks-icpr/v1/icprNodeDistance
+ufokn-icpr:icprNodeDistance rdf:type owl:DatatypeProperty ;
+                            rdfs:domain ufokn-icpr:ICPRNodeDistance ;
+                            rdfs:range ufokn-icpr:distance .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://schema.ufokn.org/risks-icpr/v1/ICPRLocation
+ufokn-icpr:ICPRLocation rdf:type owl:Class ;
+                        rdfs:subClassOf ufokn:RelativeRiskPointLocation ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty ufokn-icpr:hasICPRNodeDistance ;
+                                          owl:qualifiedCardinality "3"^^xsd:nonNegativeInteger ;
+                                          owl:onClass ufokn-icpr:ICPRNodeDistance
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty <http://www.opengis.net/spec/geosparql/1.0/sfWithin> ;
+                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                          owl:onClass ufokn-icpr:ICPRTriangle
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty ufokn-icpr:inICPRTriangulation ;
+                                          owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                          owl:onClass ufokn-icpr:ICPRTriangulation
+                                        ] .
+
+
+###  http://schema.ufokn.org/risks-icpr/v1/ICPRNodeDistance
+ufokn-icpr:ICPRNodeDistance rdf:type owl:Class ;
+                            rdfs:subClassOf owl:Thing ,
+                                            [ rdf:type owl:Restriction ;
+                                              owl:onProperty ufokn-icpr:toICPRTriangleNode ;
+                                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                              owl:onClass ufokn-icpr:ICPRTriangleNode
+                                            ] ,
+                                            [ rdf:type owl:Restriction ;
+                                              owl:onProperty ufokn-icpr:icprNodeDistance ;
+                                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                              owl:onDataRange ufokn-icpr:distance
+                                            ] .
+
+
+###  http://schema.ufokn.org/risks-icpr/v1/ICPRTriangle
+ufokn-icpr:ICPRTriangle rdf:type owl:Class ;
+                        rdfs:subClassOf <http://www.opengis.net/spec/geosparql/1.0/Triangle> ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty <http://schema.ufokn.org/geo/v1/hasNode> ;
+                                          owl:qualifiedCardinality "3"^^xsd:nonNegativeInteger ;
+                                          owl:onClass ufokn-icpr:ICPRTriangleNode
+                                        ] .
+
+
+###  http://schema.ufokn.org/risks-icpr/v1/ICPRTriangleNode
+ufokn-icpr:ICPRTriangleNode rdf:type owl:Class ;
+                            rdfs:subClassOf <http://www.opengis.net/spec/geosparql/1.0/Point> .
+
+
+###  http://schema.ufokn.org/risks-icpr/v1/ICPRTriangulation
+ufokn-icpr:ICPRTriangulation rdf:type owl:Class ;
+                             rdfs:subClassOf <http://www.opengis.net/spec/geosparql/1.0/PolyedralSurface> .
+
+
+###  http://www.opengis.net/spec/geosparql/1.0/Triangle
+<http://www.opengis.net/spec/geosparql/1.0/Triangle> rdf:type owl:Class .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
