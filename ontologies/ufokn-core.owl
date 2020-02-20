@@ -6,6 +6,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix time: <http://www.w3.org/2006/time#> .
 @prefix ufokn: <http://schema.ufokn.org/ufokn/v1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix ufokn-geo: <http://schema.ufokn.org/geo/v1/> .
@@ -89,6 +90,27 @@ dcterms:title rdf:type owl:AnnotationProperty .
 :comid rdf:type owl:ObjectProperty .
 
 
+###  http://schema.ufokn.org/core/v1/forecastCreatedAtTime
+:forecastCreatedAtTime rdf:type owl:ObjectProperty ;
+                       rdfs:range time:TemporalEntity .
+
+
+###  http://schema.ufokn.org/core/v1/forecastedDuration
+:forecastedDuration rdf:type owl:ObjectProperty ;
+                    rdfs:range time:TemporalDuration .
+
+
+###  http://schema.ufokn.org/core/v1/forecastedForTime
+:forecastedForTime rdf:type owl:ObjectProperty ;
+                   rdfs:range time:TemporalEntity .
+
+
+###  http://schema.ufokn.org/core/v1/fromForecastModelOutput
+:fromForecastModelOutput rdf:type owl:ObjectProperty ;
+                         rdfs:domain :Forecast ;
+                         rdfs:range :ForecastModelOutput .
+
+
 ###  http://schema.ufokn.org/core/v1/hasRelativeRiskPointLocation
 :hasRelativeRiskPointLocation rdf:type owl:ObjectProperty ;
                               owl:inverseOf :locationForRiskPoint ;
@@ -112,11 +134,18 @@ dcterms:title rdf:type owl:AnnotationProperty .
 
 
 ###  http://schema.ufokn.org/core/v1/identifiedBy
-:identifiedBy rdf:type owl:ObjectProperty .
+:identifiedBy rdf:type owl:ObjectProperty ;
+              rdfs:range :Identifier .
 
 
 ###  http://schema.ufokn.org/core/v1/locationForRiskPoint
 :locationForRiskPoint rdf:type owl:ObjectProperty .
+
+
+###  http://schema.ufokn.org/core/v1/observedAtTime
+:observedAtTime rdf:type owl:ObjectProperty ;
+                rdfs:domain sosa:Observation ;
+                rdfs:range time:TemporalEntity .
 
 
 ###  http://www.opengis.net/spec/geosparql/1.0/hasGeometry
@@ -137,6 +166,11 @@ sosa:hasFeatureOfInterest rdf:type owl:ObjectProperty .
                rdfs:range :depth .
 
 
+###  http://schema.ufokn.org/core/v1/dataSourceUri
+:dataSourceUri rdf:type owl:DatatypeProperty ;
+               rdfs:range xsd:anyURI .
+
+
 ###  http://schema.ufokn.org/core/v1/heightAboveNearestDrainage
 :heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
                             rdfs:domain :RelativeRiskPointLocation ;
@@ -149,7 +183,11 @@ sosa:hasFeatureOfInterest rdf:type owl:ObjectProperty .
 
 ###  http://schema.ufokn.org/core/v1/DataSource
 :DataSource rdf:type owl:Class ;
-            rdfs:subClassOf owl:Thing ;
+            rdfs:subClassOf owl:Thing ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :dataSourceUri ;
+                              owl:someValuesFrom xsd:anyURI
+                            ] ;
             owl:disjointWith geo:Feature ,
                              geo:Geometry .
 
@@ -166,7 +204,28 @@ sosa:hasFeatureOfInterest rdf:type owl:ObjectProperty .
 
 ###  http://schema.ufokn.org/core/v1/Forecast
 :Forecast rdf:type owl:Class ;
+          rdfs:subClassOf [ rdf:type owl:Restriction ;
+                            owl:onProperty :forecastedForTime ;
+                            owl:someValuesFrom time:TemporalEntity
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :forecastedForTime ;
+                            owl:allValuesFrom time:TemporalEntity
+                          ] ;
           owl:disjointWith sosa:Observation .
+
+
+###  http://schema.ufokn.org/core/v1/ForecastModelOutput
+:ForecastModelOutput rdf:type owl:Class ;
+                     rdfs:subClassOf owl:Thing ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty :forecastCreatedAtTime ;
+                                       owl:someValuesFrom time:TemporalEntity
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty :forecastedForTime ;
+                                       owl:someValuesFrom time:TemporalEntity
+                                     ] .
 
 
 ###  http://schema.ufokn.org/core/v1/Identifier
@@ -219,7 +278,7 @@ sosa:hasFeatureOfInterest rdf:type owl:ObjectProperty .
 :RiskPointForecast rdf:type owl:Class ;
                    rdfs:subClassOf :Forecast ,
                                    [ rdf:type owl:Restriction ;
-                                     owl:onProperty sosa:hasFeatureOfInterest ;
+                                     owl:onProperty :hasRiskPointOfInterest ;
                                      owl:someValuesFrom :RiskPointFeature
                                    ] .
 
@@ -228,7 +287,7 @@ sosa:hasFeatureOfInterest rdf:type owl:ObjectProperty .
 :RiskPointObservation rdf:type owl:Class ;
                       rdfs:subClassOf sosa:Observation ,
                                       [ rdf:type owl:Restriction ;
-                                        owl:onProperty sosa:hasFeatureOfInterest ;
+                                        owl:onProperty :hasRiskPointOfInterest ;
                                         owl:someValuesFrom :RiskPointFeature
                                       ] .
 
@@ -242,11 +301,49 @@ geo:Geometry rdf:type owl:Class .
 
 
 ###  http://www.opengis.net/spec/geosparql/1.0/Point
-geo:Point rdf:type owl:Class .
+geo:Point rdf:type owl:Class ;
+          rdfs:subClassOf geo:Geometry .
+
+
+###  http://www.w3.org/2006/time#TemporalDuration
+time:TemporalDuration rdf:type owl:Class ;
+                      rdfs:subClassOf owl:Thing .
+
+
+###  http://www.w3.org/2006/time#TemporalEntity
+time:TemporalEntity rdf:type owl:Class ;
+                    rdfs:subClassOf owl:Thing .
 
 
 ###  http://www.w3.org/ns/sosa/Observation
-sosa:Observation rdf:type owl:Class .
+sosa:Observation rdf:type owl:Class ;
+                 rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                   owl:onProperty :observedAtTime ;
+                                   owl:someValuesFrom time:TemporalEntity
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :observedAtTime ;
+                                   owl:allValuesFrom time:TemporalEntity
+                                 ] .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :DataSource
+                :Forecast
+                :ForecastModelOutput
+                :Identifier
+                :RelativeRiskPointLocation
+                geo:Feature
+                geo:Geometry
+                time:TemporalDuration
+                time:TemporalEntity
+                sosa:Observation
+              )
+] .
 
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
