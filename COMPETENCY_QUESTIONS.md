@@ -2,9 +2,39 @@
 
 Google Doc: https://docs.google.com/document/d/15YcQOQBwhOLEZfFe4r4aGcLs0B2MxRmHVwYz1lVp0uo/edit#
 
+
 ## Nervous Norman
 
 1. I see a storm is coming, will it flood near me? (Yes or No)
+
+_Given:_
+```
+INSERT {
+  ?home a ufokn:Home .
+  ?home ufokn:identifiedBy ?id .
+  ?id ufokn:hasIdentifierScheme {?scheme} .
+  ?id ufokn:hasIdentifierValue {?value} .
+  ?home ufokn:hasRiskPoint ?rp .
+  ?rp sf:spatialRS <http://www.wikidata.org/entity/Q11902211> .
+  ?rp geo:lat {?lat} .
+  ?rp geo:lon {?lon} .
+}
+```
+
+_Query:_
+```
+SELECT ?forecast ?observation
+WHERE {
+  {?home} ufokn:hasRiskPoint ?feature .
+  ?feature a ufokn:RiskPointFeature .
+  ?forecast ufokn:riskPointOfInterest ?feature .
+  ?forecast a ufokn:RiskPointForecast .
+  ?forecast ufokn:fromModelOutput [ ufokn:forecastTime ?time ] .
+  FILTER (?time > {?now})
+}
+```
+
+
 2. Is my home at 123 Main St, Anytown,USA in danger of being flooded during the approaching weather system?
 3. Will I have access to food, power and fuel during this storm?
 4. How long will I have to ride out the storm?
