@@ -5,7 +5,7 @@ Google Doc: https://docs.google.com/document/d/15YcQOQBwhOLEZfFe4r4aGcLs0B2MxRmH
 
 ## Nervous Norman
 
-1. I see a storm is coming, will it flood near me? (Yes or No)
+### 1. I see a storm is coming, will it flood near me? (Yes or No)
 
 _Given:_
 ```
