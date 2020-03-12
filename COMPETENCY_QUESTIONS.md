@@ -9,6 +9,7 @@ PREFIX schema: <http://schema.org/>
 PREFIX geoparql: <http://www.opengis.net/ont/geosparql#>
 PREFIX geofunc: http://www.opengis.net/def/function/geosparql/
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns##>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
@@ -39,7 +40,7 @@ WHERE {
 
 ### 2. Is my home at 9219 Oak Knoll Ln, Houston, TX 77078 in danger of being flooded during the approaching weather system?
 
-_Given: A home from the Zillow database _
+_Given: A home from the Zillow database and a current datetime {?now} _
 ```
 INSERT {
   GRAPH <https://www.zillow.com/homedetails/9219-Oak-Knoll-Ln-Houston-TX-77078/28036610_zpid/> {
@@ -49,10 +50,13 @@ INSERT {
       ?rp geosparql:hasGeometry ?geom .
         ?geom a sf:Point .
         ?geom sf:spatialRS <http://www.wikidata.org/entity/Q11902211> .
-        ?geom geo:asWKT "POINT(-95.252 29.839269)"^^geo:wktLiteral
+        ?geom geo:asWKT "POINT(-95.252 29.839269)"^^geo:wktLiteral .
     ?home ufokn:identifiedBy ?id .
-      ?id ufokn:hasIdentifierScheme <http://www.wikidata.org/entity/Q8071921> .
-      ?id ufokn:hasIdentifierValue "28036610_zpid"^^xsd:token .
+      ?id ufokn:hasIdentifierScheme <http://schema.ufokn.org/id/IdentifierScheme/UFOKN> .
+      ?id ufokn:hasIdentifierValue "Kv8XakQ7DA6gHVdJ6yOlV9Po"^^xsd:token .
+    ?home ufokn:identifiedBy ?zillow .
+      ?zillow ufokn:hasIdentifierScheme <http://schema.ufokn.org/id/IdentifierScheme/Zillow> .
+      ?zillow ufokn:hasIdentifierValue "28036610_zpid"^^xsd:token .
     ?home schema:name "9219 Oak Knoll Ln, Houston, TX 77078"^^xsd:string .
     ?home schema:url "https://www.zillow.com/homedetails/9219-Oak-Knoll-Ln-Houston-TX-77078/28036610_zpid/"^^xsd:anyURI
     ?home schema:address ?address .
@@ -61,13 +65,52 @@ INSERT {
       ?address schema:addressLocality "Houston"^^xsd:string . 
       ?address schema:addressRegion "TX"^^xsd:string .
       ?address schema:postalCode "77078"^^xsd:string .
+    ?home prov:hasPrimarySource <http://www.wikidata.org/entity/Q8071921> .
   }
+}
+WHERE {
+  BIND (<http://id.ufokn.org/Kv8XakQ7DA6gHVdJ6yOlV9Po> as ?home)
 }
 ```
 
 _Query:_
 ```
 SELECT ?forecast
+WHERE {
+  <http://id.ufokn.org/Kv8XakQ7DA6gHVdJ6yOlV9Po> ufokn:hasRiskPoint ?rp .
+  ?rp a ufokn:RiskPointFeature .
+  ?forecast ufokn:riskPointOfInterest ?rp .
+  ?forecast a ufokn:RiskPointForecast .
+  ?forecast ufokn:fromModelOutput [ ufokn:forecastTime ?time ] .
+  FILTER (?time > {?now})
+}
+```
+
+### 3. Will I have access to food, power and fuel during this storm?
+
+
+
+### 4. How long will I have to ride out the storm?
+_Given:_ Nervous Norman's home (<http://id.ufokn.org/Kv8XakQ7DA6gHVdJ6yOlV9Po>) and a current datetime {?now}.
+
+_Query:_
+```
+SELECT MAX(?time)
+WHERE {
+  <http://id.ufokn.org/Kv8XakQ7DA6gHVdJ6yOlV9Po> ufokn:hasRiskPoint ?rp .
+  ?rp a ufokn:RiskPointFeature .
+  ?forecast ufokn:riskPointOfInterest ?rp .
+  ?forecast a ufokn:RiskPointForecast .
+  ?forecast ufokn:fromModelOutput [ ufokn:forecastTime ?time ] .
+  FILTER (?time > {?now})
+}
+```
+
+### 5. Is there a possibility of damage to my house?
+
+_Query:_
+```
+SELECT MAX(?elevation)
 WHERE {
   {?home} ufokn:hasRiskPoint ?rp .
   ?rp a ufokn:RiskPointFeature .
@@ -78,9 +121,6 @@ WHERE {
 }
 ```
 
-3. Will I have access to food, power and fuel during this storm?
-4. How long will I have to ride out the storm?
-5. Is there a possibility of damage to my house?
 6. Will I need to evacuate? If so, how soon and what is the safest route?
 7. Will my water be safe to drink? Is there contamination in nearby water resources?
 8. Alert me when a risk point in the given bounding box is predicted to be flooded.
