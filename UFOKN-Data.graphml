@@ -594,6 +594,7 @@
 			<port name="p5"/>
 			<port name="p6"/>
 			<port name="p7"/>
+			<port name="p8"/>
 		</node>
 		<node id="n11">
 			<data key="d3">
@@ -1603,6 +1604,7 @@
 					</data>
 					<port name="p0"/>
 					<port name="p1"/>
+					<port name="p2"/>
 				</node>
 				<node id="n24::n1">
 					<data key="d3">
@@ -2788,8 +2790,7 @@ comid (==1)]]></y:Label.Text>
 			<data key="d10">
 				<x:List>
 					<y:Label Style="{y:GraphMLReference 37}">
-						<y:Label.Text><![CDATA[forecastTime (==1);
-modelTime]]></y:Label.Text>
+						<y:Label.Text><![CDATA[forecastedTime (==1)]]></y:Label.Text>
 						<y:Label.LayoutParameter>
 							<y:FreeEdgeLabelModelParameter Ratio="0.37426503818592505" Distance="-2.582165029734714"/>
 						</y:Label.LayoutParameter>
@@ -3322,6 +3323,37 @@ SurfaceElevation]]></y:Label.Text>
 			</data>
 			<data key="d12">
 				<y:GraphMLReference ResourceKey="89"/>
+			</data>
+		</edge>
+		<edge id="e50" source="n10" target="n24::n0" sourceport="p8" targetport="p2">
+			<data key="d10">
+				<x:List>
+					<y:Label>
+						<y:Label.Text>generatedTime</y:Label.Text>
+						<y:Label.LayoutParameter>
+							<y:SmartEdgeLabelModelParameter Location="FromTarget" Distance="5">
+								<y:SmartEdgeLabelModelParameter.Model>
+									<y:SmartEdgeLabelModel/>
+								</y:SmartEdgeLabelModelParameter.Model>
+							</y:SmartEdgeLabelModelParameter>
+						</y:Label.LayoutParameter>
+						<y:Label.Style>
+							<yjs:DefaultLabelStyle verticalTextAlignment="BOTTOM" horizontalTextAlignment="CENTER" textFill="BLACK">
+								<yjs:DefaultLabelStyle.font>
+									<yjs:Font fontSize="12" fontFamily="'Arial'"/>
+								</yjs:DefaultLabelStyle.font>
+							</yjs:DefaultLabelStyle>
+						</y:Label.Style>
+					</y:Label>
+				</x:List>
+			</data>
+			<data key="d11">
+				<x:List>
+					<y:Bend Location="2321.75,-125.46875"/>
+				</x:List>
+			</data>
+			<data key="d12">
+				<yjs:PolylineEdgeStyle stroke="{y:GraphMLReference 85}" targetArrow="{y:GraphMLReference 86}" sourceArrow="{y:GraphMLReference 14}"/>
 			</data>
 		</edge>
 	</graph>
