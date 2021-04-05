@@ -215,6 +215,7 @@ geo:Surface rdf:type owl:Class ;
             rdfs:subClassOf geo:Geometry ;
             rdfs:comment "A surface as a 2-dimensional spatial geometry"@en ;
             rdfs:isDefinedBy geo: ;
+			owl:disjointWith geo:Point ;
             rdfs:label "Surface"@en .
 
 
