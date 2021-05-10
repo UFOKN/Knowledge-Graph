@@ -66,8 +66,8 @@ dcterms:title rdf:type owl:AnnotationProperty .
 #    Object Properties
 #################################################################
 
-###  http://schema.ufokn.org/core/v1/utilityServiceProvidedByAsset
-ufokn:utilityServiceProvidedByAsset rdf:type owl:ObjectProperty ;
+###  http://schema.ufokn.org/utility-connection/v1/providedByUtilityAsset
+:providedByUtilityAsset rdf:type owl:ObjectProperty ;
                                     owl:inverseOf :providesUtilityService .
 
 
@@ -102,7 +102,9 @@ ufokn:utilityServiceProvidedByAsset rdf:type owl:ObjectProperty ;
 
 ###  http://schema.ufokn.org/utility-connection/v1/servedBy
 :servedBy rdf:type owl:ObjectProperty ;
-          owl:inverseOf :serves .
+			owl:inverseOf :serves ;
+			rdfs:domain ufokn:FeatureAtRisk ;
+			rdfs:range :UtilityService .
 
 
 ###  http://schema.ufokn.org/utility-connection/v1/servedElectricBy
@@ -290,7 +292,7 @@ ufokn:StormwaterServiceArea rdf:type owl:Class ;
 ###  http://schema.ufokn.org/utility-connection/v1/UtilityService
 :UtilityService rdf:type owl:Class ;
                 rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                  owl:onProperty ufokn:utilityServiceProvidedByAsset ;
+                                  owl:onProperty :providedByUtilityAsset ;
                                   owl:someValuesFrom :UtilityAsset
                                 ] ,
                                 [ rdf:type owl:Restriction ;
