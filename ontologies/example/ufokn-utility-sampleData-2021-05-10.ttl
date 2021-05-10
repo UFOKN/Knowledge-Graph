@@ -156,7 +156,8 @@ ufokn-f:Well rdf:type owl:Class .
                        ufokn-u:ofUtilityType ufokn-u:waterService ;
                        ufokn-u:providedByUtilityAsset :ReservoirA ,
                                                       :WellMN001 ;
-                       ufokn-u:serves :localHospital .
+                       ufokn-u:serves :localHospital ,
+                                      :myHouse .
 
 
 ###  http://schema.ufokn.org/sample-region#WellMN001
