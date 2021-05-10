@@ -199,7 +199,9 @@ sosa:hasFeatureOfInterest rdf:type owl:ObjectProperty .
                                  owl:onProperty :identifiedBy ;
                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                  owl:onClass :Identifier
-                               ] .
+                               ] ;
+            owl:disjointWith :RiskPoint ,
+                             :RegionOfInterest .
 
 
 ###  http://schema.ufokn.org/core/v1/Forecast
@@ -345,6 +347,14 @@ sosa:Observation rdf:type owl:Class ;
 #################################################################
 #    General axioms
 #################################################################
+
+# The subclasses of geo:Feature are all disjoint
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :FeatureAtRisk
+                :RiskPoint
+                :RegionOfInterest
+              )
+] .
 
 [ rdf:type owl:AllDisjointClasses ;
   owl:members ( :DataSource
