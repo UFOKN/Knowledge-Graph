@@ -46,216 +46,236 @@ ufokn-f:Well rdf:type owl:Class .
 #    Individuals
 #################################################################
 
-###  http://schema.ufokn.org/sample-regionAlternateSewer
-ufokn-sample:AlternateSewer rdf:type owl:NamedIndividual ,
-                                     ufokn-u:SewerUtilityAsset .
+###  http://schema.ufokn.org/sample-region#AlternateSewer
+:AlternateSewer rdf:type owl:NamedIndividual ,
+                         ufokn-u:SewerUtilityAsset .
 
 
-###  http://schema.ufokn.org/sample-regionElectricServiceForMyHome
-ufokn-sample:ElectricServiceForMyHome rdf:type owl:NamedIndividual ,
-                                               ufokn-u:UtilityService ;
-                                      ufokn-u:ofUtilityType ufokn-u:electricService ;
-                                      ufokn-u:servedBy ufokn-sample:SubstationABC ;
-                                      ufokn-u:serves ufokn-sample:myHouse ,
-                                                     ufokn-sample:otherHouse .
+###  http://schema.ufokn.org/sample-region#CentralPowerPlant
+:CentralPowerPlant rdf:type owl:NamedIndividual ,
+                            ufokn-f:Powerplant .
 
 
-###  http://schema.ufokn.org/sample-regionElectricServiceForSewerTreatmentPlantA
-ufokn-sample:ElectricServiceForSewerTreatmentPlantA rdf:type owl:NamedIndividual ,
-                                                             ufokn-u:UtilityService ;
-                                                    ufokn-u:ofUtilityType ufokn-u:electricService ;
-                                                    ufokn-u:servedBy ufokn-sample:SubstationABD ;
-                                                    ufokn-u:serves ufokn-sample:TreatmentPlantA .
+###  http://schema.ufokn.org/sample-region#CentralPowerplantService
+:CentralPowerplantService rdf:type owl:NamedIndividual ,
+                                   ufokn-u:UtilityService ;
+                          ufokn-u:ofUtilityType ufokn-u:electricService ;
+                          ufokn-u:providedByUtilityAsset :CentralPowerPlant ;
+                          ufokn-u:serves :SubstationABC ,
+                                         :SubstationABD .
 
 
-###  http://schema.ufokn.org/sample-regionMainSewer
-ufokn-sample:MainSewer rdf:type owl:NamedIndividual ,
-                                ufokn-u:SewerUtilityAsset .
+###  http://schema.ufokn.org/sample-region#ElectricService1
+:ElectricService1 rdf:type owl:NamedIndividual ,
+                           ufokn-u:UtilityService ;
+                  ufokn-u:ofUtilityType ufokn-u:electricService ;
+                  ufokn-u:providedByUtilityAsset :SubstationABC ;
+                  ufokn-u:serves :WellMN001 ,
+                                 :myHouse ,
+                                 :otherHouse .
 
 
-###  http://schema.ufokn.org/sample-regionPumpingStationA
-ufokn-sample:PumpingStationA rdf:type owl:NamedIndividual ,
-                                      ufokn-u:SewerUtilityAsset .
+###  http://schema.ufokn.org/sample-region#ElectricService2
+:ElectricService2 rdf:type owl:NamedIndividual ,
+                           ufokn-u:UtilityService ;
+                  ufokn-u:ofUtilityType ufokn-u:electricService ;
+                  ufokn-u:providedByUtilityAsset :SubstationABD ;
+                  ufokn-u:serves :WellMN002 ,
+                                 :localHospital .
 
 
-###  http://schema.ufokn.org/sample-regionPumpingStationB
-ufokn-sample:PumpingStationB rdf:type owl:NamedIndividual ,
-                                      ufokn-u:SewerUtilityAsset .
+###  http://schema.ufokn.org/sample-region#ElectricServiceForSewerTreatmentPlantA
+:ElectricServiceForSewerTreatmentPlantA rdf:type owl:NamedIndividual ,
+                                                 ufokn-u:UtilityService ;
+                                        ufokn-u:ofUtilityType ufokn-u:electricService ;
+                                        ufokn-u:providedByUtilityAsset :SubstationABD ;
+                                        ufokn-u:serves :TreatmentPlantA .
 
 
-###  http://schema.ufokn.org/sample-regionReclaimationDrain
-ufokn-sample:ReclaimationDrain rdf:type owl:NamedIndividual ,
-                                        ufokn-u:StormwaterUtilityAsset .
+###  http://schema.ufokn.org/sample-region#MainSewer
+:MainSewer rdf:type owl:NamedIndividual ,
+                    ufokn-u:SewerUtilityAsset .
 
 
-###  http://schema.ufokn.org/sample-regionReservoirA
-ufokn-sample:ReservoirA rdf:type owl:NamedIndividual ,
-                                 ufokn-u:WaterUtilityAsset .
+###  http://schema.ufokn.org/sample-region#PumpingStationA
+:PumpingStationA rdf:type owl:NamedIndividual ,
+                          ufokn-u:SewerUtilityAsset .
 
 
-###  http://schema.ufokn.org/sample-regionReservoirB
-ufokn-sample:ReservoirB rdf:type owl:NamedIndividual ,
-                                 ufokn-u:WaterUtilityAsset .
+###  http://schema.ufokn.org/sample-region#PumpingStationB
+:PumpingStationB rdf:type owl:NamedIndividual ,
+                          ufokn-u:SewerUtilityAsset .
 
 
-###  http://schema.ufokn.org/sample-regionSeaOutlet
-ufokn-sample:SeaOutlet rdf:type owl:NamedIndividual ,
-                                ufokn-u:StormwaterUtilityAsset .
+###  http://schema.ufokn.org/sample-region#ReclaimationDrain
+:ReclaimationDrain rdf:type owl:NamedIndividual ,
+                            ufokn-u:StormwaterUtilityAsset .
 
 
-###  http://schema.ufokn.org/sample-regionSewerServiceDistrict1
-ufokn-sample:SewerServiceDistrict1 rdf:type owl:NamedIndividual ,
-                                            ufokn-u:UtilityService ;
-                                   ufokn-u:ofUtilityType ufokn-u:sewerService ;
-                                   ufokn-u:servedBy ufokn-sample:TreatmentPlantA ;
-                                   ufokn-u:servesArea ufokn-sample:sewerServiceDistrict1 .
+###  http://schema.ufokn.org/sample-region#ReservoirA
+:ReservoirA rdf:type owl:NamedIndividual ,
+                     ufokn-u:WaterUtilityAsset .
 
 
-###  http://schema.ufokn.org/sample-regionSubstationABC
-ufokn-sample:SubstationABC rdf:type owl:NamedIndividual ,
-                                    ufokn-f:Substation .
+###  http://schema.ufokn.org/sample-region#ReservoirB
+:ReservoirB rdf:type owl:NamedIndividual ,
+                     ufokn-u:WaterUtilityAsset .
 
 
-###  http://schema.ufokn.org/sample-regionSubstationABD
-ufokn-sample:SubstationABD rdf:type owl:NamedIndividual ,
-                                    ufokn-f:Substation .
+###  http://schema.ufokn.org/sample-region#RiverOutlet
+:RiverOutlet rdf:type owl:NamedIndividual ,
+                      ufokn-u:StormwaterUtilityAsset .
 
 
-###  http://schema.ufokn.org/sample-regionTreatmentPlantA
-ufokn-sample:TreatmentPlantA rdf:type owl:NamedIndividual ,
-                                      ufokn-u:SewerUtilityAsset .
+###  http://schema.ufokn.org/sample-region#SewerServiceDistrict1
+:SewerServiceDistrict1 rdf:type owl:NamedIndividual ,
+                                ufokn-u:UtilityService ;
+                       ufokn-u:ofUtilityType ufokn-u:sewerService ;
+                       ufokn-u:providedByUtilityAsset :TreatmentPlantA ;
+                       ufokn-u:servesArea :sewerServiceDistrict1 .
 
 
-###  http://schema.ufokn.org/sample-regionWellMN001
-ufokn-sample:WellMN001 rdf:type owl:NamedIndividual ,
-                                ufokn-f:Well .
+###  http://schema.ufokn.org/sample-region#SubstationABC
+:SubstationABC rdf:type owl:NamedIndividual ,
+                        ufokn-f:Substation .
 
 
-###  http://schema.ufokn.org/sample-regionWellMN002
-ufokn-sample:WellMN002 rdf:type owl:NamedIndividual ,
-                                ufokn-f:Well .
+###  http://schema.ufokn.org/sample-region#SubstationABD
+:SubstationABD rdf:type owl:NamedIndividual ,
+                        ufokn-f:Substation .
 
 
-###  http://schema.ufokn.org/sample-regionbookStore
-ufokn-sample:bookStore rdf:type owl:NamedIndividual ,
-                                ufokn:FeatureAtRisk .
+###  http://schema.ufokn.org/sample-region#TreatmentPlantA
+:TreatmentPlantA rdf:type owl:NamedIndividual ,
+                          ufokn-u:SewerUtilityAsset .
 
 
-###  http://schema.ufokn.org/sample-regiongradeSchool001
-ufokn-sample:gradeSchool001 rdf:type owl:NamedIndividual ,
-                                     ufokn:FeatureAtRisk .
+###  http://schema.ufokn.org/sample-region#WaterDistrictXService
+:WaterDistrictXService rdf:type owl:NamedIndividual ,
+                                ufokn-u:UtilityService ;
+                       ufokn-u:ofUtilityType ufokn-u:waterService ;
+                       ufokn-u:providedByUtilityAsset :ReservoirA ,
+                                                      :WellMN001 ;
+                       ufokn-u:serves :localHospital .
 
 
-###  http://schema.ufokn.org/sample-regiongradeSchool002
-ufokn-sample:gradeSchool002 rdf:type owl:NamedIndividual ,
-                                     ufokn:FeatureAtRisk .
+###  http://schema.ufokn.org/sample-region#WellMN001
+:WellMN001 rdf:type owl:NamedIndividual ,
+                    ufokn-f:Well .
 
 
-###  http://schema.ufokn.org/sample-regiongroceryStore001
-ufokn-sample:groceryStore001 rdf:type owl:NamedIndividual ,
-                                      ufokn:FeatureAtRisk .
+###  http://schema.ufokn.org/sample-region#WellMN002
+:WellMN002 rdf:type owl:NamedIndividual ,
+                    ufokn-f:Well .
 
 
-###  http://schema.ufokn.org/sample-regionhighSchool001
-ufokn-sample:highSchool001 rdf:type owl:NamedIndividual ,
-                                    ufokn:FeatureAtRisk .
+###  http://schema.ufokn.org/sample-region#bookStore
+:bookStore rdf:type owl:NamedIndividual ,
+                    ufokn:FeatureAtRisk .
 
 
-###  http://schema.ufokn.org/sample-regionlocalHospital
-ufokn-sample:localHospital rdf:type owl:NamedIndividual ,
-                                    ufokn:FeatureAtRisk .
+###  http://schema.ufokn.org/sample-region#gradeSchool001
+:gradeSchool001 rdf:type owl:NamedIndividual ,
+                         ufokn:FeatureAtRisk .
 
 
-###  http://schema.ufokn.org/sample-regionmyHouse
-ufokn-sample:myHouse rdf:type owl:NamedIndividual ,
-                              ufokn:FeatureAtRisk .
+###  http://schema.ufokn.org/sample-region#gradeSchool002
+:gradeSchool002 rdf:type owl:NamedIndividual ,
+                         ufokn:FeatureAtRisk .
 
 
-###  http://schema.ufokn.org/sample-regionotherHouse
-ufokn-sample:otherHouse rdf:type owl:NamedIndividual ,
-                                 ufokn:FeatureAtRisk .
+###  http://schema.ufokn.org/sample-region#groceryStore001
+:groceryStore001 rdf:type owl:NamedIndividual ,
+                          ufokn:FeatureAtRisk .
 
 
-###  http://schema.ufokn.org/sample-regionparkingStructure
-ufokn-sample:parkingStructure rdf:type owl:NamedIndividual ,
-                                       ufokn:FeatureAtRisk .
+###  http://schema.ufokn.org/sample-region#highSchool001
+:highSchool001 rdf:type owl:NamedIndividual ,
+                        ufokn:FeatureAtRisk .
 
 
-###  http://schema.ufokn.org/sample-regionpharmacy001
-ufokn-sample:pharmacy001 rdf:type owl:NamedIndividual ,
-                                  ufokn:FeatureAtRisk .
+###  http://schema.ufokn.org/sample-region#localHospital
+:localHospital rdf:type owl:NamedIndividual ,
+                        ufokn:FeatureAtRisk .
 
 
-###  http://schema.ufokn.org/sample-regionpharmacy002
-ufokn-sample:pharmacy002 rdf:type owl:NamedIndividual ,
-                                  ufokn:FeatureAtRisk .
+###  http://schema.ufokn.org/sample-region#myHouse
+:myHouse rdf:type owl:NamedIndividual ,
+                  ufokn:FeatureAtRisk .
 
 
-###  http://schema.ufokn.org/sample-regionpharmacy003
-ufokn-sample:pharmacy003 rdf:type owl:NamedIndividual ,
-                                  ufokn:FeatureAtRisk .
+###  http://schema.ufokn.org/sample-region#otherHouse
+:otherHouse rdf:type owl:NamedIndividual ,
+                     ufokn:FeatureAtRisk .
 
 
-###  http://schema.ufokn.org/sample-regionprivateSchool
-ufokn-sample:privateSchool rdf:type owl:NamedIndividual ,
-                                    ufokn:FeatureAtRisk .
+###  http://schema.ufokn.org/sample-region#parkingStructure
+:parkingStructure rdf:type owl:NamedIndividual ,
+                           ufokn:FeatureAtRisk .
 
 
-###  http://schema.ufokn.org/sample-regionprivateUniversity
-ufokn-sample:privateUniversity rdf:type owl:NamedIndividual ,
-                                        ufokn:FeatureAtRisk .
+###  http://schema.ufokn.org/sample-region#pharmacy001
+:pharmacy001 rdf:type owl:NamedIndividual ,
+                      ufokn:FeatureAtRisk .
 
 
-###  http://schema.ufokn.org/sample-regionschoolHospital
-ufokn-sample:schoolHospital rdf:type owl:NamedIndividual ,
-                                     ufokn:FeatureAtRisk .
+###  http://schema.ufokn.org/sample-region#pharmacy002
+:pharmacy002 rdf:type owl:NamedIndividual ,
+                      ufokn:FeatureAtRisk .
 
 
-###  http://schema.ufokn.org/sample-regionsewerDistrict1
-ufokn-sample:sewerDistrict1 rdf:type owl:NamedIndividual ,
-                                     ufokn-u:SewerServiceArea .
+###  http://schema.ufokn.org/sample-region#pharmacy003
+:pharmacy003 rdf:type owl:NamedIndividual ,
+                      ufokn:FeatureAtRisk .
 
 
-###  http://schema.ufokn.org/sample-regionsewerDistrict2
-ufokn-sample:sewerDistrict2 rdf:type owl:NamedIndividual ,
-                                     ufokn-u:SewerServiceArea .
+###  http://schema.ufokn.org/sample-region#privateSchool
+:privateSchool rdf:type owl:NamedIndividual ,
+                        ufokn:FeatureAtRisk .
 
 
-###  http://schema.ufokn.org/sample-regionsewerServiceDistrict1
-ufokn-sample:sewerServiceDistrict1 rdf:type owl:NamedIndividual .
+###  http://schema.ufokn.org/sample-region#privateUniversity
+:privateUniversity rdf:type owl:NamedIndividual ,
+                            ufokn:FeatureAtRisk .
 
 
-###  http://schema.ufokn.org/sample-regionstateUniversity
-ufokn-sample:stateUniversity rdf:type owl:NamedIndividual ,
-                                      ufokn:FeatureAtRisk .
+###  http://schema.ufokn.org/sample-region#schoolHospital
+:schoolHospital rdf:type owl:NamedIndividual ,
+                         ufokn:FeatureAtRisk .
 
 
-###  http://schema.ufokn.org/sample-regiontrafficLight001
-ufokn-sample:trafficLight001 rdf:type owl:NamedIndividual ,
-                                      ufokn:FeatureAtRisk .
+###  http://schema.ufokn.org/sample-region#sewerDistrict1
+:sewerDistrict1 rdf:type owl:NamedIndividual ,
+                         ufokn-u:SewerServiceArea .
 
 
-###  http://schema.ufokn.org/sample-regiontrafficLight002
-ufokn-sample:trafficLight002 rdf:type owl:NamedIndividual ,
-                                      ufokn:FeatureAtRisk .
+###  http://schema.ufokn.org/sample-region#sewerDistrict2
+:sewerDistrict2 rdf:type owl:NamedIndividual ,
+                         ufokn-u:SewerServiceArea .
 
 
-###  http://schema.ufokn.org/sample-regiontrafficLight003
-ufokn-sample:trafficLight003 rdf:type owl:NamedIndividual ,
-                                      ufokn:FeatureAtRisk .
+###  http://schema.ufokn.org/sample-region#sewerServiceDistrict1
+:sewerServiceDistrict1 rdf:type owl:NamedIndividual .
 
 
-#################################################################
-#    Annotations
-#################################################################
+###  http://schema.ufokn.org/sample-region#stateUniversity
+:stateUniversity rdf:type owl:NamedIndividual ,
+                          ufokn:FeatureAtRisk .
 
-ufokn-sample:ElectricService rdfs:comment "will delete, not sure where instance \"goes\"" .
 
+###  http://schema.ufokn.org/sample-region#trafficLight001
+:trafficLight001 rdf:type owl:NamedIndividual ,
+                          ufokn:FeatureAtRisk .
 
-ufokn-sample:PublicTransit rdfs:comment "will delete, not sure where instance \"goes\"" .
 
+###  http://schema.ufokn.org/sample-region#trafficLight002
+:trafficLight002 rdf:type owl:NamedIndividual ,
+                          ufokn:FeatureAtRisk .
 
-ufokn-sample:SewerService rdfs:comment "will delete, not sure where instance \"goes\"" .
+
+###  http://schema.ufokn.org/sample-region#trafficLight003
+:trafficLight003 rdf:type owl:NamedIndividual ,
+                          ufokn:FeatureAtRisk .
 
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
