@@ -12,102 +12,136 @@
 @prefix ufokn-geo: <http://schema.ufokn.org/geo/v1/> .
 @base <http://schema.ufokn.org/utility-connection/v1/> .
 
-<http://schema.ufokn.org/core/v1/> rdf:type owl:Ontology ;
-                                    owl:versionIRI <http://schema.ufokn.org/utility-connection/v1/> ;
-                                    dcterms:created "2021-04-12"@en-us ;
-                                    dcterms:creator <http://orcid.org/0000-0002-5331-5052>;
-                                    dcterms:description "Part of the UFOKN ontology for describing dependencies between utility assets."@en-us ;
-                                    dcterms:issued "2021-04-12"^^xsd:date ;
-                                    dcterms:modified "2021-05-10"^^xsd:date ;
-                                    dcterms:publisher <http://ufokn.org> ;
-                                    dcterms:source "https://github.com/UFOKN/Knowledge-Graph/ontologies/ufokn-utility-connection.ttl"^^<xsd:anyURI> ;
-                                    dcterms:title "Utility Connection Pattnern of the UFOKN Ontology"@en-us ;
-                                    rdfs:label "Utility Connection Pattern of the UFOKN Ontology"@en-us ;
-                                    owl:versionInfo "1"@en-us .
+<http://schema.ufokn.org/utility-connection/v1/> rdf:type owl:Ontology ;
+                                                  owl:versionIRI <http://schema.ufokn.org/utility-connection/v1/> ;
+                                                  owl:imports ufokn: ;
+                                                  dcterms:created "2021-04-12"@en-us ;
+                                                  dcterms:creator <http://orcid.org/0000-0002-5331-5052> ;
+                                                  dcterms:description "Part of the UFOKN ontology for describing dependencies between utility assets."@en-us ;
+                                                  dcterms:issued "2021-04-12"^^xsd:date ;
+                                                  dcterms:modified "2021-05-10"^^xsd:date ;
+                                                  dcterms:publisher <http://ufokn.org> ;
+                                                  dcterms:source "https://raw.githubusercontent.com/UFOKN/Knowledge-Graph/master/ontologies/ufokn-utility-connection.ttl"^^<xsd:anyURI> ;
+                                                  dcterms:title "Utility Connection Pattnern of the UFOKN Ontology"@en-us ;
+                                                  rdfs:label "Utility Connection Pattern of the UFOKN Ontology"@en-us ;
+                                                  owl:versionInfo "1"@en-us .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/created
+dcterms:created rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/issued
+dcterms:issued rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/modified
+dcterms:modified rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/publisher
+dcterms:publisher rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/source
+dcterms:source rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+dcterms:title rdf:type owl:AnnotationProperty .
+
 
 #################################################################
 #    Object Properties
 #################################################################
 
-###  http://www.opengis.net/spec/geosparql/1.0#hasGeometry
-geo:hasGeometry rdf:type owl:ObjectProperty ;
-                                                        rdfs:subPropertyOf owl:topObjectProperty ;
-                                                        rdfs:domain geo:Feature .
+###  http://schema.ufokn.org/core/v1/utilityServiceProvidedByAsset
+ufokn:utilityServiceProvidedByAsset rdf:type owl:ObjectProperty ;
+                                    owl:inverseOf :providesUtilityService .
 
 
-###  http://schema.ufokn.org/core/v1/areaServedBy
+###  http://schema.ufokn.org/utility-connection/v1/areaServedBy
 :areaServedBy rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf :servedBy ;
               owl:inverseOf :servesArea .
 
 
-###  http://schema.ufokn.org/core/v1/ofUtilityType
+###  http://schema.ufokn.org/utility-connection/v1/ofUtilityType
 :ofUtilityType rdf:type owl:ObjectProperty ;
-               rdfs:subPropertyOf owl:topObjectProperty ;
                rdfs:domain [ rdf:type owl:Class ;
                              owl:unionOf ( :UtilityAsset
                                            :UtilityService
+                                           :UtilityServiceArea
                                          )
                            ] ;
                rdfs:range :UtilityType .
 
 
-###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#providesUtilityService
+###  http://schema.ufokn.org/utility-connection/v1/providesUtilityService
 :providesUtilityService rdf:type owl:ObjectProperty ;
-                        rdfs:subPropertyOf owl:topObjectProperty ;
                         rdfs:domain :UtilityAsset ;
                         rdfs:range :UtilityService .
 
 
-###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#requiresUtilityType
+###  http://schema.ufokn.org/utility-connection/v1/requiresUtilityType
 :requiresUtilityType rdf:type owl:ObjectProperty ;
-                     rdfs:subPropertyOf owl:topObjectProperty ;
+                     rdfs:domain ufokn:FeatureAtRisk ;
                      rdfs:range :UtilityType .
 
 
-###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servedBy
+###  http://schema.ufokn.org/utility-connection/v1/servedBy
 :servedBy rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf owl:topObjectProperty ;
           owl:inverseOf :serves .
 
 
-###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servedElectricBy
+###  http://schema.ufokn.org/utility-connection/v1/servedElectricBy
 :servedElectricBy rdf:type owl:ObjectProperty ;
                   rdfs:subPropertyOf :servedBy ;
                   owl:inverseOf :servesElectric .
 
 
-###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servedPublicTransity
-:servedPublicTransity rdf:type owl:ObjectProperty ;
-                      rdfs:subPropertyOf :servedBy ;
-                      owl:inverseOf :servesPublicTransit .
+###  http://schema.ufokn.org/utility-connection/v1/servedPublicTransitBy
+:servedPublicTransitBy rdf:type owl:ObjectProperty ;
+                       rdfs:subPropertyOf :servedBy ;
+                       owl:inverseOf :servesPublicTransit .
 
 
-###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servedSewerBy
+###  http://schema.ufokn.org/utility-connection/v1/servedSewerBy
 :servedSewerBy rdf:type owl:ObjectProperty ;
                rdfs:subPropertyOf :servedBy ;
                owl:inverseOf :servesSewer .
 
 
-###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servedStormwaterBy
+###  http://schema.ufokn.org/utility-connection/v1/servedStormwaterBy
 :servedStormwaterBy rdf:type owl:ObjectProperty ;
                     rdfs:subPropertyOf :servedBy ;
                     owl:inverseOf :servesStormwater .
 
 
-###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servedWaterBy
+###  http://schema.ufokn.org/utility-connection/v1/servedWaterBy
 :servedWaterBy rdf:type owl:ObjectProperty ;
                rdfs:subPropertyOf :servedBy ;
                owl:inverseOf :servesWater .
 
 
-###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#serves
+###  http://schema.ufokn.org/utility-connection/v1/serves
 :serves rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf owl:topObjectProperty ;
-        rdfs:domain :UtilityService .
+        rdfs:domain :UtilityService ;
+        rdfs:range ufokn:FeatureAtRisk .
 
 
-###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servesArea
+###  http://schema.ufokn.org/utility-connection/v1/servesArea
 :servesArea rdf:type owl:ObjectProperty ;
             rdfs:subPropertyOf :serves ;
             rdfs:domain :UtilityService ;
@@ -115,27 +149,27 @@ geo:hasGeometry rdf:type owl:ObjectProperty ;
             rdfs:comment "i dont know if this needs an inverse (utility serves an area; that area is servedby a utility, this may be captured by servedBy itself unless it needs an area-level (T-Box) property in addition to an A-Box (specific services)" .
 
 
-###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servesElectric
+###  http://schema.ufokn.org/utility-connection/v1/servesElectric
 :servesElectric rdf:type owl:ObjectProperty ;
                 rdfs:subPropertyOf :serves .
 
 
-###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servesPublicTransit
+###  http://schema.ufokn.org/utility-connection/v1/servesPublicTransit
 :servesPublicTransit rdf:type owl:ObjectProperty ;
                      rdfs:subPropertyOf :serves .
 
 
-###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servesSewer
+###  http://schema.ufokn.org/utility-connection/v1/servesSewer
 :servesSewer rdf:type owl:ObjectProperty ;
              rdfs:subPropertyOf :serves .
 
 
-###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servesStormwater
+###  http://schema.ufokn.org/utility-connection/v1/servesStormwater
 :servesStormwater rdf:type owl:ObjectProperty ;
                   rdfs:subPropertyOf :serves .
 
 
-###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servesWater
+###  http://schema.ufokn.org/utility-connection/v1/servesWater
 :servesWater rdf:type owl:ObjectProperty ;
              rdfs:subPropertyOf :serves .
 
@@ -144,36 +178,37 @@ geo:hasGeometry rdf:type owl:ObjectProperty ;
 #    Classes
 #################################################################
 
-
-### This is already defined in the ufokn-core; including here for cross-reference
 ###  http://schema.ufokn.org/core/v1/FeatureAtRisk
-:FeatureAtRisk rdf:type owl:Class ;
-               rdfs:subClassOf geo:Feature.
-
-###  http://schema.ufokn.org/utility-connection/v1/UtilityAsset
-:UtilityAsset rdf:type owl:Class ;
-               rdfs:subClassOf ufokn:FeatureAtRisk.
-
-###  http://schema.ufokn.org/utility-connection/v1/UtilityService
-:UtilityService rdf:type owl:Class ;
-            rdfs:subClassOf owl:Thing ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :ofUtilityType ;
-                              owl:someValuesFrom :UtilityType
-                            ] ;
-            owl:disjointWith geo:Feature ,
-                             geo:Geometry ,
-							 :utilityType , 
-							 :utilityProvider. 
+ufokn:FeatureAtRisk rdf:type owl:Class .
 
 
-###  http://schema.ufokn.org/utility-connection/v1/ElectricService
-:ElectricService rdf:type owl:Class ;
-                 rdfs:subClassOf :UtilityType .
+###  http://schema.ufokn.org/core/v1/RegionOfInterest
+ufokn:RegionOfInterest rdf:type owl:Class .
+
+
+###  http://schema.ufokn.org/core/v1/StormwaterServiceArea
+ufokn:StormwaterServiceArea rdf:type owl:Class ;
+                            owl:equivalentClass [ owl:intersectionOf ( :UtilityServiceArea
+                                                                       [ rdf:type owl:Restriction ;
+                                                                         owl:onProperty :ofUtilityType ;
+                                                                         owl:hasValue :stormwaterService
+                                                                       ]
+                                                                     ) ;
+                                                  rdf:type owl:Class
+                                                ] ;
+                            rdfs:subClassOf :UtilityServiceArea .
 
 
 ###  http://schema.ufokn.org/utility-connection/v1/ElectricServiceArea
 :ElectricServiceArea rdf:type owl:Class ;
+                     owl:equivalentClass [ owl:intersectionOf ( :UtilityServiceArea
+                                                                [ rdf:type owl:Restriction ;
+                                                                  owl:onProperty :ofUtilityType ;
+                                                                  owl:hasValue :electricService
+                                                                ]
+                                                              ) ;
+                                           rdf:type owl:Class
+                                         ] ;
                      rdfs:subClassOf :UtilityServiceArea .
 
 
@@ -182,35 +217,24 @@ geo:hasGeometry rdf:type owl:ObjectProperty ;
                       owl:equivalentClass [ owl:intersectionOf ( :UtilityAsset
                                                                  [ rdf:type owl:Restriction ;
                                                                    owl:onProperty :ofUtilityType ;
-                                                                   owl:someValuesFrom :ElectricService
+                                                                   owl:hasValue :electricService
                                                                  ]
                                                                ) ;
                                             rdf:type owl:Class
                                           ] ;
-                      rdfs:subClassOf :UtilityAsset ,
-                                      [ rdf:type owl:Restriction ;
-                                        owl:onProperty :ofUtilityType ;
-                                        owl:allValuesFrom :ElectricService
-                                      ] .
-
-
-###  http://schema.ufokn.org/utility-connection/v1/Powerplant
-:Powerplant rdf:type owl:Class ;
-            rdfs:subClassOf :ElectricUtilityAsset .
-
-
-###  http://schema.ufokn.org/utility-connection/v1/PublicTransit
-:PublicTransit rdf:type owl:Class ;
-               rdfs:subClassOf :UtilityType .
-
-
-###  http://schema.ufokn.org/utility-connection/v1/SewerService
-:SewerService rdf:type owl:Class ;
-              rdfs:subClassOf :UtilityType .
+                      rdfs:subClassOf :UtilityAsset .
 
 
 ###  http://schema.ufokn.org/utility-connection/v1/SewerServiceArea
 :SewerServiceArea rdf:type owl:Class ;
+                  owl:equivalentClass [ owl:intersectionOf ( :UtilityServiceArea
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty :ofUtilityType ;
+                                                               owl:hasValue :sewerService
+                                                             ]
+                                                           ) ;
+                                        rdf:type owl:Class
+                                      ] ;
                   rdfs:subClassOf :UtilityServiceArea .
 
 
@@ -219,21 +243,12 @@ geo:hasGeometry rdf:type owl:ObjectProperty ;
                    owl:equivalentClass [ owl:intersectionOf ( :UtilityAsset
                                                               [ rdf:type owl:Restriction ;
                                                                 owl:onProperty :ofUtilityType ;
-                                                                owl:someValuesFrom :SewerService
+                                                                owl:hasValue :sewerService
                                                               ]
                                                             ) ;
                                          rdf:type owl:Class
                                        ] ;
-                   rdfs:subClassOf :UtilityAsset ,
-                                   [ rdf:type owl:Restriction ;
-                                     owl:onProperty :ofUtilityType ;
-                                     owl:allValuesFrom :SewerService
-                                   ] .
-
-
-###  http://schema.ufokn.org/utility-connection/v1/StormwaterService
-:StormwaterService rdf:type owl:Class ;
-                   rdfs:subClassOf :UtilityType .
+                   rdfs:subClassOf :UtilityAsset .
 
 
 ###  http://schema.ufokn.org/utility-connection/v1/StormwaterUtilityAsset
@@ -241,21 +256,18 @@ geo:hasGeometry rdf:type owl:ObjectProperty ;
                         owl:equivalentClass [ owl:intersectionOf ( :UtilityAsset
                                                                    [ rdf:type owl:Restriction ;
                                                                      owl:onProperty :ofUtilityType ;
-                                                                     owl:someValuesFrom :StormwaterService
+                                                                     owl:hasValue :stormwaterService
                                                                    ]
                                                                  ) ;
                                               rdf:type owl:Class
                                             ] ;
-                        rdfs:subClassOf :UtilityAsset ,
-                                        [ rdf:type owl:Restriction ;
-                                          owl:onProperty :ofUtilityType ;
-                                          owl:allValuesFrom :StormwaterService
-                                        ] .
+                        rdfs:subClassOf :UtilityAsset .
+
 
 ###  http://schema.ufokn.org/utility-connection/v1/UtilityAsset
 :UtilityAsset rdf:type owl:Class ;
-			  rdfs:subClassOf ufokn::FeatureAtRisk ,
-							  [ rdf:type owl:Restriction ;
+              rdfs:subClassOf ufokn:FeatureAtRisk ,
+                              [ rdf:type owl:Restriction ;
                                 owl:onProperty :ofUtilityType ;
                                 owl:someValuesFrom :UtilityType
                               ] ,
@@ -269,8 +281,10 @@ geo:hasGeometry rdf:type owl:ObjectProperty ;
                                 owl:onClass :UtilityType
                               ] .
 
+
 ###  http://schema.ufokn.org/utility-connection/v1/UtilityProvider
-:UtilityProvider rdf:type owl:Class .
+:UtilityProvider rdf:type owl:Class ;
+                 owl:disjointWith :UtilityService .
 
 
 ###  http://schema.ufokn.org/utility-connection/v1/UtilityService
@@ -288,43 +302,45 @@ geo:hasGeometry rdf:type owl:ObjectProperty ;
                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                   owl:onClass :UtilityType
                                 ] ;
-            owl:disjointWith geo:Feature ,
-                             geo:Geometry ,
-							 :utilityType , 
-							 :utilityProvider. 
-
-								
+                owl:disjointWith geo:Feature ,
+                                 geo:Geometry .
 
 
 ###  http://schema.ufokn.org/utility-connection/v1/UtilityServiceArea
 :UtilityServiceArea rdf:type owl:Class ;
-			  rdfs:subClassOf ufokn:RegionOfInterest ,
-							  [ rdf:type owl:Restriction ;
-                                owl:onProperty :ofUtilityType ;
-                                owl:someValuesFrom :UtilityType
-                              ] ,
-                              [ rdf:type owl:Restriction ;
-                                owl:onProperty :ofUtilityType ;
-                                owl:allValuesFrom :UtilityType
-                              ] ,
-                              [ rdf:type owl:Restriction ;
-                                owl:onProperty :ofUtilityType ;
-                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                owl:onClass :UtilityType
-                              ] .
+                    owl:equivalentClass [ owl:intersectionOf ( ufokn:RegionOfInterest
+                                                               [ rdf:type owl:Restriction ;
+                                                                 owl:onProperty :ofUtilityType ;
+                                                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                 owl:onClass :UtilityType
+                                                               ]
+                                                             ) ;
+                                          rdf:type owl:Class
+                                        ] ;
+                    rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                      owl:onProperty :ofUtilityType ;
+                                      owl:someValuesFrom :UtilityType
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :ofUtilityType ;
+                                      owl:allValuesFrom :UtilityType
+                                    ] .
 
 
 ###  http://schema.ufokn.org/utility-connection/v1/UtilityType
 :UtilityType rdf:type owl:Class .
 
 
-###  http://schema.ufokn.org/utility-connection/v1/WaterService
-:WaterService rdf:type owl:Class ;
-              rdfs:subClassOf :UtilityType .
-
-
 ###  http://schema.ufokn.org/utility-connection/v1/WaterServiceArea
 :WaterServiceArea rdf:type owl:Class ;
+                  owl:equivalentClass [ owl:intersectionOf ( :UtilityServiceArea
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty :ofUtilityType ;
+                                                               owl:hasValue :waterService
+                                                             ]
+                                                           ) ;
+                                        rdf:type owl:Class
+                                      ] ;
                   rdfs:subClassOf :UtilityServiceArea .
 
 
@@ -333,81 +349,91 @@ geo:hasGeometry rdf:type owl:ObjectProperty ;
                    owl:equivalentClass [ owl:intersectionOf ( :UtilityAsset
                                                               [ rdf:type owl:Restriction ;
                                                                 owl:onProperty :ofUtilityType ;
-                                                                owl:someValuesFrom :WaterService
+                                                                owl:hasValue :waterService
                                                               ]
                                                             ) ;
                                          rdf:type owl:Class
                                        ] ;
-                   rdfs:subClassOf :UtilityAsset ,
-                                   [ rdf:type owl:Restriction ;
-                                     owl:onProperty :ofUtilityType ;
-                                     owl:allValuesFrom :WaterService
-                                   ] .
+                   rdfs:subClassOf :UtilityAsset .
 
 
-#################################################################
-#    General axioms
-#################################################################
+###  http://www.opengis.net/spec/geosparql/1.0/Feature
+geo:Feature rdf:type owl:Class .
 
 
-[ rdf:type owl:AllDisjointClasses ;
-  owl:members ( :FeatureAtRisk
-                :UtilityService
-                :UtilityServiceArea
-				:UtilityProvider
-              )
-] .
-
-
-[ rdf:type owl:AllDifferent ;
-  owl:distinctMembers ( :electricService
-						:medicalService
-                        :sewerService
-                        :waterService
-						:stormwaterService
-						:transitService
-						:cellphoneService
-                      )
-] .
+###  http://www.opengis.net/spec/geosparql/1.0/Geometry
+geo:Geometry rdf:type owl:Class .
 
 
 #################################################################
 #    Individuals
 #################################################################
 
-
-###  http://www.semanticweb.org/torsten/ontologies/2021/4/untitled-ontology-30#cellphoneService
+###  http://schema.ufokn.org/utility-connection/v1/cellphoneService
 :cellphoneService rdf:type owl:NamedIndividual ,
-                       :UtilityType .
-					   
-###  http://www.semanticweb.org/torsten/ontologies/2021/4/untitled-ontology-30#electricService
+                           :UtilityType .
+
+
+###  http://schema.ufokn.org/utility-connection/v1/electricService
 :electricService rdf:type owl:NamedIndividual ,
                           :UtilityType .
 
-					   
-###  http://www.semanticweb.org/torsten/ontologies/2021/4/untitled-ontology-30#medicalService
+
+###  http://schema.ufokn.org/utility-connection/v1/medicalService
 :medicalService rdf:type owl:NamedIndividual ,
-                          :UtilityType .
+                         :UtilityType .
 
 
-###  http://www.semanticweb.org/torsten/ontologies/2021/4/untitled-ontology-30#sewerService
+###  http://schema.ufokn.org/utility-connection/v1/sewerService
 :sewerService rdf:type owl:NamedIndividual ,
                        :UtilityType .
 
-###  http://www.semanticweb.org/torsten/ontologies/2021/4/untitled-ontology-30#transitService
+
+###  http://schema.ufokn.org/utility-connection/v1/stormwaterService
+:stormwaterService rdf:type owl:NamedIndividual .
+
+
+###  http://schema.ufokn.org/utility-connection/v1/transitService
 :transitService rdf:type owl:NamedIndividual ,
-                       :UtilityType .
+                         :UtilityType .
 
 
-###  http://www.semanticweb.org/torsten/ontologies/2021/4/untitled-ontology-30#waterService
+###  http://schema.ufokn.org/utility-connection/v1/waterService
 :waterService rdf:type owl:NamedIndividual ,
                        :UtilityType .
 
 
+#################################################################
+#    General axioms
+#################################################################
 
-#################################################################
-#    Annotations
-#################################################################
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( ufokn:FeatureAtRisk
+                :UtilityProvider
+                :UtilityService
+                :UtilityServiceArea
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( ufokn:FeatureAtRisk
+                :UtilityService
+                :UtilityType
+              )
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( :cellphoneService
+                        :electricService
+                        :medicalService
+                        :sewerService
+                        :stormwaterService
+                        :transitService
+                        :waterService
+                      )
+] .
 
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
