@@ -225,10 +225,6 @@ ufokn:StormwaterServiceArea rdf:type owl:Class ;
                       rdfs:subClassOf :UtilityAsset .
 
 
-###  http://schema.ufokn.org/utility-connection/v1/FeatureAtRisk
-:FeatureAtRisk rdf:type owl:Class .
-
-
 ###  http://schema.ufokn.org/utility-connection/v1/SewerServiceArea
 :SewerServiceArea rdf:type owl:Class ;
                   owl:equivalentClass [ owl:intersectionOf ( :UtilityServiceArea
@@ -300,10 +296,6 @@ ufokn:StormwaterServiceArea rdf:type owl:Class ;
                                 [ rdf:type owl:Restriction ;
                                   owl:onProperty :ofUtilityType ;
                                   owl:someValuesFrom :UtilityType
-                                ] ,
-                                [ rdf:type owl:Restriction ;
-                                  owl:onProperty :serves ;
-                                  owl:someValuesFrom :FeatureAtRisk
                                 ] ,
                                 [ rdf:type owl:Restriction ;
                                   owl:onProperty :ofUtilityType ;
