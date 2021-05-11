@@ -1,4 +1,4 @@
-@prefix : <http://schema.ufokn.org/sample-region> .
+@prefix : <http://schema.ufokn.org/sample-region#> .
 @prefix geo: <http://www.opengis.net/spec/geosparql/1.0/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -12,7 +12,7 @@
 @prefix ufokn-f: <http://schema.ufokn.org/features-at-risk/v1/> .
 @prefix ufokn-u: <http://schema.ufokn.org/utility-connection/v1/> .
 @prefix ufokn-geo: <http://schema.ufokn.org/geo/v1/> .
-@prefix ufokn-sample: <http://schema.ufokn.org/sample-region> .
+@prefix ufokn-sample: <http://schema.ufokn.org/sample-region#> .
 @base <http://schema.ufokn.org/sample-region#> .
 
 <http://schema.ufokn.org/sample-region#> rdf:type owl:Ontology ;

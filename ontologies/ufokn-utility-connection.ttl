@@ -323,7 +323,9 @@ ufokn:StormwaterServiceArea rdf:type owl:Class ;
                                                              ) ;
                                           rdf:type owl:Class
                                         ] ;
-                    rdfs:subClassOf [ rdf:type owl:Restriction ;
+					rdfs:subClassOf ufokn:RegionOfInterest ,
+									ufokn:FeatureAtRisk ,
+									[ rdf:type owl:Restriction ;
                                       owl:onProperty :ofUtilityType ;
                                       owl:someValuesFrom :UtilityType
                                     ] ,
@@ -417,17 +419,10 @@ geo:Geometry rdf:type owl:Class .
   owl:members ( ufokn:FeatureAtRisk
                 :UtilityProvider
                 :UtilityService
-                :UtilityServiceArea
-              )
-] .
-
-
-[ rdf:type owl:AllDisjointClasses ;
-  owl:members ( ufokn:FeatureAtRisk
-                :UtilityService
                 :UtilityType
               )
 ] .
+
 
 
 [ rdf:type owl:AllDifferent ;
