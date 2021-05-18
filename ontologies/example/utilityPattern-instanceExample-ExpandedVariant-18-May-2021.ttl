@@ -1,0 +1,517 @@
+@prefix : <http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21> .
+
+<http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.opengis.net/spec/geosparql/1.0#hasGeometry
+<http://www.opengis.net/spec/geosparql/1.0#hasGeometry> rdf:type owl:ObjectProperty ;
+                                                        rdfs:subPropertyOf owl:topObjectProperty ;
+                                                        rdfs:domain :UtilityServiceArea .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#areaServedBy
+:areaServedBy rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf :servedBy ;
+              owl:inverseOf :servesArea .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#ofUtilityAsset
+:ofUtilityAsset rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf owl:topObjectProperty .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#ofUtilityType
+:ofUtilityType rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdfs:domain [ rdf:type owl:Class ;
+                             owl:unionOf ( :UtilityAsset
+                                           :UtilityService
+                                         )
+                           ] ;
+               rdfs:range :UtilityType .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#providesUtilityService
+:providesUtilityService rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf owl:topObjectProperty ;
+                        rdfs:domain :UtilityAsset ;
+                        rdfs:range :UtilityService .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#requiresUtilityType
+:requiresUtilityType rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf owl:topObjectProperty ;
+                     rdfs:range :UtilityType .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servedBy
+:servedBy rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          owl:inverseOf :serves .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servedElectricBy
+:servedElectricBy rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf :servedBy ;
+                  owl:inverseOf :servesElectric .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servedPublicTransity
+:servedPublicTransity rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf :servedBy ;
+                      owl:inverseOf :servesPublicTransit .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servedSewerBy
+:servedSewerBy rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf :servedBy ;
+               owl:inverseOf :servesSewer .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servedStormwaterBy
+:servedStormwaterBy rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf :servedBy ;
+                    owl:inverseOf :servesStormwater .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servedWaterBy
+:servedWaterBy rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf :servedBy ;
+               owl:inverseOf :servesWater .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#serves
+:serves rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf owl:topObjectProperty ;
+        rdfs:domain :UtilityService .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servesArea
+:servesArea rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :serves ;
+            rdfs:domain :UtilityService ;
+            rdfs:range :UtilityServiceArea ;
+            rdfs:comment "i dont know if this needs an inverse (utility serves an area; that area is servedby a utility, this may be captured by servedBy itself unless it needs an area-level (T-Box) property in addition to an A-Box (specific services)" .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servesElectric
+:servesElectric rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :serves .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servesPublicTransit
+:servesPublicTransit rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf :serves .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servesSewer
+:servesSewer rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :serves .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servesStormwater
+:servesStormwater rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf :serves .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#servesWater
+:servesWater rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :serves .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#ElectricService
+:ElectricService rdf:type owl:Class ;
+                 owl:equivalentClass [ owl:intersectionOf ( :UtilityType
+                                                            [ rdf:type owl:Restriction ;
+                                                              owl:onProperty :ofUtilityAsset ;
+                                                              owl:someValuesFrom :ElectricUtilityAsset
+                                                            ]
+                                                          ) ;
+                                       rdf:type owl:Class
+                                     ] ;
+                 rdfs:subClassOf :UtilityType .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#ElectricServiceArea
+:ElectricServiceArea rdf:type owl:Class ;
+                     rdfs:subClassOf :UtilityServiceArea .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#ElectricUtilityAsset
+:ElectricUtilityAsset rdf:type owl:Class ;
+                      owl:equivalentClass [ owl:intersectionOf ( :UtilityAsset
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty :ofUtilityType ;
+                                                                   owl:someValuesFrom :ElectricService
+                                                                 ]
+                                                               ) ;
+                                            rdf:type owl:Class
+                                          ] ;
+                      rdfs:subClassOf :UtilityAsset ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty :ofUtilityType ;
+                                        owl:allValuesFrom :ElectricService
+                                      ] .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#PublicTransit
+:PublicTransit rdf:type owl:Class ;
+               rdfs:subClassOf :UtilityType .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#SewerService
+:SewerService rdf:type owl:Class ;
+              owl:equivalentClass [ owl:intersectionOf ( :UtilityType
+                                                         [ rdf:type owl:Restriction ;
+                                                           owl:onProperty :ofUtilityAsset ;
+                                                           owl:someValuesFrom :SewerUtilityAsset
+                                                         ]
+                                                       ) ;
+                                    rdf:type owl:Class
+                                  ] ;
+              rdfs:subClassOf :UtilityType .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#SewerServiceArea
+:SewerServiceArea rdf:type owl:Class ;
+                  rdfs:subClassOf :UtilityServiceArea .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#SewerUtilityAsset
+:SewerUtilityAsset rdf:type owl:Class ;
+                   owl:equivalentClass [ owl:intersectionOf ( :UtilityAsset
+                                                              [ rdf:type owl:Restriction ;
+                                                                owl:onProperty :ofUtilityType ;
+                                                                owl:someValuesFrom :SewerService
+                                                              ]
+                                                            ) ;
+                                         rdf:type owl:Class
+                                       ] ;
+                   rdfs:subClassOf :UtilityAsset ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty :ofUtilityType ;
+                                     owl:allValuesFrom :SewerService
+                                   ] .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#StormwaterService
+:StormwaterService rdf:type owl:Class ;
+                   owl:equivalentClass [ owl:intersectionOf ( :UtilityType
+                                                              [ rdf:type owl:Restriction ;
+                                                                owl:onProperty :ofUtilityAsset ;
+                                                                owl:someValuesFrom :StormwaterUtilityAsset
+                                                              ]
+                                                            ) ;
+                                         rdf:type owl:Class
+                                       ] ;
+                   rdfs:subClassOf :UtilityType .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#StormwaterUtilityAsset
+:StormwaterUtilityAsset rdf:type owl:Class ;
+                        owl:equivalentClass [ owl:intersectionOf ( :UtilityAsset
+                                                                   [ rdf:type owl:Restriction ;
+                                                                     owl:onProperty :ofUtilityType ;
+                                                                     owl:someValuesFrom :StormwaterService
+                                                                   ]
+                                                                 ) ;
+                                              rdf:type owl:Class
+                                            ] ;
+                        rdfs:subClassOf :UtilityAsset ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty :ofUtilityType ;
+                                          owl:allValuesFrom :StormwaterService
+                                        ] .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#UtilityAsset
+:UtilityAsset rdf:type owl:Class ;
+              rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                owl:onProperty :ofUtilityType ;
+                                owl:someValuesFrom :UtilityType
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :ofUtilityType ;
+                                owl:allValuesFrom :UtilityType
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :ofUtilityType ;
+                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                owl:onClass :UtilityType
+                              ] ;
+              rdfs:comment "add util subclasses here" .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#UtilityService
+:UtilityService rdf:type owl:Class ;
+                rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                  owl:onProperty :ofUtilityType ;
+                                  owl:someValuesFrom :UtilityType
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :ofUtilityType ;
+                                  owl:allValuesFrom :UtilityType
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :ofUtilityType ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass :UtilityType
+                                ] .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#UtilityServiceArea
+:UtilityServiceArea rdf:type owl:Class ;
+                    rdfs:comment "On the chart, this didnt have Stormwater, PublicTransit (present in UtilityType)" .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#UtilityType
+:UtilityType rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#WaterService
+:WaterService rdf:type owl:Class ;
+              owl:equivalentClass [ owl:intersectionOf ( :UtilityType
+                                                         [ rdf:type owl:Restriction ;
+                                                           owl:onProperty :ofUtilityAsset ;
+                                                           owl:someValuesFrom :WaterUtilityAsset
+                                                         ]
+                                                       ) ;
+                                    rdf:type owl:Class
+                                  ] ;
+              rdfs:subClassOf :UtilityType .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#WaterServiceArea
+:WaterServiceArea rdf:type owl:Class ;
+                  rdfs:subClassOf :UtilityServiceArea .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#WaterUtilityAsset
+:WaterUtilityAsset rdf:type owl:Class ;
+                   owl:equivalentClass [ owl:intersectionOf ( :UtilityAsset
+                                                              [ rdf:type owl:Restriction ;
+                                                                owl:onProperty :ofUtilityType ;
+                                                                owl:someValuesFrom :WaterService
+                                                              ]
+                                                            ) ;
+                                         rdf:type owl:Class
+                                       ] ;
+                   rdfs:subClassOf :UtilityAsset ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty :ofUtilityType ;
+                                     owl:allValuesFrom :WaterService
+                                   ] .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.opengis.net/spec/geosparql/1.0#ElectricServiceForMyHome
+<http://www.opengis.net/spec/geosparql/1.0#ElectricServiceForMyHome> rdf:type owl:NamedIndividual ,
+                                                                              :UtilityService ;
+                                                                     :serves :myHouse ,
+                                                                             :otherHouse .
+
+
+###  http://www.opengis.net/spec/geosparql/1.0#ElectricServiceForMyHome2
+<http://www.opengis.net/spec/geosparql/1.0#ElectricServiceForMyHome2> rdf:type owl:NamedIndividual ,
+                                                                               :UtilityService ;
+                                                                      :serves :mySchool ,
+                                                                              :privateSchool ,
+                                                                              :privateUniversity .
+
+
+###  http://www.opengis.net/spec/geosparql/1.0#SewerServiceForMyHome
+<http://www.opengis.net/spec/geosparql/1.0#SewerServiceForMyHome> rdf:type owl:NamedIndividual ,
+                                                                           :UtilityService .
+
+
+###  http://www.opengis.net/spec/geosparql/1.0#SubstationABC
+<http://www.opengis.net/spec/geosparql/1.0#SubstationABC> rdf:type owl:NamedIndividual ,
+                                                                   :ElectricUtilityAsset .
+
+
+###  http://www.opengis.net/spec/geosparql/1.0#SubstationABD
+<http://www.opengis.net/spec/geosparql/1.0#SubstationABD> rdf:type owl:NamedIndividual ,
+                                                                   :ElectricUtilityAsset .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#AlternateSewer
+:AlternateSewer rdf:type owl:NamedIndividual ;
+                :servedBy :SewerService .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#ElectricService
+:ElectricService rdf:type owl:NamedIndividual ,
+                          :UtilityType ;
+                 :serves :localHospital .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#FarmWater
+:FarmWater rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#IndustrialWater
+:IndustrialWater rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#LakeA
+:LakeA rdf:type owl:NamedIndividual ,
+                :WaterUtilityAsset .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#LakeB
+:LakeB rdf:type owl:NamedIndividual ,
+                :WaterUtilityAsset .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#MainSewer
+:MainSewer rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#PotableWater
+:PotableWater rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#PublicTransit
+:PublicTransit rdf:type owl:NamedIndividual ,
+                        :UtilityType .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#PumpingStationA
+:PumpingStationA rdf:type owl:NamedIndividual ,
+                          :SewerUtilityAsset .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#PumpingStationB
+:PumpingStationB rdf:type owl:NamedIndividual ,
+                          :SewerUtilityAsset .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#ReclaimationDrain
+:ReclaimationDrain rdf:type owl:NamedIndividual ,
+                            :StormwaterUtilityAsset .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#ReservoirA
+:ReservoirA rdf:type owl:NamedIndividual ,
+                     :WaterUtilityAsset .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#ReservoirB
+:ReservoirB rdf:type owl:NamedIndividual ,
+                     :WaterUtilityAsset .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#SeaOutlet
+:SeaOutlet rdf:type owl:NamedIndividual ,
+                    :StormwaterUtilityAsset .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#SewerService
+:SewerService rdf:type owl:NamedIndividual ,
+                       :UtilityType .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#StormwaterService
+:StormwaterService rdf:type owl:NamedIndividual ,
+                            :UtilityType .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#TreatmentPlantA
+:TreatmentPlantA rdf:type owl:NamedIndividual ,
+                          :SewerUtilityAsset .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#WaterService
+:WaterService rdf:type owl:NamedIndividual ,
+                       :UtilityType .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#bookStore
+:bookStore rdf:type owl:NamedIndividual ;
+           :servedBy :ElectricService .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#computerStore
+:computerStore rdf:type owl:NamedIndividual ;
+               :servedBy <http://www.opengis.net/spec/geosparql/1.0#ElectricServiceForMyHome> .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#foodStore
+:foodStore rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#gradeSchool
+:gradeSchool rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#localHospital
+:localHospital rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#myHouse
+:myHouse rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#mySchool
+:mySchool rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#otherHouse
+:otherHouse rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#parkingStructure
+:parkingStructure rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#privateSchool
+:privateSchool rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#privateUniversity
+:privateUniversity rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#schoolHospital
+:schoolHospital rdf:type owl:NamedIndividual ;
+                :servedBy <http://www.opengis.net/spec/geosparql/1.0#ElectricServiceForMyHome2> .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#stateUniversity
+:stateUniversity rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/sean/ontologies/2021/3/untitled-ontology-21#trafficLight
+:trafficLight rdf:type owl:NamedIndividual .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+:ElectricService rdfs:comment "will delete, not sure where instance \"goes\"" .
+
+
+:PublicTransit rdfs:comment "will delete, not sure where instance \"goes\"" .
+
+
+:SewerService rdfs:comment "will delete, not sure where instance \"goes\"" .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
