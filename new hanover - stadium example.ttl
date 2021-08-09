@@ -1,0 +1,157 @@
+#################################################################
+#    name spaces
+#################################################################
+
+@prefix : <http://schema.ufokn.org/utility-connection/v1/> .
+@prefix geo: <http://www.opengis.net/spec/geosparql/1.0/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix ufokn: <http://schema.ufokn.org/core/v1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ufokn-geo: <http://schema.ufokn.org/geo/v1/> .
+@base <http://schema.ufokn.org/utility-connection/v1/> .
+
+
+<http://schema.ufokn.org/core/v1/FeatureAtRisk> a owl:Ontology .
+
+
+
+:hasAddress a owl:ObjectProperty .
+
+:Address a owl:Class .
+
+:FeatureAtRisk a owl:Class .
+
+:hasMember a owl:ObjectProperty .
+
+:CollectionOfFeatures a owl:Class .
+
+:hasRiskPoint a owl:ObjectProperty .
+
+:RiskPoint a owl:Class .
+
+<http://www.opengis.net/spec/geosparql/1.0#hasGeometry> a owl:ObjectProperty .
+
+<http://www.opengis.net/ont/sf#Point> a owl:Class .
+
+<http://www.opengis.net/spec/geosparql/1.0#Geometry> a owl:Class .
+
+:address a owl:DatatypeProperty .
+
+:city a owl:DatatypeProperty .
+
+:description a owl:DatatypeProperty .
+
+:Facility a owl:Class .
+
+:Release a owl:Class .
+
+:featureType a owl:DatatypeProperty .
+
+:ms_id a owl:DatatypeProperty .
+
+:name a owl:DatatypeProperty .
+
+:oa_id a owl:DatatypeProperty .
+
+:osm_id a owl:DatatypeProperty .
+
+:postcode a owl:DatatypeProperty .
+
+:region a owl:DatatypeProperty .
+
+:source a owl:DatatypeProperty .
+
+:state a owl:DatatypeProperty .
+
+:value a owl:DatatypeProperty .
+
+:Amenity a owl:Class .
+
+_:node1 a owl:Restriction .
+
+:Building a owl:Class .
+
+_:node2 a owl:Restriction .
+
+:Leisure a owl:Class .
+
+_:node3 a owl:Restriction .
+
+:ManMade a owl:Class .
+
+_:node4 a owl:Restriction .
+
+:Military a owl:Class .
+
+_:node5 a owl:Restriction .
+
+:MultiUnitBuilding a owl:Class .
+
+_:node6 a owl:Restriction .
+
+:Office a owl:Class .
+
+_:node7 a owl:Restriction .
+
+:Road a owl:Class .
+
+_:node8 a owl:Restriction .
+
+:Shop a owl:Class .
+
+_:node9 a owl:Restriction .
+
+:Sport a owl:Class .
+
+_:node10 a owl:Restriction .
+
+:Tourism a owl:Class .
+
+_:node11 a owl:Restriction .
+
+
+#################################################################
+#    Instance 1: some stadium
+#################################################################
+
+
+<http://schema.ufokn.org/core/v1/FeatureAtRisk/92232729737129-25624> a :FeatureAtRisk .
+
+<http://schema.ufokn.org/core/v1/FeatureAtRisk/Address/92232729737129-25624> a :Address .
+
+<http://schema.ufokn.org/core/v1/FeatureAtRisk/RiskPoint/92232729737129-25624> a :RiskPoint .
+
+
+<http://schema.ufokn.org/core/v1/CollectionOfFeatures/http://schema.ufokn.org/core/v1/FeatureAtRisk/92232729737129-25624>
+  a :CollectionOfFeatures .
+
+<http://schema.ufokn.org/core/v1/FeatureAtRisk/92232729737129-25624> :hasAddress <http://schema.ufokn.org/core/v1/FeatureAtRisk/Address/92232729737129-25624> .
+
+<http://schema.ufokn.org/core/v1/CollectionOfFeatures/http://schema.ufokn.org/core/v1/FeatureAtRisk/92232729737129-25624>
+  :hasMember <http://schema.ufokn.org/core/v1/FeatureAtRisk/http://schema.ufokn.org/core/v1/FeatureAtRisk/92232729737129-25624> .
+
+<http://schema.ufokn.org/core/v1/FeatureAtRisk/92232729737129-25624> :hasRiskPoint
+    <http://schema.ufokn.org/core/v1/FeatureAtRisk/RiskPoint/92232729737129-25624> .
+
+<http://schema.ufokn.org/core/v1/FeatureAtRisk/RiskPoint/92232729737129-25624> <http://www.opengis.net/spec/geosparql/1.0#hasGeometry>
+    "POINT (1642010 1394292)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+
+
+# DATA PROPERTY ASSERTIONS:
+<http://schema.ufokn.org/core/v1/FeatureAtRisk/92232729737129-25624> :ms_id "37129-25624" .
+
+<http://schema.ufokn.org/core/v1/FeatureAtRisk/92232729737129-25624> :name "building" .
+
+<http://schema.ufokn.org/core/v1/FeatureAtRisk/92232729737129-25624> :osm_id "922327297" .
+
+
+<http://schema.ufokn.org/core/v1/FeatureAtRisk/92232729737129-25624> :source "osm-ms-no_address" .
+
+
+<http://schema.ufokn.org/core/v1/FeatureAtRisk/92232729737129-25624> :value "stadium" .
