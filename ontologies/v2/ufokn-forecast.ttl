@@ -1,0 +1,226 @@
+@prefix : <http://schema.ufokn.org/forecast/v2/> .
+@prefix ufokn-fc: <http://schema.ufokn.org/forecast/v2/> .
+@prefix ufokn: <http://schema.ufokn.org/core/v2/> .
+@prefix ufokn-geo: <http://schema.ufokn.org/geo/v1/> .
+@prefix geo: <http://www.opengis.net/spec/geosparql/1.0/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <http://schema.ufokn.org/forecast/v2/> .
+
+<http://schema.ufokn.org/forecast/v2/> rdf:type owl:Ontology ;
+                                    owl:versionIRI <http://schema.ufokn.org/forecast/v2/> ;
+                                    owl:imports ufokn: , ufokn-geo: ;
+                                    dcterms:created "2020-02-04"@en-us ;
+                                    dcterms:creator <http://orcid.org/0000-0002-5331-5052>;
+                                    dcterms:description "Part of the UFOKN ontology for describing forecasts."@en-us ;
+                                    dcterms:issued "2020-02-04"^^xsd:date ;
+                                    dcterms:modified "2021-12-15"^^xsd:date ;
+                                    dcterms:publisher <http://ufokn.org> ;
+                                    dcterms:source "https://github.com/UFOKN/Knowledge-Graph/ontologies/v2/ufokn-forecasts.owl"^^<xsd:anyURI> ;
+                                    dcterms:title "Forecasts for the UFOKN Ontology"@en-us ;
+                                    rdfs:label "Forecasts the UFOKN Ontology"@en-us ;
+                                    owl:versionInfo "2"@en-us .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/created
+dcterms:created rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/issued
+dcterms:issued rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/modified
+dcterms:modified rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/publisher
+dcterms:publisher rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/source
+dcterms:source rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+dcterms:title rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+
+###  http://schema.ufokn.org/core/v1/forecastCreatedAtTime
+ufokn-fc:forecastCreatedAtTime rdf:type owl:ObjectProperty ;
+                            rdfs:range time:TemporalEntity .
+
+
+###  http://schema.ufokn.org/core/v1/forecastedDuration
+ufokn-fc:forecastedDuration rdf:type owl:ObjectProperty ;
+                         rdfs:range time:TemporalDuration .
+
+
+###  http://schema.ufokn.org/core/v1/forecastedForTime
+ufokn-fc:forecastedForTime rdf:type owl:ObjectProperty ;
+                        rdfs:range time:TemporalEntity .
+
+
+###  http://schema.ufokn.org/core/v1/fromForecastModelOutput
+ufokn-fc:fromForecastModelOutput rdf:type owl:ObjectProperty ;
+                              rdfs:domain ufokn-fc:Forecast ;
+                              rdfs:range ufokn-fc:ForecastModelOutput .
+
+
+
+###  http://schema.ufokn.org/core/v1/hasRiskPointOfInterest
+ufokn-fc:hasRiskPointOfInterest rdf:type owl:ObjectProperty ;
+                             rdfs:subPropertyOf sosa:hasFeatureOfInterest ;
+                             rdfs:domain _:UnionOfObservationAndForecast ;
+							 rdfs:range ufokn:RiskPoint.
+							 
+### blank node to describe the union of UFOKN Observations and Forecasts 
+_:UnionOfObservationAndForecast owl:unionOf (ufokn-fc:Observation ufokn-fc:Forecast).
+
+
+###  http://schema.ufokn.org/core/v1/observedAtTime
+ufokn-fc:observedAtTime rdf:type owl:ObjectProperty ;
+                     rdfs:domain sosa:Observation ;
+                     rdfs:range time:TemporalEntity .
+
+
+###  http://www.w3.org/ns/sosa/hasFeatureOfInterest
+sosa:hasFeatureOfInterest rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+
+#################################################################
+#    Classes
+#################################################################
+
+
+owl:Thing rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                owl:onProperty ufokn-fc:hasRiskPointOfInterest ;
+                                owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                          ] .
+
+
+###  http://schema.ufokn.org/core/v1/Forecast
+ufokn-fc:Forecast rdf:type owl:Class ;
+               rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                 owl:onProperty ufokn-fc:forecastedForTime ;
+                                 owl:someValuesFrom time:TemporalEntity
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty ufokn-fc:forecastedForTime ;
+                                 owl:allValuesFrom time:TemporalEntity
+                               ] ;
+               owl:disjointWith sosa:Observation .
+
+
+###  http://schema.ufokn.org/core/v1/ForecastModelOutput
+ufokn-fc:ForecastModelOutput rdf:type owl:Class ;
+                          rdfs:subClassOf owl:Thing ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty ufokn-fc:forecastCreatedAtTime ;
+                                            owl:someValuesFrom time:TemporalEntity
+                                          ] ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty ufokn-fc:forecastedForTime ;
+                                            owl:someValuesFrom time:TemporalEntity
+                                          ] .
+
+
+
+###  http://schema.ufokn.org/core/v1/RiskPointForecast
+ufokn-fc:RiskPointForecast rdf:type owl:Class ;
+                        rdfs:subClassOf ufokn-fc:Forecast ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty ufokn-fc:hasRiskPointOfInterest ;
+                                          owl:someValuesFrom ufokn:RiskPoint
+                                        ] .
+
+
+###  http://schema.ufokn.org/core/v1/RiskPointObservation
+ufokn-fc:RiskPointObservation rdf:type owl:Class ;
+                           rdfs:subClassOf ufokn-fc:Observation ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty ufokn-fc:hasRiskPointOfInterest ;
+                                             owl:someValuesFrom ufokn:RiskPoint
+                                           ] .
+
+
+###  http://www.w3.org/2006/time#TemporalDuration
+time:TemporalDuration rdf:type owl:Class ;
+                      rdfs:subClassOf owl:Thing .
+
+
+###  http://www.w3.org/2006/time#TemporalEntity
+time:TemporalEntity rdf:type owl:Class ;
+                    rdfs:subClassOf owl:Thing .
+
+
+###  http://www.w3.org/ns/sosa/Observation
+sosa:Observation rdf:type owl:Class.
+
+
+###  http://schema.ufokn.org/core/v1/Observation
+### UFOKN Observations have some time:TemporalEntity as observationTime
+ufokn-fc:Observation rdf:type owl:Class ;
+                 rdfs:subClassOf sosa:Observation, 
+								 [ rdf:type owl:Restriction ;
+                                   owl:onProperty ufokn-fc:observedAtTime ;
+                                   owl:someValuesFrom time:TemporalEntity
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty ufokn-fc:observedAtTime ;
+                                   owl:allValuesFrom time:TemporalEntity
+                                 ] ,
+								 [ rdf:type owl:Restriction ;
+                                   owl:onProperty ufokn-fc:observedAtTime ;
+								   owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                 ] .
+
+#################################################################
+#    General axioms
+#################################################################
+
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( ufokn:DataSource
+                ufokn-fc:Forecast
+                ufokn-fc:ForecastModelOutput
+                ufokn:Identifier
+                time:TemporalDuration
+                time:TemporalEntity
+                sosa:Observation
+              )
+] .
+
