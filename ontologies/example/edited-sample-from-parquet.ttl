@@ -1,0 +1,140 @@
+@prefix : <http://schema.ufokn.org/example2012-12-16/> .
+@prefix ufokn: <http://schema.ufokn.org/core/v2/> .
+@prefix ufokn-geo: <http://schema.ufokn.org/geo/v1/> .
+@prefix geo: <http://www.opengis.net/spec/geosparql/1.0/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <http://schema.ufokn.org/example/> .
+
+<http://schema.ufokn.org/example2012-12-16/> rdf:type owl:Ontology ;
+                                    owl:imports ufokn: ,
+												ufokn-geo: ;
+                                    dcterms:created "2021-12-15"@en-us ;
+                                    dcterms:creator <http://orcid.org/0000-0002-5331-5052> ;
+                                    dcterms:description "Sample instantiation of features, feature collections and their addresses."@en-us ;
+                                    dcterms:issued "2021-12-16"^^xsd:date ;
+                                    dcterms:modified "2021-12-16"^^xsd:date ;
+                                    dcterms:publisher <http://ufokn.org> ;
+                                    dcterms:source "https://github.com/UFOKN/Knowledge-Graph/ontologies/example/edited-sample-from-parquet.ttl"^^<xsd:anyURI> ;
+                                    dcterms:title "Core of the UFOKN Ontology"@en-us ;
+                                    rdfs:label "Example of using the UFOKN Ontology for features and addresses"@en-us ;
+                                    owl:versionInfo "1"@en-us .
+
+
+
+###  http://schema.ufokn.org/example2012-12-16/CollectionOfFeatures#UFOKN-dq0dtevjev
+<http://schema.ufokn.org/example2012-12-16/CollectionOfFeatures#UFOKN-dq0dtevjev> rdf:type owl:NamedIndividual ,
+                                                                          ufokn:CollectionOfFeatures ; 
+                                                                 ufokn:hasMember </http://schema.ufokn.org/ufokn-core/v2/FeatureAtRisk/UFOKN-dq0dtevjev> . # do not create a collection if it just has a single member; instead just create the FeatureAtRisk directly.
+																 
+###  http://schema.ufokn.org/example2012-12-16/CollectionOfFeatures/FeatureAtRisk/UFOKN-dq0dtevjev
+<http://schema.ufokn.org/example2012-12-16/FeatureAtRisk#UFOKN-dq0dtevjev> rdf:type owl:NamedIndividual ,
+                                                                              ufokn:FeatureAtRisk ;
+                                                                     ufokn:hasAddress <http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq0dtevjev> ;
+                                                                     ufokn:hasRiskPoint <http://schema.ufokn.org/example2012-12-16/RiskPoint/UFOKN-dq0dtevjev> ;
+                                                                     ufokn:ms_id "dq0dtevjev" ;
+                                                                     ufokn:key "building" ;
+                                                                     ufokn:oa_id "00027c4330b507c6" ;
+                                                                     ufokn:osm_id "935890693" ;
+                                                                     ufokn:fromDataSource ufokn:OSMdataSource, ufokn:MSdataSource, ufokn:OAdataSource ;
+																	 ufokn:value "yes" .                                                                                                                          
+###  http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq0dtevjev
+<http://schema.ufokn.org/example2012-12-16/UFOKN-dq0dtevjev> rdf:type owl:NamedIndividual ,
+                                                                          ufokn:Address ; 
+                                                                ufokn:street "102" ; # need to combine number, street, and items from units (if available)
+																ufokn:streetNumber "102" ;
+                                                                ufokn:state "";# this can be extracted from postal code
+                                                                ufokn:postcode "28480" ;
+																ufokn:unitNumber "". #needed for a unit that is part of a collection 
+
+
+###  http://schema.ufokn.org/example2012-12-16/RiskPoint/UFOKN-dq0dtevjev
+<http://schema.ufokn.org/example2012-12-16/RiskPoint/UFOKN-dq0dtevjev> rdf:type owl:NamedIndividual ,
+                                                                            ufokn:RiskPoint ;
+                                                                   <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654323 1397477)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+                                                                               
+###  http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq0dtevjev
+<http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq0dtevjev> rdf:type owl:NamedIndividual .
+
+###  http://schema.ufokn.org/ufokn-core/v2/CollectionOfFeatures/UFOKN-dq09e0n1dt
+<http://schema.ufokn.org/ufokn-core/v2/CollectionOfFeatures/UFOKN-dq09e0n1dt> rdf:type owl:NamedIndividual ,
+                                                                                ufokn:CollectionOfFeatures ;
+                                                                       ufokn:hasMember <http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq09e0n1dt> .
+																	   
+### http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq09e0n1dt
+<http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq09e0n1dt> rdf:type owl:NamedIndividual ,
+                                                                          ufokn:FeatureAtRisk ;
+                                                                     ufokn:hasAddress <http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq09e0n1dt> ;
+                                                                     ufokn:hasRiskPoint <http://schema.ufokn.org/example2012-12-16/RiskPoint/UFOKN-dq09e0n1dt> ;
+                                                                     ufokn:ms_id "dq09e0n1dt" ;
+                                                                     ufokn:key "None" ;
+                                                                     ufokn:oa_id "000ceb17dfafd634" ;
+                                                                     ufokn:fromDataSource ufokn:MSdataSource, ufokn:OAdataSource ;
+                                                                     ufokn:value "None" .                                                                                                                          
+###  http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq09e0n1dt
+<http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq09e0n1dt> rdf:type owl:NamedIndividual ,
+                                                                          ufokn:StreetAddress ;
+                                                                 ufokn:street "MISSISSIPPI AVENUE" ;
+																 ufokn:streetNumber "800";
+                                                                 ufokn:city "" ; # this can be extracted from postal code
+                                                                 ufokn:region "" ; # this can be extracted from postal code
+                                                                 ufokn:state "";# this can be extracted from postal code
+                                                                 ufokn:postcode "28428".
+
+
+###  http://schema.ufokn.org/example2012-12-16/RiskPoint/UFOKN-dq09e0n1dt
+<http://schema.ufokn.org/example2012-12-16/RiskPoint/UFOKN-dq09e0n1dt> rdf:type owl:NamedIndividual ,
+																			ufokn:RiskPoint ;
+                                                                   <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1648746 1373964)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+                                                                               
+###  http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq09e0n1dt
+<http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq09e0n1dt> rdf:type owl:NamedIndividual .
+
+###  http://schema.ufokn.org/example2012-12-16/CollectionOfFeatures/UFOKN-dq0dk3bp96
+<http://schema.ufokn.org/example2012-12-16/CollectionOfFeatures/UFOKN-dq0dk3bp96> rdf:type owl:NamedIndividual ,
+                                                                                ufokn:CollectionOfFeatures ;
+                                                                       ufokn:hasMember <http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq0dk3bp96-1> ,
+																	   <http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq0dk3bp96-2> ; # add members for each unit, adjust the id to make them unique; here just an example
+																	   ufokn:hasAddress <http://schema.ufokn.org/example2012-12-16/AddressUFOKN-dq0dk3bp96> .# need to add an address to each CollectionOfFeatures
+																	   
+###  http://schema.ufokn.org/ufokn-core/v2/FeatureAtRisk/UFOKN-dq0dk3bp96-1 # adjusted to reflect the example
+<http://schema.ufokn.org/ufokn-core/v2/FeatureAtRisk/UFOKN-dq0dk3bp96-1> rdf:type owl:NamedIndividual ,
+                                                                              ufokn:FeatureAtRisk ;
+                                                                     ufokn:hasAddress <http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq0dk3bp96> ;
+                                                                     ufokn:hasRiskPoint <http://schema.ufokn.org/example2012-12-16/RiskPoint/UFOKN-dq0dk3bp96> ;
+                                                                     ufokn:ms_id "dq0dk3bp96" ;
+                                                                     ufokn:key "None" ;
+                                                                     ufokn:oa_id "001299ad8064bc54" ;
+                                                                     ufokn:fromDataSource ufokn:MSdataSource, ufokn:OAdataSource ;
+                                                                     ufokn:value "None" .                                                                                                                          
+###  http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq0dk3bp96
+<http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq0dk3bp96> rdf:type owl:NamedIndividual ,
+                                                                                      ufokn:StreetAddress ; # a collection has a streetAddress, which is the same as the streetAddress referred to by all its units
+                                                                             ufokn:street "TRAILS END ROAD" ; # need to combine number, street, and items from units (if available)
+																			 ufokn:streetNumber "440" ;
+                                                                             ufokn:postcode "28409".
+
+                          
+###  http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq0dk3bp96-1
+<http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq0dk3bp96-1> rdf:type owl:NamedIndividual ,
+                                                                                      ufokn:UnitAddress ; # unit address which points to the street address and adds a unit number 
+                                                                             ufokn:hasStreetAddress <http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq0dk3bp96> ; 
+                                                                             ufokn:unitNumber "101".
+
+
+###  http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/RiskPoint/UFOKN-dq0dk3bp96
+<http://schema.ufokn.org/example2012-12-16/RiskPoint/UFOKN-dq0dk3bp96> rdf:type owl:NamedIndividual ,
+                                                                                        ufokn:RiskPoint ;
+                                                                               <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1649923 1390408)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+                                                     
+### This seems to be a duplicate													 
+###  http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq0dk3bp96
+<http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq0dk3bp96> rdf:type owl:NamedIndividual .
+
+
