@@ -2,14 +2,11 @@
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
     <uri id="Imports Wizard Entry" name="http://schema.ufokn.org/features-at-risk/v1/" uri="https://raw.githubusercontent.com/UFOKN/Knowledge-Graph/master/ontologies/ufokn-features.ttl"/>
     <uri id="User Entered Import Resolution" name="http://schema.ufokn.org/geo/v1/" uri="https://raw.githubusercontent.com/UFOKN/Knowledge-Graph/master/ontologies/ufokn-geo.ttl"/>
-    <uri id="User Entered Import Resolution" name="http://schema.ufokn.org/core/v1/" uri="https://raw.githubusercontent.com/UFOKN/Knowledge-Graph/master/ontologies/ufokn-core.ttl"/>
+    <uri id="User Entered Import Resolution" name="http://schema.ufokn.org/core/v1/" uri="https://raw.githubusercontent.com/UFOKN/Knowledge-Graph/master/ontologies/v1/ufokn-core.ttl"/>
     <uri id="User Entered Import Resolution" name="http://schema.ufokn.org/utility-connection/v1/" uri="https://raw.githubusercontent.com/UFOKN/Knowledge-Graph/master/ontologies/ufokn-utility-connection.ttl"/>
-
-    <uri id="Imports Wizard Entry" name="http://schema.ufokn.org/pattern/agent/" uri="https://raw.githubusercontent.com/UFOKN/Knowledge-Graph/master/ontologies/patterns/agent.owl"/>
-    <uri id="Identifier" name="http://schema.ufokn.org/pattern/identifier/" uri="https://raw.githubusercontent.com/UFOKN/Knowledge-Graph/master/ontologies/patterns/identifier.owl"/>
-    
-	<uri id="OWL-Time" name="http://www.w3.org/2006/time#2016" uri="http://www.w3.org/2006/time"/>
-    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">     
-        <uri id="Automatically generated entry, Timestamp=1620638591932" name="http://www.w3.org/ns/sosa/" uri="sosa.rdf"/>
+    <uri id="OWL-Time" name="http://www.w3.org/2006/time#2016" uri="http://www.w3.org/2006/time"/>
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
+        <uri id="Automatically generated entry, Timestamp=1625682996815" name="http://schema.ufokn.org/geo/v1/" uri="ufokn-geo.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1625682996815" name="http://www.w3.org/ns/sosa/" uri="sosa.rdf"/>
     </group>
 </catalog>
