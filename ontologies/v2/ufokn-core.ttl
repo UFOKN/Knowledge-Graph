@@ -131,7 +131,7 @@ ufokn:hasUnitAddress rdf:type owl:ObjectProperty ;
 
 ###  http://schema.ufokn.org/ufokn-features/v2/hasStreetAddress
 # any FeatureAtRisk as well as a UnitAddress can have a streetAddress
-ufokn:hasStretAddress rdf:type owl:ObjectProperty ;
+ufokn:hasStreetAddress rdf:type owl:ObjectProperty ;
 			rdfs:subPropertyOf ufokn:hasAddress ;
 			rdfs:domain _:FeatureAtRiskOrUnitAddress ; 
 			rdfs:range ufokn:StreetAddress .
