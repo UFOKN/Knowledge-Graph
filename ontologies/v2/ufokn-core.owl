@@ -1,0 +1,779 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://schema.ufokn.org/core/"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://schema.ufokn.org/core/"
+     versionIRI="http://schema.ufokn.org/core/v2/">
+    <Prefix name="" IRI="http://schema.ufokn.org/ufokn-core/v2/"/>
+    <Prefix name="geo" IRI="http://www.opengis.net/spec/geosparql/1.0/"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Prefix name="sosa" IRI="http://www.w3.org/ns/sosa/"/>
+    <Prefix name="time" IRI="http://www.w3.org/2006/time#"/>
+    <Prefix name="ufokn" IRI="http://schema.ufokn.org/ufokn-core/v2/"/>
+    <Prefix name="dcterms" IRI="http://purl.org/dc/terms/"/>
+    <Prefix name="ufokn-geo" IRI="http://schema.ufokn.org/geo/v1/"/>
+    <Import>http://schema.ufokn.org/geo/v1/</Import>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:created"/>
+        <Literal xml:lang="en-us">2021-12-15</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:creator"/>
+        <IRI>http://orcid.org/0000-0002-5331-5052</IRI>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:creator"/>
+        <IRI>http://orcid.org/0000-0003-4486-9448</IRI>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:description"/>
+        <Literal xml:lang="en-us">Part of the UFOKN ontology for describing infrastructure at risk due to flooding events.</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:issued"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#date">2021-12-15</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:modified"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#date">2021-12-15</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:publisher"/>
+        <IRI>http://ufokn.org</IRI>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:source"/>
+        <Literal datatypeIRI="xsd:anyURI">https://github.com/UFOKN/Knowledge-Graph/ontologies/v2/ufokn-core.owl</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dcterms:title"/>
+        <Literal xml:lang="en-us">Core of the UFOKN Ontology</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <Literal xml:lang="en-us">Risk points and events of the UFOKN Ontology</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="owl:versionInfo"/>
+        <Literal xml:lang="en-us">2</Literal>
+    </Annotation>
+    <Declaration>
+        <Class abbreviatedIRI="ufokn:Address"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="ufokn:CollectionOfFeatures"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="ufokn:DataSource"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="ufokn:FeatureAtRisk"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="ufokn:FeatureAtRiskInCollection"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="ufokn:IndividualFeatureAtRisk"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="ufokn:RegionOfInterest"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="ufokn:RelativeRiskPointLocation"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="ufokn:RiskPoint"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="ufokn:StreetAddress"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="ufokn:UnitAddress"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="geo:Feature"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="geo:Geometry"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="geo:Point"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="ufokn:comid"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="ufokn:fromDataSource"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="ufokn:hasAddress"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="ufokn:hasMember"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="ufokn:hasRelativeRiskPointLocation"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="ufokn:hasStretAddress"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="ufokn:hasUnitAddress"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="ufokn:isMemberOf"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="ufokn:locationForRiskPoint"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="geo:hasGeometry"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="sosa:hasFeatureOfInterest"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:areaSize"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:city"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:country"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:criticalDepth"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:dataSourceUri"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:district"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:heightAboveNearestDrainage"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:id"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:key"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:ms_id"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:oa_id"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:osm_id"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:postcode"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:region"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:secondAddressLine"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:state"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:street"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:streetNumber"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:unitCount"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:unitNumber"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="ufokn:value"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcterms:created"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcterms:creator"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcterms:description"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcterms:issued"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcterms:modified"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcterms:publisher"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcterms:source"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcterms:title"/>
+    </Declaration>
+    <Declaration>
+        <Datatype abbreviatedIRI="ufokn:depth"/>
+    </Declaration>
+    <Declaration>
+        <Datatype abbreviatedIRI="ufokn:elevation"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="ufokn:MSdataSource"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="ufokn:OSMdataSource"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="ufokn:OAdataSource"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="sosa:FeatureOfInterest"/>
+    </Declaration>
+    <EquivalentClasses>
+        <Class abbreviatedIRI="ufokn:IndividualFeatureAtRisk"/>
+        <ObjectIntersectionOf>
+            <Class abbreviatedIRI="ufokn:FeatureAtRisk"/>
+            <ObjectMaxCardinality cardinality="0">
+                <ObjectProperty abbreviatedIRI="ufokn:isMemberOf"/>
+            </ObjectMaxCardinality>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class abbreviatedIRI="ufokn:UnitAddress"/>
+        <ObjectIntersectionOf>
+            <Class abbreviatedIRI="ufokn:Address"/>
+            <DataMinCardinality cardinality="1">
+                <DataProperty abbreviatedIRI="ufokn:unitNumber"/>
+            </DataMinCardinality>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:CollectionOfFeatures"/>
+        <Class abbreviatedIRI="ufokn:FeatureAtRisk"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:CollectionOfFeatures"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty abbreviatedIRI="ufokn:hasMember"/>
+            <Class abbreviatedIRI="ufokn:FeatureAtRisk"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:CollectionOfFeatures"/>
+        <ObjectMinCardinality cardinality="2">
+            <ObjectProperty abbreviatedIRI="ufokn:hasMember"/>
+            <Class abbreviatedIRI="ufokn:FeatureAtRisk"/>
+        </ObjectMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:DataSource"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:DataSource"/>
+        <DataSomeValuesFrom>
+            <DataProperty abbreviatedIRI="ufokn:dataSourceUri"/>
+            <Datatype abbreviatedIRI="xsd:anyURI"/>
+        </DataSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:FeatureAtRisk"/>
+        <Class abbreviatedIRI="geo:Feature"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:FeatureAtRiskInCollection"/>
+        <Class abbreviatedIRI="ufokn:FeatureAtRisk"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:FeatureAtRiskInCollection"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty abbreviatedIRI="ufokn:isMemberOf"/>
+            <Class abbreviatedIRI="ufokn:CollectionOfFeatures"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:FeatureAtRiskInCollection"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty abbreviatedIRI="ufokn:hasAddress"/>
+            <Class abbreviatedIRI="ufokn:UnitAddress"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:IndividualFeatureAtRisk"/>
+        <Class abbreviatedIRI="ufokn:FeatureAtRisk"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:IndividualFeatureAtRisk"/>
+        <ObjectMaxCardinality cardinality="0">
+            <ObjectProperty abbreviatedIRI="ufokn:hasMember"/>
+        </ObjectMaxCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:RegionOfInterest"/>
+        <Class abbreviatedIRI="geo:Feature"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:RegionOfInterest"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty abbreviatedIRI="geo:hasGeometry"/>
+            <Class abbreviatedIRI="geo:Polygon"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:RegionOfInterest"/>
+        <ObjectExactCardinality cardinality="1">
+            <ObjectProperty abbreviatedIRI="geo:hasGeometry"/>
+            <Class abbreviatedIRI="geo:Polygon"/>
+        </ObjectExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:RelativeRiskPointLocation"/>
+        <ObjectMinCardinality cardinality="1">
+            <ObjectProperty abbreviatedIRI="ufokn:locationForRiskPoint"/>
+            <Class abbreviatedIRI="ufokn:RiskPoint"/>
+        </ObjectMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:RiskPoint"/>
+        <Class abbreviatedIRI="geo:Feature"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:RiskPoint"/>
+        <Class abbreviatedIRI="sosa:FeatureOfInterest"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:RiskPoint"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty abbreviatedIRI="geo:hasGeometry"/>
+            <Class abbreviatedIRI="geo:Point"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:RiskPoint"/>
+        <ObjectExactCardinality cardinality="1">
+            <ObjectProperty abbreviatedIRI="geo:hasGeometry"/>
+            <Class abbreviatedIRI="geo:Point"/>
+        </ObjectExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:StreetAddress"/>
+        <Class abbreviatedIRI="ufokn:Address"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:StreetAddress"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty abbreviatedIRI="ufokn:postcode"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:StreetAddress"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty abbreviatedIRI="ufokn:street"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:StreetAddress"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty abbreviatedIRI="ufokn:unitCount"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:UnitAddress"/>
+        <Class abbreviatedIRI="ufokn:Address"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:UnitAddress"/>
+        <DataHasValue>
+            <DataProperty abbreviatedIRI="ufokn:unitCount"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</Literal>
+        </DataHasValue>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="ufokn:UnitAddress"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty abbreviatedIRI="ufokn:unitNumber"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="geo:Point"/>
+        <Class abbreviatedIRI="geo:Geometry"/>
+    </SubClassOf>
+    <DisjointClasses>
+        <Class abbreviatedIRI="ufokn-geo:SpatialReferenceSystem"/>
+        <Class abbreviatedIRI="ufokn:Address"/>
+        <Class abbreviatedIRI="ufokn:DataSource"/>
+        <Class abbreviatedIRI="ufokn:RelativeRiskPointLocation"/>
+        <Class abbreviatedIRI="geo:Feature"/>
+        <Class abbreviatedIRI="geo:Geometry"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class abbreviatedIRI="ufokn:CollectionOfFeatures"/>
+        <Class abbreviatedIRI="ufokn:FeatureAtRiskInCollection"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class abbreviatedIRI="ufokn:CollectionOfFeatures"/>
+        <Class abbreviatedIRI="ufokn:IndividualFeatureAtRisk"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class abbreviatedIRI="ufokn:DataSource"/>
+        <Class abbreviatedIRI="geo:Feature"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class abbreviatedIRI="ufokn:DataSource"/>
+        <Class abbreviatedIRI="geo:Geometry"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class abbreviatedIRI="ufokn:FeatureAtRisk"/>
+        <Class abbreviatedIRI="ufokn:RegionOfInterest"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class abbreviatedIRI="ufokn:FeatureAtRisk"/>
+        <Class abbreviatedIRI="ufokn:RegionOfInterest"/>
+        <Class abbreviatedIRI="ufokn:RiskPoint"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class abbreviatedIRI="ufokn:FeatureAtRisk"/>
+        <Class abbreviatedIRI="ufokn:RiskPoint"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class abbreviatedIRI="ufokn:FeatureAtRiskInCollection"/>
+        <Class abbreviatedIRI="ufokn:IndividualFeatureAtRisk"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class abbreviatedIRI="ufokn:RegionOfInterest"/>
+        <Class abbreviatedIRI="ufokn:RiskPoint"/>
+    </DisjointClasses>
+    <ClassAssertion>
+        <Class abbreviatedIRI="ufokn:DataSource"/>
+        <NamedIndividual abbreviatedIRI="ufokn:MSdataSource"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="ufokn:DataSource"/>
+        <NamedIndividual abbreviatedIRI="ufokn:OAdataSource"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="ufokn:DataSource"/>
+        <NamedIndividual abbreviatedIRI="ufokn:OSMdataSource"/>
+    </ClassAssertion>
+    <SubObjectPropertyOf>
+        <ObjectProperty abbreviatedIRI="ufokn:hasStretAddress"/>
+        <ObjectProperty abbreviatedIRI="ufokn:hasAddress"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty abbreviatedIRI="ufokn:hasUnitAddress"/>
+        <ObjectProperty abbreviatedIRI="ufokn:hasAddress"/>
+    </SubObjectPropertyOf>
+    <InverseObjectProperties>
+        <ObjectProperty abbreviatedIRI="ufokn:hasMember"/>
+        <ObjectProperty abbreviatedIRI="ufokn:isMemberOf"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty abbreviatedIRI="ufokn:hasRelativeRiskPointLocation"/>
+        <ObjectProperty abbreviatedIRI="ufokn:locationForRiskPoint"/>
+    </InverseObjectProperties>
+    <FunctionalObjectProperty>
+        <ObjectProperty abbreviatedIRI="ufokn:isMemberOf"/>
+    </FunctionalObjectProperty>
+    <InverseFunctionalObjectProperty>
+        <ObjectProperty abbreviatedIRI="ufokn:hasMember"/>
+    </InverseFunctionalObjectProperty>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="ufokn:fromDataSource"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="ufokn:hasAddress"/>
+        <Class abbreviatedIRI="ufokn:FeatureAtRisk"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="ufokn:hasMember"/>
+        <Class abbreviatedIRI="ufokn:CollectionOfFeatures"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="ufokn:hasRelativeRiskPointLocation"/>
+        <Class abbreviatedIRI="ufokn:RiskPoint"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="ufokn:hasStretAddress"/>
+        <ObjectUnionOf>
+            <Class abbreviatedIRI="ufokn:FeatureAtRisk"/>
+            <Class abbreviatedIRI="ufokn:UnitAddress"/>
+        </ObjectUnionOf>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="ufokn:hasUnitAddress"/>
+        <Class abbreviatedIRI="ufokn:IndividualFeatureAtRisk"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="ufokn:isMemberOf"/>
+        <Class abbreviatedIRI="ufokn:FeatureAtRisk"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="ufokn:fromDataSource"/>
+        <Class abbreviatedIRI="ufokn:DataSource"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="ufokn:hasAddress"/>
+        <Class abbreviatedIRI="ufokn:Address"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="ufokn:hasMember"/>
+        <Class abbreviatedIRI="ufokn:FeatureAtRisk"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="ufokn:hasRelativeRiskPointLocation"/>
+        <Class abbreviatedIRI="ufokn:RelativeRiskPointLocation"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="ufokn:hasStretAddress"/>
+        <Class abbreviatedIRI="ufokn:StreetAddress"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="ufokn:hasUnitAddress"/>
+        <Class abbreviatedIRI="ufokn:UnitAddress"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="ufokn:isMemberOf"/>
+        <Class abbreviatedIRI="ufokn:CollectionOfFeatures"/>
+    </ObjectPropertyRange>
+    <SubDataPropertyOf>
+        <DataProperty abbreviatedIRI="ufokn:ms_id"/>
+        <DataProperty abbreviatedIRI="ufokn:id"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty abbreviatedIRI="ufokn:oa_id"/>
+        <DataProperty abbreviatedIRI="ufokn:id"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty abbreviatedIRI="ufokn:osm_id"/>
+        <DataProperty abbreviatedIRI="ufokn:id"/>
+    </SubDataPropertyOf>
+    <FunctionalDataProperty>
+        <DataProperty abbreviatedIRI="ufokn:areaSize"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty abbreviatedIRI="ufokn:city"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty abbreviatedIRI="ufokn:country"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty abbreviatedIRI="ufokn:district"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty abbreviatedIRI="ufokn:postcode"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty abbreviatedIRI="ufokn:region"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty abbreviatedIRI="ufokn:secondAddressLine"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty abbreviatedIRI="ufokn:state"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty abbreviatedIRI="ufokn:street"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty abbreviatedIRI="ufokn:streetNumber"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty abbreviatedIRI="ufokn:unitCount"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty abbreviatedIRI="ufokn:unitNumber"/>
+    </FunctionalDataProperty>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="ufokn:areaSize"/>
+        <Class abbreviatedIRI="ufokn:Address"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="ufokn:city"/>
+        <Class abbreviatedIRI="ufokn:Address"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="ufokn:country"/>
+        <Class abbreviatedIRI="ufokn:Address"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="ufokn:criticalDepth"/>
+        <Class abbreviatedIRI="ufokn:RiskPoint"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="ufokn:district"/>
+        <Class abbreviatedIRI="ufokn:Address"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="ufokn:heightAboveNearestDrainage"/>
+        <Class abbreviatedIRI="ufokn:RelativeRiskPointLocation"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="ufokn:key"/>
+        <Class abbreviatedIRI="ufokn:FeatureAtRisk"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="ufokn:ms_id"/>
+        <Class abbreviatedIRI="ufokn:FeatureAtRisk"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="ufokn:osm_id"/>
+        <Class abbreviatedIRI="ufokn:FeatureAtRisk"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="ufokn:postcode"/>
+        <Class abbreviatedIRI="ufokn:Address"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="ufokn:region"/>
+        <Class abbreviatedIRI="ufokn:Address"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="ufokn:secondAddressLine"/>
+        <Class abbreviatedIRI="ufokn:Address"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="ufokn:state"/>
+        <Class abbreviatedIRI="ufokn:Address"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="ufokn:street"/>
+        <Class abbreviatedIRI="ufokn:Address"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="ufokn:streetNumber"/>
+        <Class abbreviatedIRI="ufokn:Address"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="ufokn:unitCount"/>
+        <Class abbreviatedIRI="ufokn:Address"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="ufokn:unitNumber"/>
+        <Class abbreviatedIRI="ufokn:UnitAddress"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="ufokn:value"/>
+        <Class abbreviatedIRI="ufokn:FeatureAtRisk"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:areaSize"/>
+        <Datatype abbreviatedIRI="xsd:nonNegativeInteger"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:city"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:country"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:criticalDepth"/>
+        <Datatype abbreviatedIRI="ufokn:depth"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:dataSourceUri"/>
+        <Datatype abbreviatedIRI="xsd:anyURI"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:district"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:heightAboveNearestDrainage"/>
+        <Datatype abbreviatedIRI="ufokn:elevation"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:id"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:key"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:ms_id"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:osm_id"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:postcode"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:region"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:secondAddressLine"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:state"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:street"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:streetNumber"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:unitCount"/>
+        <Datatype abbreviatedIRI="xsd:positiveInteger"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:unitNumber"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="ufokn:value"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <AbbreviatedIRI>ufokn:fromDataSource</AbbreviatedIRI>
+        <Literal xml:lang="en">A representation of a data source that contains things like model outputs, spatial features, risk points, or similar.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>ufokn:fromDataSource</AbbreviatedIRI>
+        <Literal xml:lang="en">fromDataSource</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <AbbreviatedIRI>ufokn:hasRelativeRiskPointLocation</AbbreviatedIRI>
+        <Literal xml:lang="en">Relationship between a RiskPoint and its Localication Relative to the Spatial Model used by a Specific Modeling or Observation System. The relative location allows associating different elevations with a RiskPoint based on different spatial interpolation methods.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>ufokn:hasRelativeRiskPointLocation</AbbreviatedIRI>
+        <Literal xml:lang="en">hasRelativeRiskPointLocation</Literal>
+    </AnnotationAssertion>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

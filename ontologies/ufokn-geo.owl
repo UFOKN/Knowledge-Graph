@@ -1,0 +1,367 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://schema.ufokn.org/geo/v1/"
+     xml:base="http://schema.ufokn.org/geo/v1/"
+     xmlns:geo="http://www.opengis.net/spec/geosparql/1.0/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:ufokn="http://schema.ufokn.org/core/v1/"
+     xmlns:dcterms="http://purl.org/dc/terms/"
+     xmlns:ufokn-geo="http://schema.ufokn.org/geo/v1/">
+    <owl:Ontology rdf:about="http://schema.ufokn.org/geo/v1/">
+        <owl:versionIRI rdf:resource="http://schema.ufokn.org/geo/v1/"/>
+        <dcterms:created xml:lang="en-us">2020-02-04</dcterms:created>
+        <dcterms:creator rdf:resource="http://orcid.org/0000-0002-5331-5052"/>
+        <dcterms:description xml:lang="en-us">Part of the UFOKN ontology for describing features and their geometry.</dcterms:description>
+        <dcterms:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2020-02-04</dcterms:issued>
+        <dcterms:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2020-02-20</dcterms:modified>
+        <dcterms:publisher rdf:resource="http://ufokn.org"/>
+        <dcterms:source rdf:datatype="xsd:anyURI">https://github.com/UFOKN/Knowledge-Graph/ontologies/ufokn-geo.owl</dcterms:source>
+        <dcterms:title xml:lang="en-us">Spatial part of the UFOKN Ontology</dcterms:title>
+        <rdfs:label xml:lang="en-us">Spatial part of the UFOKN Ontology</rdfs:label>
+        <owl:versionInfo xml:lang="en-us">1</owl:versionInfo>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/created -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/created"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/creator -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/creator"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/description -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/description"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/issued -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/issued"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/modified -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/modified"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/publisher -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/publisher"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/source -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/source"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/title -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/title"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://schema.ufokn.org/geo/v1/hasNode -->
+
+    <owl:ObjectProperty rdf:about="http://schema.ufokn.org/geo/v1/hasNode">
+        <rdfs:subPropertyOf rdf:resource="http://www.opengis.net/spec/geosparql/1.0/sfContains"/>
+        <rdfs:domain rdf:resource="http://www.opengis.net/spec/geosparql/1.0/Geometry"/>
+        <rdfs:range rdf:resource="http://www.opengis.net/spec/geosparql/1.0/Point"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://schema.ufokn.org/geo/v1/spatialRS -->
+
+    <owl:ObjectProperty rdf:about="http://schema.ufokn.org/geo/v1/spatialRS">
+        <rdfs:domain rdf:resource="http://www.opengis.net/spec/geosparql/1.0/Geometry"/>
+        <rdfs:range rdf:resource="http://schema.ufokn.org/geo/v1/SpatialReferenceSystem"/>
+        <rdfs:comment xml:lang="en">The spatial reference system used to specify the geometry.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/spec/geosparql/1.0/"/>
+        <rdfs:label xml:lang="en">spatialRS</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.opengis.net/spec/geosparql/1.0/hasGeometry -->
+
+    <owl:ObjectProperty rdf:about="http://www.opengis.net/spec/geosparql/1.0/hasGeometry">
+        <rdfs:domain rdf:resource="http://www.opengis.net/spec/geosparql/1.0/Feature"/>
+        <rdfs:range rdf:resource="http://www.opengis.net/spec/geosparql/1.0/Geometry"/>
+        <rdfs:comment xml:lang="en">A spatial representation for a given feature.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/spec/geosparql/1.0/"/>
+        <rdfs:label xml:lang="en">has Geometry</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.opengis.net/spec/geosparql/1.0/hasPatch -->
+
+    <owl:ObjectProperty rdf:about="http://www.opengis.net/spec/geosparql/1.0/hasPatch">
+        <owl:inverseOf rdf:resource="http://www.opengis.net/spec/geosparql/1.0/patchOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.opengis.net/spec/geosparql/1.0/patchOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.opengis.net/spec/geosparql/1.0/patchOf">
+        <rdfs:domain rdf:resource="http://www.opengis.net/spec/geosparql/1.0/Polygon"/>
+        <rdfs:range rdf:resource="http://www.opengis.net/spec/geosparql/1.0/PolyedralSurface"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.opengis.net/spec/geosparql/1.0/sfContains -->
+
+    <owl:ObjectProperty rdf:about="http://www.opengis.net/spec/geosparql/1.0/sfContains">
+        <rdfs:domain rdf:resource="http://www.opengis.net/spec/geosparql/1.0/SpatialObject"/>
+        <rdfs:range rdf:resource="http://www.opengis.net/spec/geosparql/1.0/SpatialObject"/>
+        <rdfs:comment xml:lang="en">The contains relation from Simple Features.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/spec/geosparql/1.0/"/>
+        <rdfs:label xml:lang="en">sfContains</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.opengis.net/spec/geosparql/1.0/sfWithin -->
+
+    <owl:ObjectProperty rdf:about="http://www.opengis.net/spec/geosparql/1.0/sfWithin">
+        <rdfs:domain rdf:resource="http://www.opengis.net/spec/geosparql/1.0/SpatialObject"/>
+        <rdfs:range rdf:resource="http://www.opengis.net/spec/geosparql/1.0/SpatialObject"/>
+        <rdfs:comment xml:lang="en">The within relation from Simple Features.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/spec/geosparql/1.0/"/>
+        <rdfs:label xml:lang="en">sfWithin</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.opengis.net/spec/geosparql/1.0/wktLiteral -->
+
+    <owl:DatatypeProperty rdf:about="http://www.opengis.net/spec/geosparql/1.0/wktLiteral">
+        <rdfs:comment xml:lang="en">A Well-known Text serialization of a geometry object.</rdfs:comment>
+        <rdfs:label xml:lang="en">Well-known Text Literal</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://schema.ufokn.org/geo/v1/SpatialReferenceSystem -->
+
+    <owl:Class rdf:about="http://schema.ufokn.org/geo/v1/SpatialReferenceSystem">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <owl:disjointWith rdf:resource="http://www.opengis.net/spec/geosparql/1.0/SpatialObject"/>
+        <rdfs:comment xml:lang="en">The class represents a type of Spatial Reference Systems (SRS). It is intended to be instantiated by individuals that represent concrete SRS.</rdfs:comment>
+        <rdfs:label xml:lang="en">SpatialReferenceSystem</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/spec/geosparql/1.0/Curve -->
+
+    <owl:Class rdf:about="http://www.opengis.net/spec/geosparql/1.0/Curve">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/spec/geosparql/1.0/Geometry"/>
+        <rdfs:comment xml:lang="en">A geometry of dimension 1</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/spec/geosparql/1.0/"/>
+        <rdfs:label xml:lang="en">Curve</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/spec/geosparql/1.0/Feature -->
+
+    <owl:Class rdf:about="http://www.opengis.net/spec/geosparql/1.0/Feature">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/spec/geosparql/1.0/SpatialObject"/>
+        <owl:disjointWith rdf:resource="http://www.opengis.net/spec/geosparql/1.0/Geometry"/>
+        <rdfs:comment xml:lang="en">The class represents the top-level type of features located in space that are not abstract geometric.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/spec/geosparql/1.0/"/>
+        <rdfs:label xml:lang="en">Feature</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/spec/geosparql/1.0/Geometry -->
+
+    <owl:Class rdf:about="http://www.opengis.net/spec/geosparql/1.0/Geometry">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/spec/geosparql/1.0/SpatialObject"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://schema.ufokn.org/geo/v1/spatialRS"/>
+                <owl:allValuesFrom rdf:resource="http://schema.ufokn.org/geo/v1/SpatialReferenceSystem"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://schema.ufokn.org/geo/v1/spatialRS"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onClass rdf:resource="http://schema.ufokn.org/geo/v1/SpatialReferenceSystem"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">The class represents the top-level geometry type. This class is equivalent to the UML class GM_Object defined in ISO 19107, and it is superclass of all geometry types.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/spec/geosparql/1.0/"/>
+        <rdfs:label xml:lang="en">Geometry</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/spec/geosparql/1.0/Point -->
+
+    <owl:Class rdf:about="http://www.opengis.net/spec/geosparql/1.0/Point">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/spec/geosparql/1.0/Geometry"/>
+        <owl:disjointWith rdf:resource="http://www.opengis.net/spec/geosparql/1.0/Surface"/>
+        <rdfs:comment xml:lang="en">A single point as a geometry of dimension 0</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/spec/geosparql/1.0/"/>
+        <rdfs:label xml:lang="en">Point</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/spec/geosparql/1.0/PolyedralSurface -->
+
+    <owl:Class rdf:about="http://www.opengis.net/spec/geosparql/1.0/PolyedralSurface">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/spec/geosparql/1.0/Surface"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.opengis.net/spec/geosparql/1.0/hasPatch"/>
+                <owl:someValuesFrom rdf:resource="http://www.opengis.net/spec/geosparql/1.0/Surface"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">A polyhedral surface as agglomeration of polygon patches</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/spec/geosparql/1.0/"/>
+        <rdfs:label xml:lang="en">Polyhedral Surface</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/spec/geosparql/1.0/Polygon -->
+
+    <owl:Class rdf:about="http://www.opengis.net/spec/geosparql/1.0/Polygon">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/spec/geosparql/1.0/Surface"/>
+        <rdfs:comment xml:lang="en">A planar surface defined by 1 exterior boundary and 0 or
+more interior boundaries</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/spec/geosparql/1.0/"/>
+        <rdfs:label xml:lang="en">Polygon</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/spec/geosparql/1.0/SpatialObject -->
+
+    <owl:Class rdf:about="http://www.opengis.net/spec/geosparql/1.0/SpatialObject">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/spec/geosparql/1.0/"/>
+        <rdfs:label xml:lang="en">SpatialObject</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/spec/geosparql/1.0/Surface -->
+
+    <owl:Class rdf:about="http://www.opengis.net/spec/geosparql/1.0/Surface">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/spec/geosparql/1.0/Geometry"/>
+        <rdfs:comment xml:lang="en">A surface as a 2-dimensional spatial geometry</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/spec/geosparql/1.0/"/>
+        <rdfs:label xml:lang="en">Surface</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opengis.net/spec/geosparql/1.0/Triangle -->
+
+    <owl:Class rdf:about="http://www.opengis.net/spec/geosparql/1.0/Triangle">
+        <rdfs:subClassOf rdf:resource="http://www.opengis.net/spec/geosparql/1.0/Polygon"/>
+        <rdfs:comment xml:lang="en">A triangle as a polygon that has three nodes</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/spec/geosparql/1.0/"/>
+        <rdfs:label xml:lang="en">Triangle</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://schema.ufokn.org/geo/v1/SRS_CRS84 -->
+
+    <owl:NamedIndividual rdf:about="http://schema.ufokn.org/geo/v1/SRS_CRS84">
+        <rdf:type rdf:resource="http://schema.ufokn.org/geo/v1/SpatialReferenceSystem"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/def/crs/OGC/1.3/CRS84"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://schema.ufokn.org/geo/v1/SRS_EPGS-4326 -->
+
+    <owl:NamedIndividual rdf:about="http://schema.ufokn.org/geo/v1/SRS_EPGS-4326">
+        <rdf:type rdf:resource="http://schema.ufokn.org/geo/v1/SpatialReferenceSystem"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.opengis.net/def/crs/EPSG/0/4326"/>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

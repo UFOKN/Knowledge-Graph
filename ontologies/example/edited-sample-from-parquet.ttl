@@ -33,7 +33,7 @@
                                                                           ufokn:CollectionOfFeatures ; 
                                                                  ufokn:hasMember </http://schema.ufokn.org/ufokn-core/v2/FeatureAtRisk/UFOKN-dq0dtevjev> . # do not create a collection if it just has a single member; instead just create the FeatureAtRisk directly.
 																 
-###  http://schema.ufokn.org/example2012-12-16/CollectionOfFeatures/FeatureAtRisk/UFOKN-dq0dtevjev
+###  http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq0dtevjev
 <http://schema.ufokn.org/example2012-12-16/FeatureAtRisk#UFOKN-dq0dtevjev> rdf:type owl:NamedIndividual ,
                                                                               ufokn:FeatureAtRisk ;
                                                                      ufokn:hasAddress <http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq0dtevjev> ;
@@ -99,14 +99,14 @@
 ###  http://schema.ufokn.org/example2012-12-16/CollectionOfFeatures/UFOKN-dq0dk3bp96
 <http://schema.ufokn.org/example2012-12-16/CollectionOfFeatures/UFOKN-dq0dk3bp96> rdf:type owl:NamedIndividual ,
                                                                                 ufokn:CollectionOfFeatures ;
-                                                                       ufokn:hasMember <http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq0dk3bp96-1> ,
-																	   <http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq0dk3bp96-2> ; # add members for each unit, adjust the id to make them unique; here just an example
+                                                                       ufokn:hasMember <http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq0dk3bp96/1> ,
+																	   <http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq0dk3bp96/2> ; # add members for each unit, adjust the id to make them unique; here just an example
 																	   ufokn:hasAddress <http://schema.ufokn.org/example2012-12-16/AddressUFOKN-dq0dk3bp96> .# need to add an address to each CollectionOfFeatures
 																	   
-###  http://schema.ufokn.org/ufokn-core/v2/FeatureAtRisk/UFOKN-dq0dk3bp96-1 # adjusted to reflect the example
-<http://schema.ufokn.org/ufokn-core/v2/FeatureAtRisk/UFOKN-dq0dk3bp96-1> rdf:type owl:NamedIndividual ,
+###  http://schema.ufokn.org/ufokn-core/v2/FeatureAtRisk/UFOKN-dq0dk3bp96/1 # adjusted to reflect the example
+<http://schema.ufokn.org/ufokn-core/v2/FeatureAtRisk/UFOKN-dq0dk3bp96/1> rdf:type owl:NamedIndividual ,
                                                                               ufokn:FeatureAtRisk ;
-                                                                     ufokn:hasAddress <http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq0dk3bp96> ;
+                                                                     ufokn:hasAddress <http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq0dk3bp96/1> ;
                                                                      ufokn:hasRiskPoint <http://schema.ufokn.org/example2012-12-16/RiskPoint/UFOKN-dq0dk3bp96> ;
                                                                      ufokn:ms_id "dq0dk3bp96" ;
                                                                      ufokn:key "None" ;
@@ -121,8 +121,8 @@
                                                                              ufokn:postcode "28409".
 
                           
-###  http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq0dk3bp96-1
-<http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq0dk3bp96-1> rdf:type owl:NamedIndividual ,
+###  http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq0dk3bp96/1
+<http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq0dk3bp96/1> rdf:type owl:NamedIndividual ,
                                                                                       ufokn:UnitAddress ; # unit address which points to the street address and adds a unit number 
                                                                              ufokn:hasStreetAddress <http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq0dk3bp96> ; 
                                                                              ufokn:unitNumber "101".
