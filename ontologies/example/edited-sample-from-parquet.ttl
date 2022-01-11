@@ -27,14 +27,15 @@
                                     owl:versionInfo "1"@en-us .
 
 
-
-###  http://schema.ufokn.org/example2012-12-16/CollectionOfFeatures#UFOKN-dq0dtevjev
-<http://schema.ufokn.org/example2012-12-16/CollectionOfFeatures#UFOKN-dq0dtevjev> rdf:type owl:NamedIndividual ,
-                                                                          ufokn:CollectionOfFeatures ; 
-                                                                 ufokn:hasMember </http://schema.ufokn.org/ufokn-core/v2/FeatureAtRisk/UFOKN-dq0dtevjev> . # do not create a collection if it just has a single member; instead just create the FeatureAtRisk directly.
+### This is a single-member collection: it does not need to be created;
+### instead create only the FeatureAtRisk: http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq0dtevjev
+###  http://schema.ufokn.org/example2012-12-16/CollectionOfFeatures/UFOKN-dq0dtevjev
+### <http://schema.ufokn.org/example2012-12-16/CollectionOfFeatures/UFOKN-dq0dtevjev> rdf:type owl:NamedIndividual ,
+###                       fokn:CollectionOfFeatures ; 
+###                       ufokn:hasMember </http://schema.ufokn.org/ufokn-core/v2/FeatureAtRisk/UFOKN-dq0dtevjev> . 
 																 
 ###  http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq0dtevjev
-<http://schema.ufokn.org/example2012-12-16/FeatureAtRisk#UFOKN-dq0dtevjev> rdf:type owl:NamedIndividual ,
+<http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq0dtevjev> rdf:type owl:NamedIndividual ,
                                                                               ufokn:FeatureAtRisk ;
                                                                      ufokn:hasAddress <http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq0dtevjev> ;
                                                                      ufokn:hasRiskPoint <http://schema.ufokn.org/example2012-12-16/RiskPoint/UFOKN-dq0dtevjev> ;
@@ -47,7 +48,7 @@
 ###  http://schema.ufokn.org/example2012-12-16/Address/UFOKN-dq0dtevjev
 <http://schema.ufokn.org/example2012-12-16/UFOKN-dq0dtevjev> rdf:type owl:NamedIndividual ,
                                                                           ufokn:Address ; 
-                                                                ufokn:street "102" ; # need to combine number, street, and items from units (if available)
+                                                                ufokn:street "NORTH CHANNEL DRIVE" ; # need to combine number, street, and items from units (if available)
 																ufokn:streetNumber "102" ;
                                                                 ufokn:state "";# this can be extracted from postal code
                                                                 ufokn:postcode "28480" ;
@@ -58,15 +59,15 @@
 <http://schema.ufokn.org/example2012-12-16/RiskPoint/UFOKN-dq0dtevjev> rdf:type owl:NamedIndividual ,
                                                                             ufokn:RiskPoint ;
                                                                    <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654323 1397477)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
-                                                                               
-###  http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq0dtevjev
-<http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq0dtevjev> rdf:type owl:NamedIndividual .
-
-###  http://schema.ufokn.org/ufokn-core/v2/CollectionOfFeatures/UFOKN-dq09e0n1dt
-<http://schema.ufokn.org/ufokn-core/v2/CollectionOfFeatures/UFOKN-dq09e0n1dt> rdf:type owl:NamedIndividual ,
-                                                                                ufokn:CollectionOfFeatures ;
-                                                                       ufokn:hasMember <http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq09e0n1dt> .
-																	   
+					
+### This is a single-member collection: it does not need to be created;
+### instead create only the FeatureAtRisk: http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq09e0n1dt
+### http://schema.ufokn.org/ufokn-core/v2/CollectionOfFeatures/UFOKN-dq09e0n1dt
+###<http://schema.ufokn.org/ufokn-core/v2/CollectionOfFeatures/UFOKN-dq09e0n1dt> rdf:type owl:NamedIndividual ,
+###             ufokn:CollectionOfFeatures ;
+###             ufokn:hasMember <http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq09e0n1dt> .
+			
+			
 ### http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq09e0n1dt
 <http://schema.ufokn.org/example2012-12-16/FeatureAtRisk/UFOKN-dq09e0n1dt> rdf:type owl:NamedIndividual ,
                                                                           ufokn:FeatureAtRisk ;
