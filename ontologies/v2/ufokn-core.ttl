@@ -143,7 +143,7 @@ ufokn:hasStreetAddress rdf:type owl:ObjectProperty ;
 ufokn:hasMember rdf:type owl:ObjectProperty ;
 			rdf:type owl:InverseFunctionalProperty ;
 			rdfs:domain ufokn:CollectionOfFeatures ;
-			rdfs:range ufokn:FeatureAtRisk .
+			rdfs:range ufokn:IndividualFeatureAtRisk .
 
 
 ###  http://schema.ufokn.org/ufokn-features/v2/isMemberOf
@@ -192,12 +192,6 @@ ufokn:streetNumber rdf:type owl:DatatypeProperty ;
 
 ###  http://schema.ufokn.org/core/v2/secondAddressLine
 ufokn:secondAddressLine rdf:type owl:DatatypeProperty ;
-				rdf:type owl:FunctionalProperty ;
-				rdfs:domain ufokn:Address ;
-				rdfs:range xsd:string . 
-
-###  http://schema.ufokn.org/core/v2/district
-ufokn:district rdf:type owl:DatatypeProperty ;
 				rdf:type owl:FunctionalProperty ;
 				rdfs:domain ufokn:Address ;
 				rdfs:range xsd:string . 
