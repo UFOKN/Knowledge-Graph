@@ -1,14 +1,12 @@
-@prefix : <http://schema.ufokn.org/geo/v2/> .
-@prefix sf: <http://www.opengis.net/ont/geosparql#> .
-@prefix geo: <http://www.opengis.net/spec/geosparql#> .
+@prefix ufokn: <http://schema.ufokn.org/core/v1/> .
+@prefix ufokn-geo: <http://schema.ufokn.org/geo/v2/> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ufokn: <http://schema.ufokn.org/core/v1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix ufokn-geo: <http://schema.ufokn.org/geo/v2/> .
 @base <http://schema.ufokn.org/geo/v2/> .
 
 <http://schema.ufokn.org/geo/v2/> rdf:type owl:Ontology ;
@@ -151,7 +149,7 @@ ufokn-geo:SpatialReferenceSystem rdf:type owl:Class ;
                                  rdfs:label "SpatialReferenceSystem"@en .
 
 
-###  http://www.opengis.net/ont/geosparql#/Curve
+###  http://www.opengis.net/ont/geosparql#Curve
 geo:Curve rdf:type owl:Class ;
           rdfs:subClassOf geo:Geometry ;
           rdfs:comment "A geometry of dimension 1"@en ;
@@ -159,7 +157,7 @@ geo:Curve rdf:type owl:Class ;
           rdfs:label "Curve"@en .
 
 
-###  http://www.opengis.net/ont/geosparql#/Feature
+###  http://www.opengis.net/ont/geosparql#Feature
 geo:Feature rdf:type owl:Class ;
             rdfs:subClassOf geo:SpatialObject ;
             owl:disjointWith geo:Geometry ;
@@ -168,7 +166,7 @@ geo:Feature rdf:type owl:Class ;
             rdfs:label "Feature"@en .
 
 
-###  http://www.opengis.net/ont/geosparql#/Geometry
+###  http://www.opengis.net/ont/geosparql#Geometry
 geo:Geometry rdf:type owl:Class ;
              rdfs:subClassOf geo:SpatialObject ,
                              [ rdf:type owl:Restriction ;
@@ -185,7 +183,7 @@ geo:Geometry rdf:type owl:Class ;
              rdfs:label "Geometry"@en .
 
 
-###  http://www.opengis.net/ont/geosparql#/Point
+###  http://www.opengis.net/ont/geosparql#Point
 geo:Point rdf:type owl:Class ;
           rdfs:subClassOf geo:Geometry ;
           rdfs:comment "A single point as a geometry of dimension 0"@en ;
@@ -193,7 +191,7 @@ geo:Point rdf:type owl:Class ;
           rdfs:label "Point"@en .
 
 
-###  http://www.opengis.net/ont/geosparql#/PolyedralSurface
+###  http://www.opengis.net/ont/geosparql#PolyedralSurface
 geo:PolyedralSurface rdf:type owl:Class ;
                      rdfs:subClassOf geo:Surface ,
                                      [ rdf:type owl:Restriction ;
@@ -205,7 +203,7 @@ geo:PolyedralSurface rdf:type owl:Class ;
                      rdfs:label "Polyhedral Surface"@en .
 
 
-###  http://www.opengis.net/ont/geosparql#/Polygon
+###  http://www.opengis.net/ont/geosparql#Polygon
 geo:Polygon rdf:type owl:Class ;
             rdfs:subClassOf geo:Surface ;
             rdfs:comment """A planar surface defined by 1 exterior boundary and 0 or
@@ -214,7 +212,7 @@ more interior boundaries"""@en ;
             rdfs:label "Polygon"@en .
 
 
-###  http://www.opengis.net/ont/geosparql#/SpatialObject
+###  http://www.opengis.net/ont/geosparql#SpatialObject
 geo:SpatialObject rdf:type owl:Class ;
                   rdfs:subClassOf owl:Thing ;
                   rdfs:isDefinedBy geo: ;
