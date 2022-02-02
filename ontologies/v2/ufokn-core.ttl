@@ -143,13 +143,13 @@ ufokn:hasStreetAddress rdf:type owl:ObjectProperty ;
 ufokn:hasMember rdf:type owl:ObjectProperty ;
 			rdf:type owl:InverseFunctionalProperty ;
 			rdfs:domain ufokn:CollectionOfFeatures ;
-			rdfs:range ufokn:IndividualFeatureAtRisk .
+			rdfs:range ufokn:FeatureAtRiskInCollection .
 
 
 ###  http://schema.ufokn.org/ufokn-features/v2/isMemberOf
 ufokn:isMemberOf rdf:type owl:ObjectProperty ;
 			rdf:type owl:FunctionalProperty ;
-			rdfs:domain ufokn:FeatureAtRisk ;
+			rdfs:domain ufokn:FeatureAtRiskInCollection ;
 			rdfs:range ufokn:CollectionOfFeatures ;
 			owl:inverseOf ufokn:hasMember .
 
@@ -339,7 +339,8 @@ ufokn:FeatureAtRiskInCollection rdf:type owl:Class ;
 								owl:onProperty ufokn:hasAddress ;
 								owl:allValuesFrom ufokn:UnitAddress
 							   ] ;
-				owl:disjointWith ufokn:IndividualFeatureAtRisk.							   
+				owl:disjointWith ufokn:IndividualFeatureAtRisk, 
+								ufokn:CollectionOfFeatures .
 							   
 							   
 ###  http://schema.ufokn.org/core/v2/IndividualFeatureAtRisk
@@ -349,15 +350,24 @@ ufokn:IndividualFeatureAtRisk rdf:type owl:Class ;
 								[rdf:type owl:Restriction ;
 								 owl:onProperty ufokn:hasMember ;
 								 owl:maxCardinality "0"^^xsd:nonNegativeInteger
+								] ,
+								[rdf:type owl:Restriction ;
+								 owl:onProperty ufokn:isMemberOf ;
+								 owl:maxCardinality "0"^^xsd:nonNegativeInteger
 								] ;
 				owl:equivalentClass _:DefIndividualFeatureAtRisk .
 				
 _:DefIndividualFeatureAtRisk rdf:type owl:Class ;
-				owl:intersectionOf (ufokn:FeatureAtRisk _:FeatureAtRiskNotMemberOfACollection ).
+				owl:intersectionOf (ufokn:FeatureAtRisk _:FeatureAtRiskNotMemberOfACollection _:FeatureAtRiskWithoutMembers).
 
-### FeatureOfRiskNotMemberOfACollection are not member of any CollectionOfFeatures. 
+### FeatureAtfRiskNotMemberOfACollection are not member of any CollectionOfFeatures. 
 _:FeatureAtRiskNotMemberOfACollection rdf:type owl:Restriction ;
 									owl:onProperty ufokn:isMemberOf ;
+									owl:maxCardinality "0"^^xsd:nonNegativeInteger . 
+
+### FeatureAtRiskWithoutMembers are not member of any CollectionOfFeatures. 
+_:FeatureAtRiskWithoutMembers rdf:type owl:Restriction ;
+									owl:onProperty ufokn:hasMember ;
 									owl:maxCardinality "0"^^xsd:nonNegativeInteger . 
 
 _:FeatureAtRiskOrUnitAddress  rdf:type owl:Class ;
