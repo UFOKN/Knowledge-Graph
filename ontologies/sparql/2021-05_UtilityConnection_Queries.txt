@@ -1,0 +1,76 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ufokn-uc: <http://schema.ufokn.org/utility-connection/v1/> 
+PREFIX ufokn: <http://spatialai.org/lego/core/v1#>
+
+select ?x ?z where { 
+?x rdf:type ufokn-uc:ElectricUtilityAsset ;
+ufokn-uc:hasFloodLevel "critical" ;
+ufokn-uc:providesUtilityService ?y.
+?y ufokn:serves ?z.
+?z rdf:type ufokn-uc:WaterUtilityAsset.
+}
+
+
+
+### The query intendes to retrieve all features served by a critically flooded electric utility asset (like a substation), but the ufokn:hasFloodLevel property is just a placeholder of retrieving that 
+## Below the more general query
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ufokn-uc: <http://schema.ufokn.org/utility-connection/v1/> 
+PREFIX ufokn: <http://spatialai.org/lego/core/v1#>
+
+select ?x ?z where { 
+?x rdf:type ufokn-uc:ElectricUtilityAsset ;
+ufokn-uc:providesUtilityService ?y.
+?y ufokn-uc:serves ?z.
+?z rdf:type ufokn-uc:WaterUtilityAsset.
+}
+
+
+### Another version of the query that uses the ofUtilityType property instead of a predefined set of classes of utility assets (like ElectricUtilityAsset)
+
+select ?x ?z where { 
+?x rdf:type ufokn-uc:UtilityAsset ;
+?x ufokn-uc:providesUtilityService ?y.
+?y ufokn-uc:ofUtilityType electric ;
+?y ufokn-uc:serves ?z.
+?z rdf:type ufokn-uc:WaterUtilityAsset.
+}
+
+
+### same query, reexpressed using a subproperty of "providesUtilityService"
+
+select ?x ?z where { 
+?x rdf:type ufokn-uc:UtilityAsset ;
+ufokn-uc:providesElectricUtilityService ?y.
+?y ufokn-uc:serves ?z.
+?z rdf:type ufokn-uc:WaterUtilityAsset.
+}
+
+
+### If we want to limit the query to dependent features-at-risk that actually require electricity (or whatever failed) to operate, we can add another constraint (last line)
+
+select ?x ?z where { 
+?x rdf:type ufokn-uc:UtilityAsset ;
+ufokn-uc:providesUtilityService ?y.
+?y ufokn-uc:ofUtilityType electric ;
+ufokn-uc:serves ?z.
+?z rdf:type ufokn-uc:WaterUtilityAsset ;
+ufokn-uc:requiresUtilityType ufokn:electric.
+}
+
+
+### If we want to ask who (what utility company) is providing the service
+### Can further be combined with the previous restriction
+
+
+?x rdf:type ufokn-uc:UtilityAsset ;
+ufokn-uc:providesUtilityService ?y.
+?y ufokn-uc:ofUtilityType electric ;
+ufokn-uc:providedBy MagicPowerCompany ;
+ufokn-uc:serves ?z.
+?z rdf:type ufokn-uc:WaterUtilityAsset .
+}
+
