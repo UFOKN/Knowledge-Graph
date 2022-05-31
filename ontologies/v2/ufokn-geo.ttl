@@ -1,4 +1,4 @@
-@prefix ufokn: <http://schema.ufokn.org/core/v1/> .
+@prefix ufokn: <http://schema.ufokn.org/core/v2/> .
 @prefix ufokn-geo: <http://schema.ufokn.org/geo/v2/> .
 
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .

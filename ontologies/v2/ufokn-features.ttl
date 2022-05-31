@@ -1,8 +1,9 @@
-@prefix : <http://schema.ufokn.org/ufokn-features/v2/> .
-@prefix ufokn-f: <http://schema.ufokn.org/ufokn-features/v2/> .
 @prefix ufokn: <http://schema.ufokn.org/core/v2/> .
-@prefix ufokn-u: <http://schema.ufokn.org/utility-connection/v1/> .
-@prefix geo: <http://www.opengis.net/spec/geosparql/1.0> .
+@prefix ufokn-f: <http://schema.ufokn.org/ufokn-features/v2/> .
+@prefix ufokn-geo: <http://schema.ufokn.org/geo/v2/> .
+@prefix ufokn-u: <http://schema.ufokn.org/utility-connection/v2/> .
+
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
@@ -19,7 +20,7 @@
                                                 dcterms:creator <http://orcid.org/0000-0002-5331-5052>;
                                                 dcterms:description "An ontology for describing the classes of (spatial) features modeled as risk points in UFOKN and their addresses."@en-us ;
                                                 dcterms:issued "2021-12-15"^^xsd:date ;
-                                                dcterms:modified "2021-12-15"^^xsd:date ;
+                                                dcterms:modified "2022-05-27"^^xsd:date ;
                                                 dcterms:publisher <http://ufokn.org> ;
                                                 dcterms:source "https://raw.githubusercontent.com/UFOKN/Knowledge-Graph/master/ontologies/v2/ufokn-features.ttl"^^<xsd:anyURI> ;
                                                 dcterms:title "Classes of features at risk for the UFOKN Ontology"@en-us ;
