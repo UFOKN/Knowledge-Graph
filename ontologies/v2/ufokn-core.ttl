@@ -363,7 +363,9 @@ ufokn:FeatureAtRiskInCollection rdf:type owl:Class ;
 				owl:disjointWith ufokn:IndividualFeatureAtRisk, 
 								ufokn:CollectionOfFeatures .
 							   
-							   
+		   
+### New: IndividualFeatureAtRisk, which relaxes the previous condition to those that have noMembers
+### but is agnotistic about whether it is part of a collection
 ###  http://schema.ufokn.org/core/v2/IndividualFeatureAtRisk
 ### All FeaturesAtRisk that are a member of some CollectionOfFeatures
 ufokn:IndividualFeatureAtRisk rdf:type owl:Class ;
@@ -371,17 +373,25 @@ ufokn:IndividualFeatureAtRisk rdf:type owl:Class ;
 								[rdf:type owl:Restriction ;
 								 owl:onProperty ufokn:hasMember ;
 								 owl:maxCardinality "0"^^xsd:nonNegativeInteger
-								] ,
+								] .				
+
+
+### Renamed: StandaloneFeatureAtRisk							   
+###  http://schema.ufokn.org/core/v2/StandaloneFeatureAtRisk
+### All StandaloneFeaturesAtRisk are IndividualFeaturesAtRisk that are also not a member of some CollectionOfFeatures
+ufokn:StandaloneFeatureAtRisk rdf:type owl:Class ;
+				rdfs:subClassOf ufokn:IndividualFeatureAtRisk ,
 								[rdf:type owl:Restriction ;
 								 owl:onProperty ufokn:isMemberOf ;
 								 owl:maxCardinality "0"^^xsd:nonNegativeInteger
 								] ;
-				owl:equivalentClass _:DefIndividualFeatureAtRisk .
-				
-_:DefIndividualFeatureAtRisk rdf:type owl:Class ;
+				owl:equivalentClass _:DefStandaloneFeatureAtRisk .
+
+			
+_:DefStandaloneFeatureAtRisk rdf:type owl:Class ;
 				owl:intersectionOf (ufokn:FeatureAtRisk _:FeatureAtRiskNotMemberOfACollection _:FeatureAtRiskWithoutMembers).
 
-### FeatureAtfRiskNotMemberOfACollection are not member of any CollectionOfFeatures. 
+### FeatureAtRiskNotMemberOfACollection are not member of any CollectionOfFeatures. 
 _:FeatureAtRiskNotMemberOfACollection rdf:type owl:Restriction ;
 									owl:onProperty ufokn:isMemberOf ;
 									owl:maxCardinality "0"^^xsd:nonNegativeInteger . 
