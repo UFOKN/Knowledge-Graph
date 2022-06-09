@@ -18,12 +18,13 @@ def router(df, lim: int) -> None:
     
         #print(row['units'])
         if row['buildID'] == None:
-            # there is a problem here: we have no buildID to identify the building
+            # TODO there is a problem here: we have no buildID to identify the building
             ...
     
         else:
             #if row['unit_count'] < 1.0:
             if len(row['units']) == None:
+
                 ...
             
             #elif row['unit_count'] == 1.0: 
@@ -78,22 +79,23 @@ def sourceHarness(sometext: str) -> None:
 # the target graph schema consists of three separate RDF statements (FeatureAtRisk, Address, RiskPoint)
 # this takes a row (from the source data frame) and translates it into RDF statements
 
+
 def monoProc(temp_pointer: int) -> str:
 
-    ftAtRisk1_1 = '''### http://schema.ufokn.org/ufokn-core/v2/FeatureAtRisk/''' + str(df.loc[temp_pointer]['buildID']) + '''
-    <http://schema.ufokn.org/ufokn-core/v2/FeatureAtRisk/''' + str(df.loc[temp_pointer]['buildID']) + '''> rdf:type owl:NamedIndividual ,
+    ftAtRisk1_1 = '''### http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/''' + str(df.loc[temp_pointer]['buildID']) + '''
+    <ufokn-data:FeatureAtRisk/''' + str(df.loc[temp_pointer]['buildID']) + ''' rdf:type owl:NamedIndividual ,
                                                                               ufokn:FeatureAtRisk ;
-                                                                         ufokn:hasAddress <http://schema.ufokn.org/ufokn-core/v2/Address/''' + str(df.loc[temp_pointer]['buildID']) + '''> ;
-                                                                         ufokn:hasRiskPoint <http://schema.ufokn.org/ufokn-core/v2/RiskPoint/''' + str(df.loc[temp_pointer]['buildID']) + '''> ;
+                                                                         ufokn:hasAddress ufokn-data:Address/''' + str(df.loc[temp_pointer]['buildID']) + ''' ;
+                                                                         ufokn:hasRiskPoint ufokn-data:RiskPoint/''' + str(df.loc[temp_pointer]['buildID']) + ''' ;
                                                                          ufokn:ms_id "''' + str(df.loc[temp_pointer]['ms_id']) + '''" ;
                                                                          ufokn:key "''' + str(df.loc[temp_pointer]['KEY']) + '''" ;
                                                                          ufokn:oa_id "''' + str(df.loc[temp_pointer]['oa_id'][0]) + '''" ;
                                                                          ''' + sourceHarness(df.loc[temp_pointer].loc['source']) + ''' 
                                                                          ufokn:value "''' + str(df.loc[temp_pointer]['VALUE']).lower() + '''" .''' + '\n'             
     
-    
-    ftAtRisk1_2 = '''###  http://schema.ufokn.org/ufokn-core/v2/Address/''' + str(df.loc[temp_pointer]['buildID']) + '''
-    <http://schema.ufokn.org/ufokn-core/v2/Address/''' + str(df.loc[temp_pointer]['buildID'])+'''> rdf:type owl:NamedIndividual ,
+    # For a feature with a single unit (or no unit information), the address is a streetAddress (as opposed to a UnitAddress)
+    ftAtRisk1_2 = '''###  http://schema.ufokn.org/ufokn-data/v2/Address/''' + str(df.loc[temp_pointer]['buildID']) + '''
+    ufokn-data:Address/''' + str(df.loc[temp_pointer]['buildID'])+''' rdf:type owl:NamedIndividual ,
                                                                               ufokn:StreetAddress ;
                                                                      ufokn:street "''' + str(df.loc[temp_pointer]['street']) + '''" ;
                                                                      ufokn:streetNumber "''' + str(df.loc[temp_pointer]['number'][0]) + '''";
@@ -103,10 +105,10 @@ def monoProc(temp_pointer: int) -> str:
                                                                      ufokn:postcode "''' + str(df.loc[temp_pointer]['postcode']) + '''".''' + '\n'
     
 
-    ftAtRisk1_3 = '''###  http://schema.ufokn.org/ufokn-core/v2/RiskPoint/''' + str(df.loc[temp_pointer]['buildID']) + '''
-    <http://schema.ufokn.org/ufokn-core/v2/RiskPoint/''' + str(df.loc[temp_pointer]['buildID']) + '''> rdf:type owl:NamedIndividual ,
+    ftAtRisk1_3 = '''###  http://schema.ufokn.org/ufokn-data/v2/RiskPoint/''' + str(df.loc[temp_pointer]['buildID']) + '''
+    ufokn-data:RiskPoint/''' + str(df.loc[temp_pointer]['buildID']) + ''' rdf:type owl:NamedIndividual ,
                                                                                 ufokn:RiskPoint ;
-                                                                       <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "''' + str(df.loc[temp_pointer]['geometry']) + '''"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .'''+'\n'
+                                                                       ufokn-geo:hasWktGeometry "''' + str(df.loc[temp_pointer]['geometry']) + '''"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .'''+'\n'
     
     
     return ftAtRisk1_1 + '\n' + ftAtRisk1_2 + '\n' + ftAtRisk1_3 + '\n'
@@ -130,64 +132,56 @@ def polyProc(temp_pointer) -> str:
 
 
     subUnit = map( lambda subunitnumber:
-'''
-###  http://schema.ufokn.org/ufokn-core/v2/FeatureAtRisk/''' + str(df.loc[temp_pointer].loc['buildID']) + '''/''' + str(subunitnumber+1) + '''
-<http://schema.ufokn.org/ufokn-core/v2/FeatureAtRisk/''' + str(df.loc[temp_pointer].loc['buildID']) + '''/''' + str(subunitnumber+1) + '''>rdf:type owl:NamedIndividual ,
-                                                                              ufokn:FeatureAtRisk ;
-                                                                     ufokn:hasAddress <http://schema.ufokn.org/ufokn-core/v2/Address/''' + str(df.loc[temp_pointer].loc['buildID']) + '''/''' + str(subunitnumber+1)  + '''> ;''' +
-                                                                     '''ufokn:hasRiskPoint <http://schema.ufokn.org/ufokn-core/v2/RiskPoint/''' + str(df.loc[temp_pointer].loc['buildID']) + '''> ; 
-                                                                     ufokn:ms_id "''' + str(df.loc[temp_pointer]['ms_id']) + '''" ;
-                                                                         ufokn:key "''' + str(df.loc[temp_pointer]['KEY']) + '''" ;
-                                                                         ufokn:oa_id "''' + str(df.loc[temp_pointer]['oa_id'][0]) + '''" ;
-                                                                         ''' + sourceHarness(df.loc[temp_pointer].loc['source']) + ''' 
-                                                                         ufokn:value "''' + str(df.loc[temp_pointer]['VALUE']).lower() + '''" .''' + '\n' +                                                                                                                        
+    '''
+    ###  http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/''' + str(df.loc[temp_pointer].loc['buildID']) + '''/''' + str(subunitnumber+1) + '''
+    ufokn-data:FeatureAtRisk/''' + str(df.loc[temp_pointer].loc['buildID']) + '''/''' + str(subunitnumber+1) + ''' rdf:type owl:NamedIndividual ,
+                                                                                  ufokn:FeatureAtRisk ;
+                                                                         ufokn:hasAddress ufokn-data:Address/''' + str(df.loc[temp_pointer].loc['buildID']) + '''/''' + str(subunitnumber+1)  + ''' ;''' +
+                                                                         '''ufokn:hasRiskPoint ufokn-data:RiskPoint/''' + str(df.loc[temp_pointer].loc['buildID']) + ''' ; 
+                                                                         ufokn:ms_id "''' + str(df.loc[temp_pointer]['ms_id']) + '''" ;
+                                                                             ufokn:key "''' + str(df.loc[temp_pointer]['KEY']) + '''" ;
+                                                                             ufokn:oa_id "''' + str(df.loc[temp_pointer]['oa_id'][0]) + '''" ;
+                                                                             ''' + sourceHarness(df.loc[temp_pointer].loc['source']) + ''' 
+                                                                             ufokn:value "''' + str(df.loc[temp_pointer]['VALUE']).lower() + '''" .''' + '\n' +
 
 
-
-
-'''
-###  http://schema.ufokn.org/ufokn-core/v2/Address/''' + str(df.loc[temp_pointer].loc['buildID']) + '''/'''+ str(subunitnumber+1) +'''
-<http://schema.ufokn.org/ufokn-core/v2/Address/''' + str(df.loc[temp_pointer].loc['buildID']) + '''/'''+ str(subunitnumber+1) +'''> rdf:type owl:NamedIndividual ,
-                                                                                      ufokn:UnitAddress ;  
-                                                                             ufokn:hasStreetAddress <http://schema.ufokn.org/ufokn-core/v2/Address/''' + str(df.loc[temp_pointer].loc['buildID']) + '''> ; 
-                                                                             ufokn:unitNumber "''' + df.loc[temp_pointer].loc['units'][subunitnumber] + '''".''',
-                                                                             range(int(len(df.loc[temp_pointer].loc['units'])) 
-
-                                                                                ) 
-                                                                                )
-
+    '''
+    ###  http://schema.ufokn.org/ufokn-data/v2/Address/''' + str(df.loc[temp_pointer].loc['buildID']) + '''/'''+ str(subunitnumber+1) +'''
+    ufokn-data:Address/''' + str(df.loc[temp_pointer].loc['buildID']) + '''/'''+ str(subunitnumber+1) +''' rdf:type owl:NamedIndividual ,
+                                                                                          ufokn:UnitAddress ;  
+                                                                                 ufokn:hasStreetAddress ufokn-data:Address/''' + str(df.loc[temp_pointer].loc['buildID']) + ''' ; 
+                                                                                 ufokn:unitNumber "''' + df.loc[temp_pointer].loc['units'][subunitnumber] + '''".''',
+                                                                                 range(int(len(df.loc[temp_pointer].loc['units'])))
+             )
 
 
     ftAtRisk2_1 = '''
-    ###  http://schema.ufokn.org/ufokn-core/v2/CollectionOfFeatures/''' + str(df.loc[temp_pointer]['buildID']) + '''
-    <http://schema.ufokn.org/ufokn-core/v2/CollectionOfFeatures/''' + str(df.loc[temp_pointer]['buildID']) + '''> rdf:type owl:NamedIndividual ,
-                                                                                                ufokn:CollectionOfFeatures ;''' + "ufokn:hasMember " + ",\n".join(subLink2) + ";" + ''' 
-                                                                                       
-                                                                                       ufokn:hasAddress <http://schema.ufokn.org/ufokn-core/v2/Address/UFOKN-dq0dk3bp96> .'''
+    ###  http://schema.ufokn.org/ufokn-data/v2/CollectionOfFeatures/''' + str(df.loc[temp_pointer]['buildID']) + '''
+    ufokn-data:CollectionOfFeatures/''' + str(df.loc[temp_pointer]['buildID']) + ''' rdf:type owl:NamedIndividual ,
+                                                                                               ufokn:CollectionOfFeatures ;''' + "ufokn:hasMember " + ",\n".join(subLink2) + ";" + ''' 
+                                                                                      ufokn:hasAddress ufokn-data:Address''' + str(df.loc[temp_pointer].loc['buildID']) + ''' .'''
                                                                                       
     
 
     ftAtRisk2_2 = '''
-                ###  http://schema.ufokn.org/ufokn-core/v2/Address/''' + str(df.loc[temp_pointer]['buildID']) + '''
-                <http://schema.ufokn.org/ufokn-core/v2/Address/''' + str(df.loc[temp_pointer]['buildID']) + '''> rdf:type owl:NamedIndividual ,
-                                                                                                      ufokn:StreetAddress ; 
-                                                                                             ufokn:street "''' + str(df.loc[temp_pointer]['street']) + '''" ;
-                                                                                            ufokn:streetNumber "''' + str(df.loc[temp_pointer]['number'][0]) + '''";
-                                                                                            ufokn:city "''' + str(df.loc[temp_pointer]['city']) + '''" ; 
+    ###  http://schema.ufokn.org/ufokn-data/v2/Address/''' + str(df.loc[temp_pointer]['buildID']) + '''
+    ufokn-data:Address/''' + str(df.loc[temp_pointer]['buildID']) + ''' rdf:type owl:NamedIndividual ,
+                                                                                          ufokn:StreetAddress ; 
+                                                                                ufokn:street "''' + str(df.loc[temp_pointer]['street']) + '''" ;
+                                                                                ufokn:streetNumber "''' + str(df.loc[temp_pointer]['number'][0]) + '''";
+                                                                                ufokn:city "''' + str(df.loc[temp_pointer]['city']) + '''" ;
+                                                                                ufokn:postcode "''' + str(df.loc[temp_pointer]['postcode']) + '''".'''
+    
 
-                                                                                             ufokn:postcode "''' + str(df.loc[temp_pointer]['postcode']) + '''".'''
-    
-                              
-    
     ftAtRisk2_3 = '''    
-                ###  http://schema.ufokn.org/ufokn-core/v2/FeatureAtRisk/RiskPoint/UFOKN-dq0dk3bp96
-                <http://schema.ufokn.org/ufokn-core/v2/RiskPoint/UFOKN-dq0dk3bp96> rdf:type owl:NamedIndividual ,
-                                                                                                        ufokn:RiskPoint ;
-                                                                                               <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "''' + str(df.loc[temp_pointer]['geometry']) + '''"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .'''+'\n'
+    ###  http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/RiskPoint/''' + str(df.loc[temp_pointer]['buildID']) + '''
+    ufokn-data:RiskPoint/''' + str(df.loc[temp_pointer]['buildID']) + ''' rdf:type owl:NamedIndividual ,
+                                                                                ufokn:RiskPoint ;
+                                                                       ufokn-geo:hasWktGeometry "''' + str(df.loc[temp_pointer]['geometry']) + '''"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .'''+'\n'
                                             
     ftAtRisk2_4 = '''                           
-                ###  http://schema.ufokn.org/ufokn-core/v2/FeatureAtRisk/''' + str(df.loc[temp_pointer]['buildID']) + '''
-                <http://schema.ufokn.org/ufokn-core/v2/FeatureAtRisk/''' + str(df.loc[temp_pointer]['buildID']) + '''> rdf:type owl:NamedIndividual .'''
+    ###  http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/''' + str(df.loc[temp_pointer]['buildID']) + '''
+    ufokn-data:FeatureAtRisk/''' + str(df.loc[temp_pointer]['buildID']) + ''' rdf:type owl:NamedIndividual .'''
     
 
     return ftAtRisk2_1 + '\n' + ftAtRisk2_2 + '\n' + ftAtRisk2_3 + '\n' + "\n".join(subUnit) + '\n' 
@@ -197,20 +191,21 @@ def polyProc(temp_pointer) -> str:
 if __name__ == '__main__':
 
 # basic header for well-formed ttl file format
-    header = '''
-    @prefix : <http://schema.ufokn.org/ufokn-core/v2/> .
+    namespaces = '''
+    @prefix : <http://schema.ufokn.org/data/v2/> .
+    @prefix ufokn-data: <http://schema.ufokn.org/data/v2/> .
     @prefix ufokn: <http://schema.ufokn.org/core/v2/> .
-    @prefix ufokn-geo: <http://schema.ufokn.org/geo/v1/> .
-    @prefix geo: <http://www.opengis.net/spec/geosparql/1.0/> .
+    @prefix ufokn-geo: <http://schema.ufokn.org/geo/v2/> .
+    
+    @prefix geo: <http://www.opengis.net/ont/geosparql#> .
     @prefix owl: <http://www.w3.org/2002/07/owl#> .
     @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
     @prefix xml: <http://www.w3.org/XML/1998/namespace> .
     @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
     @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-    @prefix sosa: <http://www.w3.org/ns/sosa/> .
-    @prefix time: <http://www.w3.org/2006/time#> .
     @prefix dcterms: <http://purl.org/dc/terms/> .
-    @base <http://schema.ufokn.org/example/> .
+    
+    @base <http://schema.ufokn.org/data#> .
 
     
     '''
@@ -222,8 +217,9 @@ if __name__ == '__main__':
             
             
             ###  http://schema.ufokn.org/geo/v2/hasWktGeometry
-            ufokn-geo:hasWktGeometry rdf:type owl:DatatypeProperty .
-            
+            ufokn-geo:hasWktGeometry rdf:type owl:DatatypeProperty ;
+                rdfs:domain geo:Feature ;
+                rdfs:range geo:wktLiteral .
             
             
             ### datatype properties for addresses
@@ -349,16 +345,10 @@ if __name__ == '__main__':
             ###  http://schema.ufokn.org/core/v2/dataSourceUri
             ufokn:dataSourceUri rdf:type owl:DatatypeProperty ;
                                 rdfs:range xsd:anyURI .
-            
-            
-            ###  http://schema.ufokn.org/core/v2/heightAboveNearestDrainage
-            ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
-                                             rdfs:domain ufokn:RelativeRiskPointLocation ;
-                                             rdfs:range ufokn:elevation .'''
 
-    writeFeature(header)
+'''
 
-    writeFeature("\n\n")
+    writeFeature(namespaces)
 
     writeFeature(dataProps)
 
