@@ -1,0 +1,125 @@
+###
+# Attempts to retrieve all ufokn:IndividualFeatureAtRisk or all ufokn:StandaloneFeatureAtRisk (comment one out)
+#    Note the latter is a subclass of the former
+# These classes must be inferred in many cases and are not being inferred correctly per the Results notes below
+
+# Results on UFOKN-Basic dataset
+#    IndividualFeatureAtRisk does not retrieve SFaR coded as FaR (but does retrieve IFaRiC coded as FaR)
+#    StandaloneFeatureAtRisk does not retrieve SFaR coded as FaR
+
+# Results on UFOKN-2500 / UFOKN-mini datasets
+#    IndividualFeatureAtRisk only retrieves IFaRiC coded as FaR
+#    StandaloneFeatureAtRisk retrieves nothing
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+
+select ?feature ?st_add where { 
+    ?feature rdf:type ufokn:IndividualFeatureAtRisk.
+#    ?feature rdf:type ufokn:StandaloneFeatureAtRisk.
+} 
+
+
+
+###
+# Retrieves all ufokn:CollectionOfFeatures
+# Works as expected
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+
+select distinct ?collection where { 
+	?collection rdf:type ufokn:CollectionOfFeatures.
+    ?collection ufokn:hasMember ?faric.
+} 
+
+
+
+###
+# Retrieves all ufokn:CollectionOfFeatures (alternate)
+# Works as expected
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+
+select ?feature where {
+  ?feature ufokn:hasMember ?unit.
+}
+group by ?feature
+having (count(distinct ?unit) > 1)
+
+
+
+###
+# Retrieves all ufokn:IndividualFeatureAtRiskInCollection along with address information
+# Works as expected, including retrieveing ufokn:FeatureAtRisk that satisfy definition of ufokn:FeatureAtRiskInCollection.
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+
+select ?feature ?st_add where { 
+	?feature rdf:type ufokn:IndividualFeatureAtRiskInCollection.
+    ?feature ufokn:hasAddress ?address.
+    ?address ufokn:hasStreetAddress ?st_address.
+    ?st_address ufokn:streetNumber ?st_num.
+    ?st_address ufokn:street ?street.
+    ?address ufokn:unitNumber ?u_num.
+    ?st_address ufokn:city ?city.
+    ?st_address ufokn:state ?state.
+    ?st_address ufokn:postcode ?zip.
+    BIND(concat(str(?st_num), str(" "), str(?street), str(" "), str(?u_num), str(", "), str(?city), str(", "), str(?state), str("  "), str(?zip)) as ?st_add).
+} 
+
+
+
+###
+# Retrieves all ufokn:FeatureAtRisk
+# Currently also retrieves addresses of ufokn:IndividualFeatureAtRiskInCollection
+#    This appears to be a domain issue and should be fixed soon
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+
+select ?feature where { 
+	?feature rdf:type ufokn:FeatureAtRisk.
+} 
+
+
+
+###
+# Retrieves a count of how many ufokn:IndividualFeatureAtRiskInCollection are in each ufokn:CollectionOfFeatures
+# Works as expected
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+
+select ?collection (count(?collection) as ?count) where { 
+	?collection rdf:type ufokn:CollectionOfFeatures.
+    ?collection ufokn:hasMember ?x.
+} group by ?collection
+
+
+
+###
+# Retrieves all distinct key-value pairs
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+
+select distinct ?key ?value where { 
+	?x ufokn:key ?key.
+    ?x ufokn:value ?value.
+} order by ?key ?value
+
+
+
+###
+# Retrieves all distinct values and the number of times they occur
+# Easily adapted to do the same for keys
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+
+select ?val (count(?val) as ?count) where { 
+	?X ufokn:value ?val.
+} group by ?val
