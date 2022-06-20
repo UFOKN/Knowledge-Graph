@@ -1,339 +1,380 @@
+@prefix : <http://schema.ufokn.org/data/v2/> .
+@prefix ufokn-data: <http://schema.ufokn.org/data/v2/> .
+@prefix ufokn: <http://schema.ufokn.org/core/v2/> .
+@prefix ufokn-c: <http://schema.ufokn.org/utility-connection/v2/> .
+@prefix ufokn-geo: <http://schema.ufokn.org/geo/v2/> .
+    
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+    
+@base <http://schema.ufokn.org/data#> .
+    
+    #################################################################
+    #    Data properties
+    #################################################################
 
-    @prefix : <http://schema.ufokn.org/data/v2/> .
-    @prefix ufokn-data: <http://schema.ufokn.org/data/v2/> .
-    @prefix ufokn: <http://schema.ufokn.org/core/v2/> .
-	@prefix ufokn-c: <http://schema.ufokn.org/utility-connection/v2/> .
-    @prefix ufokn-geo: <http://schema.ufokn.org/geo/v2/> .
-    
-    @prefix geo: <http://www.opengis.net/ont/geosparql#> .
-    @prefix owl: <http://www.w3.org/2002/07/owl#> .
-    @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-    @prefix xml: <http://www.w3.org/XML/1998/namespace> .
-    @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-    @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-    @prefix dcterms: <http://purl.org/dc/terms/> .
-    
-    @base <http://schema.ufokn.org/data#> .
-    
-            #################################################################
-            #    Data properties
-            #################################################################
-            
-            
-            ###  http://schema.ufokn.org/geo/v2/hasWktGeometry
-            ufokn-geo:hasWktGeometry rdf:type owl:DatatypeProperty .
-            
-            
-            
-            ### datatype properties for addresses
-            
-            ###  http://schema.ufokn.org/core/v2/unitNumber
-            ufokn:unitNumber rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:UnitAddress ;
-                            rdfs:range xsd:string . 
-                            
-            ###  http://schema.ufokn.org/core/v2/unitCount
-            ufokn:unitCount rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:positiveInteger . 
-                            
-            ###  http://schema.ufokn.org/core/v2/areaSize
-            ufokn:areaSize rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:nonNegativeInteger . 
-                            
-            ###  http://schema.ufokn.org/core/v2/street
-            ufokn:street rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:string . 
-                            
-            ###  http://schema.ufokn.org/core/v2/streetNumber
-            ufokn:streetNumber rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:string . 
-            
-            ###  http://schema.ufokn.org/core/v2/secondAddressLine
-            ufokn:secondAddressLine rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:string . 
-            
-            ###  http://schema.ufokn.org/core/v2/region
-            ufokn:region rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:string . 
-            
-            ###  http://schema.ufokn.org/core/v2/city
-            ufokn:city rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:string . 
-            
-            ###  http://schema.ufokn.org/core/v2/state
-            ufokn:state rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:string . 
-                            
-            ###  http://schema.ufokn.org/core/v2/country
-            ufokn:country rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:string . 
-                            
-            ###  http://schema.ufokn.org/core/v2/district
-            ufokn:district rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:string . 
-            
-            ###  http://schema.ufokn.org/core/v2/postcode
-            ufokn:postcode rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:string . 
-                            
-            ### Data Properties for Features-at-risk
-                            
-            ###  http://schema.ufokn.org/core/v2/key
-            ufokn:key rdf:type owl:DatatypeProperty ;
-                            rdfs:domain ufokn:FeatureAtRisk ;
-                            rdfs:range xsd:string . 
-            
-            ###  http://schema.ufokn.org/core/v2/value
-            ufokn:value rdf:type owl:DatatypeProperty ;
-                            rdfs:domain ufokn:FeatureAtRisk ;
-                            rdfs:range xsd:string . 
-            
-            ###  http://schema.ufokn.org/core/v2/osm_id
-            ufokn:osm_id rdf:type owl:DatatypeProperty ;
-                            rdfs:domain ufokn:FeatureAtRisk ;
-                            rdfs:range xsd:string . 
-            
-            ###  http://schema.ufokn.org/core/v2/ms_id
-            ufokn:ms_id rdf:type owl:DatatypeProperty ;
-                            rdfs:domain ufokn:FeatureAtRisk ;
-                            rdfs:range xsd:string . 
-            
-            ###  http://schema.ufokn.org/core/v2/id
-            ufokn:id rdf:type owl:DatatypeProperty ;
-                               rdfs:range xsd:string .
-            
-            ###  http://schema.ufokn.org/core/v2/osm_id
-            ufokn:osm_id rdf:type owl:DatatypeProperty ;
-                               rdfs:subPropertyOf ufokn:id.
-            
-            ###  http://schema.ufokn.org/core/v2/ms_id
-            ufokn:ms_id rdf:type owl:DatatypeProperty ;
-                               rdfs:subPropertyOf ufokn:id.
-            
-            ###  http://schema.ufokn.org/core/v2/oa_id
-            ufokn:oa_id rdf:type owl:DatatypeProperty ;
-                               rdfs:subPropertyOf ufokn:id.
-                               
-            ### other datatype properties 
-                               
-            ###  http://schema.ufokn.org/core/v2/criticalDepth
-            ufokn:criticalDepth rdf:type owl:DatatypeProperty ;
-                                rdfs:domain ufokn:RiskPoint ;
-                                rdfs:range ufokn:depth .
-            
-            
-            ###  http://schema.ufokn.org/core/v2/dataSourceUri
-            ufokn:dataSourceUri rdf:type owl:DatatypeProperty ;
-                                rdfs:range xsd:anyURI .
-            
-            
-            ###  http://schema.ufokn.org/core/v2/heightAboveNearestDrainage
-            ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
-                                             rdfs:domain ufokn:RelativeRiskPointLocation ;
-                                             rdfs:range ufokn:elevation .
-											 
+	###  http://schema.ufokn.org/geo/v2/hasWktGeometry
+	ufokn-geo:hasWktGeometry rdf:type owl:DatatypeProperty .
+	
+	
+	### datatype properties for addresses
+	
+	###  http://schema.ufokn.org/core/v2/unitNumber
+	ufokn:unitNumber rdf:type owl:DatatypeProperty ;
+					rdf:type owl:FunctionalProperty ;
+					rdfs:domain ufokn:UnitAddress ;
+					rdfs:range xsd:string . 
+					
+	###  http://schema.ufokn.org/core/v2/unitCount
+	ufokn:unitCount rdf:type owl:DatatypeProperty ;
+					rdf:type owl:FunctionalProperty ;
+					rdfs:domain ufokn:Address ;
+					rdfs:range xsd:positiveInteger . 
+					
+	###  http://schema.ufokn.org/core/v2/areaSize
+	ufokn:areaSize rdf:type owl:DatatypeProperty ;
+					rdf:type owl:FunctionalProperty ;
+					rdfs:domain ufokn:Address ;
+					rdfs:range xsd:nonNegativeInteger . 
+					
+	###  http://schema.ufokn.org/core/v2/street
+	ufokn:street rdf:type owl:DatatypeProperty ;
+					rdf:type owl:FunctionalProperty ;
+					rdfs:domain ufokn:Address ;
+					rdfs:range xsd:string . 
+					
+	###  http://schema.ufokn.org/core/v2/streetNumber
+	ufokn:streetNumber rdf:type owl:DatatypeProperty ;
+					rdf:type owl:FunctionalProperty ;
+					rdfs:domain ufokn:Address ;
+					rdfs:range xsd:string . 
+	
+	###  http://schema.ufokn.org/core/v2/secondAddressLine
+	ufokn:secondAddressLine rdf:type owl:DatatypeProperty ;
+					rdf:type owl:FunctionalProperty ;
+					rdfs:domain ufokn:Address ;
+					rdfs:range xsd:string . 
+	
+	###  http://schema.ufokn.org/core/v2/region
+	ufokn:region rdf:type owl:DatatypeProperty ;
+					rdf:type owl:FunctionalProperty ;
+					rdfs:domain ufokn:Address ;
+					rdfs:range xsd:string . 
+	
+	###  http://schema.ufokn.org/core/v2/city
+	ufokn:city rdf:type owl:DatatypeProperty ;
+					rdf:type owl:FunctionalProperty ;
+					rdfs:domain ufokn:Address ;
+					rdfs:range xsd:string . 
+	
+	###  http://schema.ufokn.org/core/v2/state
+	ufokn:state rdf:type owl:DatatypeProperty ;
+					rdf:type owl:FunctionalProperty ;
+					rdfs:domain ufokn:Address ;
+					rdfs:range xsd:string . 
+					
+	###  http://schema.ufokn.org/core/v2/country
+	ufokn:country rdf:type owl:DatatypeProperty ;
+					rdf:type owl:FunctionalProperty ;
+					rdfs:domain ufokn:Address ;
+					rdfs:range xsd:string . 
+					
+	###  http://schema.ufokn.org/core/v2/district
+	ufokn:district rdf:type owl:DatatypeProperty ;
+					rdf:type owl:FunctionalProperty ;
+					rdfs:domain ufokn:Address ;
+					rdfs:range xsd:string . 
+	
+	###  http://schema.ufokn.org/core/v2/postcode
+	ufokn:postcode rdf:type owl:DatatypeProperty ;
+					rdf:type owl:FunctionalProperty ;
+					rdfs:domain ufokn:Address ;
+					rdfs:range xsd:string . 
+					
+	### Data Properties for Features-at-risk
+					
+	###  http://schema.ufokn.org/core/v2/key
+	ufokn:key rdf:type owl:DatatypeProperty ;
+					rdfs:domain ufokn:FeatureAtRisk ;
+					rdfs:range xsd:string . 
+	
+	###  http://schema.ufokn.org/core/v2/value
+	ufokn:value rdf:type owl:DatatypeProperty ;
+					rdfs:domain ufokn:FeatureAtRisk ;
+					rdfs:range xsd:string . 
+	
+	###  http://schema.ufokn.org/core/v2/osm_id
+	ufokn:osm_id rdf:type owl:DatatypeProperty ;
+					rdfs:domain ufokn:FeatureAtRisk ;
+					rdfs:range xsd:string . 
+	
+	###  http://schema.ufokn.org/core/v2/ms_id
+	ufokn:ms_id rdf:type owl:DatatypeProperty ;
+					rdfs:domain ufokn:FeatureAtRisk ;
+					rdfs:range xsd:string . 
+	
+	###  http://schema.ufokn.org/core/v2/id
+	ufokn:id rdf:type owl:DatatypeProperty ;
+					   rdfs:range xsd:string .
+	
+	###  http://schema.ufokn.org/core/v2/osm_id
+	ufokn:osm_id rdf:type owl:DatatypeProperty ;
+					   rdfs:subPropertyOf ufokn:id.
+	
+	###  http://schema.ufokn.org/core/v2/ms_id
+	ufokn:ms_id rdf:type owl:DatatypeProperty ;
+					   rdfs:subPropertyOf ufokn:id.
+	
+	###  http://schema.ufokn.org/core/v2/oa_id
+	ufokn:oa_id rdf:type owl:DatatypeProperty ;
+					   rdfs:subPropertyOf ufokn:id.
+					   
+	### other datatype properties 
+					   
+	###  http://schema.ufokn.org/core/v2/criticalDepth
+	ufokn:criticalDepth rdf:type owl:DatatypeProperty ;
+						rdfs:domain ufokn:RiskPoint ;
+						rdfs:range ufokn:depth .
+	
+	
+	###  http://schema.ufokn.org/core/v2/dataSourceUri
+	ufokn:dataSourceUri rdf:type owl:DatatypeProperty ;
+						rdfs:range xsd:anyURI .
+	
+	
+	###  http://schema.ufokn.org/core/v2/heightAboveNearestDrainage
+	ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
+									 rdfs:domain ufokn:RelativeRiskPointLocation ;
+									 rdfs:range ufokn:elevation .
+
+
 ### A FeatureAtRisk coded as UFOKN-dkk-FaR01
     <ufokn-data:FeatureAtRisk/UFOKN-dkk-FaR01> rdf:type owl:NamedIndividual ,
-																		  ufokn:FeatureAtRisk ;
-																	 ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-FaR01> ;
-																	 ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-FaR01> ;
-																	 ufokn:ms_id "dkk-FaR01" ;
-																	 ufokn:key "building" ;
-																	 ufokn:oa_id "dkk-FaR01" ;
-																	 ufokn:fromDataSource ufokn:OSMdataSource,ufokn:MSdataSource,ufokn:OAdataSource; 
-																	 ufokn:value "detached" .
+														ufokn:FeatureAtRisk ;
+											   ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-FaR01> ;
+											   ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-FaR01> ;
+											   ufokn:id "dkk-FaR01" ;
+											   ufokn:key "building" ;
+											   ufokn:value "detached" .
 ### Address for FeatureAtRisk coded as UFOKN-dkk-FaR01
     <ufokn-data:Address/UFOKN-dkk-FaR01> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:StreetAddress ;
-                                                                     ufokn:street "North Channel Drive" ;
-                                                                     ufokn:streetNumber "100";
-                                                                     ufokn:city "Wrightsville Beach" ; 
-                                                                     ufokn:region "" ; 
-                                                                     ufokn:state "NC";
-                                                                     ufokn:postcode "28480";
-																	 ufokn:unitCount "1"^^xsd:positiveInteger .
+                                                  ufokn:StreetAddress ;
+                                         ufokn:street "North Channel Drive" ;
+                                         ufokn:streetNumber "100";
+                                         ufokn:city "Wrightsville Beach" ; 
+                                         ufokn:region "" ; 
+                                         ufokn:state "NC";
+                                         ufokn:postcode "28480";
+										 ufokn:unitCount "1"^^xsd:positiveInteger .
 ### RiskPoint for FeatureAtRisk coded as UFOKN-dkk-FaR01
     <ufokn-data:RiskPoint/UFOKN-dkk-FaR01> rdf:type owl:NamedIndividual ,
-                                                                                ufokn:RiskPoint ;
-                                                                       <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654323 1397477)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+                                                    ufokn:RiskPoint ;
+                                           <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654323 1397477)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
 
 
 ### An IndividualFeatureAtRisk coded as UFOKN-dkk-IFaR01
     <ufokn-data:FeatureAtRisk/UFOKN-dkk-IFaR01> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:IndividualFeatureAtRisk ;
-                                                                         ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-IFaR01> ;
-                                                                         ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-IFaR01> ;
-                                                                         ufokn:ms_id "dkk-IFaR01" ;
-                                                                         ufokn:key "building" ;
-                                                                         ufokn:oa_id "dkk-IFaR01" ;
-                                                                         ufokn:fromDataSource ufokn:OSMdataSource,ufokn:MSdataSource,ufokn:OAdataSource; 
-                                                                         ufokn:value "detached" .
+                                                         ufokn:IndividualFeatureAtRisk ;
+                                                ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-IFaR01> ;
+                                                ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-IFaR01> ;
+											    ufokn:id "dkk-IFaR01" ;
+											    ufokn:key "building" ;
+											    ufokn:value "detached" .
 ### Address for IndividualFeatureAtRisk coded as UFOKN-dkk-IFaR01
     <ufokn-data:Address/UFOKN-dkk-IFaR01> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:StreetAddress ;
-                                                                     ufokn:street "North Channel Drive" ;
-                                                                     ufokn:streetNumber "102";
-                                                                     ufokn:city "Wrightsville Beach" ; 
-                                                                     ufokn:region "" ; 
-                                                                     ufokn:state "NC";
-                                                                     ufokn:postcode "28480".
+                                                   ufokn:StreetAddress ;
+										  ufokn:street "North Channel Drive" ;
+										  ufokn:streetNumber "102";
+										  ufokn:city "Wrightsville Beach" ; 
+										  ufokn:region "" ; 
+										  ufokn:state "NC";
+										  ufokn:postcode "28480".
 ### RiskPoint for IndividualFeatureAtRisk coded as UFOKN-dkk-IFaR01
     <ufokn-data:RiskPoint/UFOKN-dkk-IFaR01> rdf:type owl:NamedIndividual ,
-                                                                                ufokn:RiskPoint ;
-                                                                       <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654323 1397477)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+                                                     ufokn:RiskPoint ;
+                                            <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654323 1397477)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
 
 
 ### A StandaloneFeatureAtRisk coded as UFOKN-dkk-SFaR01
     <ufokn-data:FeatureAtRisk/UFOKN-dkk-SFaR01> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:StandaloneFeatureAtRisk ;
-                                                                         ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-SFaR01> ;
-                                                                         ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-SFaR01> ;
-                                                                         ufokn:ms_id "dkk-SFaR01" ;
-                                                                         ufokn:key "building" ;
-                                                                         ufokn:oa_id "dkk-SFaR01" ;
-                                                                         ufokn:fromDataSource ufokn:OSMdataSource,ufokn:MSdataSource,ufokn:OAdataSource; 
-                                                                         ufokn:value "detached" .
+                                                         ufokn:StandaloneFeatureAtRisk ;
+											    ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-SFaR01> ;
+											    ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-SFaR01> ;
+											    ufokn:id "dkk-SFaR01" ;
+											    ufokn:key "building" ;
+											    ufokn:value "detached" .
 ### Address for StandaloneFeatureAtRisk coded as UFOKN-dkk-SFaR01
     <ufokn-data:Address/UFOKN-dkk-SFaR01> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:StreetAddress ;
-                                                                     ufokn:street "North Channel Drive" ;
-                                                                     ufokn:streetNumber "104";
-                                                                     ufokn:city "Wrightsville Beach" ; 
-                                                                     ufokn:region "" ; 
-                                                                     ufokn:state "NC";
-                                                                     ufokn:postcode "28480".
+                                                   ufokn:StreetAddress ;
+										  ufokn:street "North Channel Drive" ;
+										  ufokn:streetNumber "104";
+										  ufokn:city "Wrightsville Beach" ; 
+										  ufokn:region "" ; 
+										  ufokn:state "NC";
+										  ufokn:postcode "28480".
 ### RiskPoint for StandaloneFeatureAtRisk coded as UFOKN-dkk-SFaR01
     <ufokn-data:RiskPoint/UFOKN-dkk-SFaR01> rdf:type owl:NamedIndividual ,
-                                                                                ufokn:RiskPoint ;
-                                                                       <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654323 1397477)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+                                                     ufokn:RiskPoint ;
+                                            <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654323 1397477)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
 
 
 ### An IndividualFeatureAtRiskInCollection coded as UFOKN-dkk-CoF01/01
     <ufokn-data:FeatureAtRisk/UFOKN-dkk-CoF01/01> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:IndividualFeatureAtRiskInCollection ;
-                                                                         ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-CoF01/01> ;
-                                                                         ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-CoF01> ;
-                                                                         ufokn:ms_id "dkk-CoF01/01" ;
-                                                                         ufokn:key "building" ;
-                                                                         ufokn:oa_id "dkk-CoF01/01" ;
-                                                                         ufokn:fromDataSource ufokn:OSMdataSource,ufokn:MSdataSource,ufokn:OAdataSource; 
-                                                                         ufokn:value "apartments" .
+                                                           ufokn:IndividualFeatureAtRiskInCollection ;
+										 		  ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-CoF01/01> ;
+										 		  ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-CoF01> ;
+												  ufokn:id "dkk-CoF01/01" ;
+												  ufokn:key "building" ;
+												  ufokn:value "apartments" .
 ### Address for IndividualFeatureAtRiskInCollection coded as UFOKN-dkk-CoF01/01
     <ufokn-data:Address/UFOKN-dkk-CoF01/01> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:UnitAddress ;
-                                                                     ufokn:hasStreetAddress <ufokn-data:Address/UFOKN-dkk-CoF01> ;
-																	 ufokn:unitNumber "A" .
+                                                     ufokn:UnitAddress ;
+                                            ufokn:hasStreetAddress <ufokn-data:Address/UFOKN-dkk-CoF01> ;
+											ufokn:unitNumber "A" .
 
 
 ### An IndividualFeatureAtRiskInCollection coded as UFOKN-dkk-CoF01/02 (a FeatureAtRisk)
     <ufokn-data:FeatureAtRisk/UFOKN-dkk-CoF01/02> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:FeatureAtRisk ;
-                                                                         ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-CoF01/02> ;
-                                                                         ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-CoF01> ;
-                                                                         ufokn:ms_id "dkk-CoF01/02" ;
-                                                                         ufokn:key "building" ;
-                                                                         ufokn:oa_id "dkk-CoF01/02" ;
-                                                                         ufokn:fromDataSource ufokn:OSMdataSource,ufokn:MSdataSource,ufokn:OAdataSource; 
-                                                                         ufokn:value "apartments" .
+                                                           ufokn:FeatureAtRisk ;
+												  ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-CoF01/02> ;
+												  ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-CoF01> ;
+												  ufokn:id "dkk-CoF01/02" ;
+												  ufokn:key "building" ;
+												  ufokn:value "apartments" .
 ### Address for IndividualFeatureAtRiskInCollection coded as UFOKN-dkk-CoF01/02
     <ufokn-data:Address/UFOKN-dkk-CoF01/02> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:UnitAddress ;
-                                                                     ufokn:hasStreetAddress <ufokn-data:Address/UFOKN-dkk-CoF01> ;
-																	 ufokn:unitNumber "B" .
+                                                     ufokn:UnitAddress ;
+                                            ufokn:hasStreetAddress <ufokn-data:Address/UFOKN-dkk-CoF01> ;
+											ufokn:unitNumber "B" .
 
 
 ### A CollectionOfFeatures coded as UFOKN-dkk-CoF01
     <ufokn-data:CollectionOfFeatures/UFOKN-dkk-CoF01> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:CollectionOfFeatures ;
-                                                                         ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-CoF01> ;
-                                                                         ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-CoF01> ;
-                                                                         ufokn:ms_id "dkk-CoF01" ;
-                                                                         ufokn:key "building" ;
-                                                                         ufokn:oa_id "dkk-CoF01" ;
-                                                                         ufokn:fromDataSource ufokn:OSMdataSource,ufokn:MSdataSource,ufokn:OAdataSource; 
-                                                                         ufokn:value "apartments" ;
-																		 ufokn:hasMember <ufokn-data:FeatureAtRisk/UFOKN-dkk-CoF01/01> ,
-																						 <ufokn-data:FeatureAtRisk/UFOKN-dkk-CoF01/02> .
+                                                               ufokn:CollectionOfFeatures ;
+                                                      ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-CoF01> ;
+                                                      ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-CoF01> ;
+                                                      ufokn:id "dkk-CoF01" ;
+                                                      ufokn:key "building" ;
+                                                      ufokn:value "apartments" ;
+													  ufokn:hasMember <ufokn-data:FeatureAtRisk/UFOKN-dkk-CoF01/01> ,
+												                      <ufokn-data:FeatureAtRisk/UFOKN-dkk-CoF01/02> .
 ### Address for CollectionOfFeatures coded as UFOKN-dkk-CoF01
     <ufokn-data:Address/UFOKN-dkk-CoF01> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:StreetAddress ;
-                                                                     ufokn:street "North Channel Drive" ;
-                                                                     ufokn:streetNumber "101";
-                                                                     ufokn:city "Wrightsville" ; 
-                                                                     ufokn:region "" ; 
-                                                                     ufokn:state "NC";
-                                                                     ufokn:postcode "28480";
-																     ufokn:unitCount "2"^^xsd:integer .
+                                                  ufokn:StreetAddress ;
+										 ufokn:street "North Channel Drive" ;
+										 ufokn:streetNumber "101";
+										 ufokn:city "Wrightsville" ; 
+										 ufokn:region "" ; 
+										 ufokn:state "NC";
+										 ufokn:postcode "28480";
+										 ufokn:unitCount "2"^^xsd:integer .
 ### RiskPoint for CollectionOfFeatures coded as UFOKN-dkk-CoF01
     <ufokn-data:RiskPoint/UFOKN-dkk-CoF01> rdf:type owl:NamedIndividual ,
-                                                                                ufokn:RiskPoint ;
-                                                                       <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654323 1397477)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+                                                    ufokn:RiskPoint ;
+                                           <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654323 1397477)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
 
 
-### An ElecServ coded as UFOKN-dkk-ElecServ01
-    <ufokn-data:UtilityType/UFOKN-dkk-ElecServ01> rdf:type owl:NamedIndividual ,
-																						ufokn-c:electricService .
-																						
-
-### An UtilityService coded as UFOKN-dkk-UtilServ01
-    <ufokn-data:UtilityService/UFOKN-dkk-UtilServ01> rdf:type owl:NamedIndividual ,
-																						ufokn-c:UtilityService ;
-																					ufokn-c:serves <ufokn-data:FeatureAtRisk/UFOKN-dkk-FaR01> ,
-																								   <ufokn-data:FeatureAtRisk/UFOKN-dkk-IFaR01> ,
-																								   <ufokn-data:FeatureAtRisk/UFOKN-dkk-SFaR01> ,
-																								   <ufokn-data:CollectionOfFeatures/UFOKN-dkk-CoF01> ,
-																								   <ufokn-data:FeatureAtRisk/UFOKN-dkk-CoF01/01> ,
-																								   <ufokn-data:FeatureAtRisk/UFOKN-dkk-CoF01/02> ;
-																					ufokn-c:ofUtilityType <ufokn-data:UtilityType/UFOKN-dkk-ElecServ01> .
+### An ElectricService coded as UFOKN-dkk-ElectricServ01
+    <ufokn-data:UtilityService/UFOKN-dkk-ElectricServ01> rdf:type owl:NamedIndividual ,
+																  ufokn-c:UtilityService ;
+														 ufokn-c:serves <ufokn-data:FeatureAtRisk/UFOKN-dkk-FaR01> ,
+																		<ufokn-data:FeatureAtRisk/UFOKN-dkk-IFaR01> ;
+														 ufokn-c:ofUtilityType ufokn-c:ElectricService .
 
 
-### An ElectricUtilityAsset coded as UFOKN-dkk-UtilAssetElec01 (Electric Service)
-    <ufokn-data:UtilityAsset/UFOKN-dkk-UtilAssetElec01> rdf:type owl:NamedIndividual ,
-                                                                              ufokn-c:ElectricUtilityAsset ;
-                                                                         ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-UtilAssetElec01> ;
-                                                                         ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-UtilAssetElec01> ;
-                                                                         ufokn:ms_id "dkk-UtilAssetElec01" ;
-                                                                         ufokn:key "power" ;
-                                                                         ufokn:oa_id "dkk-UtilAssetElec01" ;
-                                                                         ufokn:fromDataSource ufokn:OSMdataSource,ufokn:MSdataSource,ufokn:OAdataSource; 
-                                                                         ufokn:value "substation" ;
-																		 ufokn-c:providesUtilityService <ufokn-data:UtilityService/UFOKN-dkk-UtilServ01> ;
-																		 ufokn-c:ofUtilityType <ufokn-data:UtilityType/UFOKN-dkk-ElecServ01> .
+### An ElectricUtilityAsset coded as UFOKN-dkk-Substation01 (ElectricServ01)
+    <ufokn-data:UtilityAsset/UFOKN-dkk-Substation01> rdf:type owl:NamedIndividual ,
+															  ufokn-c:ElectricUtilityAsset ;
+													 ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-Substation01> ;
+													 ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-Substation01> ;
+													 ufokn:id "dkk-Substation01" ;
+													 ufokn:key "power" ;
+													 ufokn:value "substation" ;
+													 ufokn-c:providesUtilityService <ufokn-data:UtilityService/UFOKN-dkk-ElectricServ01> ;
+													 ufokn-c:ofUtilityType ufokn-c:ElectricService .
+### Address for ElectricUtilityAsset coded as UFOKN-dkk-Substation01
+    <ufokn-data:Address/UFOKN-dkk-Substation01> rdf:type owl:NamedIndividual ,
+														 ufokn:StreetAddress ;
+											    ufokn:street "North Channel Drive" ;
+											    ufokn:streetNumber "12";
+											    ufokn:city "Wrightsville Beach" ; 
+											    ufokn:region "" ; 
+											    ufokn:state "NC";
+											    ufokn:postcode "28480".
+### RiskPoint for ElectricUtilityAsset coded as UFOKN-dkk-Substation01
+    <ufokn-data:RiskPoint/UFOKN-dkk-Substation01> rdf:type owl:NamedIndividual ,
+                                                           ufokn:RiskPoint ;
+                                                  <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654303 1397431)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
 
-### Address for ElectricUtilityAsset coded as UFOKN-dkk-UtilAssetElec01
-    <ufokn-data:Address/UFOKN-dkk-UtilAssetElec01> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:StreetAddress ;
-                                                                     ufokn:street "North Channel Drive" ;
-                                                                     ufokn:streetNumber "12";
-                                                                     ufokn:city "Wrightsville Beach" ; 
-                                                                     ufokn:region "" ; 
-                                                                     ufokn:state "NC";
-                                                                     ufokn:postcode "28480".
 
-### RiskPoint for ElectricUtilityAsset coded as UFOKN-dkk-UtilAssetElec01
-    <ufokn-data:RiskPoint/UFOKN-dkk-UtilAssetElec01> rdf:type owl:NamedIndividual ,
-                                                                                ufokn:RiskPoint ;
-                                                                       <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654303 1397431)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+### An ElectricService coded as UFOKN-dkk-ElectricServ02
+    <ufokn-data:UtilityService/UFOKN-dkk-ElectricServ02> rdf:type owl:NamedIndividual ,
+																  ufokn-c:UtilityService ;
+														 ufokn-c:serves <ufokn-data:FeatureAtRisk/UFOKN-dkk-SFaR01> ,
+																	    <ufokn-data:FeatureAtRisk/UFOKN-dkk-Cof01> ,
+																	    <ufokn-data:FeatureAtRisk/UFOKN-dkk-Cof01/01> ,
+																	    <ufokn-data:FeatureAtRisk/UFOKN-dkk-Cof01/02> ;
+														 ufokn-c:ofUtilityType ufokn-c:ElectricService .
+														 
+														 
+### An ElectricUtilityAsset coded as UFOKN-dkk-Substation02 (ElectricServ02)
+    <ufokn-data:UtilityAsset/UFOKN-dkk-Substation02> rdf:type owl:NamedIndividual ,
+                                                              ufokn-c:ElectricUtilityAsset ;
+													 ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-Substation02> ;
+													 ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-Substation01> ;
+													 ufokn:id "dkk-Substation02" ;
+													 ufokn:key "power" ;
+													 ufokn:value "substation" ;
+													 ufokn-c:providesUtilityService <ufokn-data:UtilityService/UFOKN-dkk-ElectricServ02> ;
+													 ufokn-c:ofUtilityType ufokn-c:ElectricService .
+### Address for ElectricUtilityAsset coded as UFOKN-dkk-Substation02
+    <ufokn-data:Address/UFOKN-dkk-Substation02> rdf:type owl:NamedIndividual ,
+                                                         ufokn:StreetAddress ;
+											    ufokn:street "North Channel Drive" ;
+											    ufokn:streetNumber "12";
+											    ufokn:city "Wrightsville Beach" ; 
+											    ufokn:region "" ; 
+											    ufokn:state "NC";
+											    ufokn:postcode "28480".
+### RiskPoint for ElectricUtilityAsset coded as UFOKN-dkk-Substation02
+    <ufokn-data:RiskPoint/UFOKN-dkk-Substation02> rdf:type owl:NamedIndividual ,
+                                                           ufokn:RiskPoint ;
+                                                  <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654303 1397431)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+												  
+												  
+### An ElectricService coded as UFOKN-dkk-ElectricServ03
+    <ufokn-data:UtilityService/UFOKN-dkk-ElectricServ03> rdf:type owl:NamedIndividual ,
+																  ufokn-c:UtilityService ;
+														 ufokn-c:serves <ufokn-data:UtilityAsset/UFOKN-dkk-Substation01> ,
+																	    <ufokn-data:UtilityAsset/UFOKN-dkk-Substation02> ;
+														 ufokn-c:ofUtilityType ufokn-c:ElectricService .
+														 
+														 
+### An ElectricUtilityAsset coded as UFOKN-dkk-Transmission01 (ElectricServ03)
+    <ufokn-data:UtilityAsset/UFOKN-dkk-Transmission01> rdf:type owl:NamedIndividual ,
+                                                                ufokn-c:ElectricUtilityAsset ;
+													   ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-Transmission01> ;
+													   ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-Transmission01> ;
+													   ufokn:id "dkk-Transmission01" ;
+													   ufokn:key "power" ;
+													   ufokn:value "transmission-lines" ;
+													   ufokn-c:providesUtilityService <ufokn-data:UtilityService/UFOKN-dkk-ElectricServ03> ;
+													   ufokn-c:ofUtilityType ufokn-c:ElectricService .
+### Address for ElectricUtilityAsset coded as UFOKN-dkk-Transmission01
+    <ufokn-data:Address/UFOKN-dkk-Transmission01> rdf:type owl:NamedIndividual ,
+                                                           ufokn:StreetAddress ;
+											      ufokn:street "North Channel Drive" ;
+											      ufokn:streetNumber "12";
+											      ufokn:city "Wrightsville Beach" ; 
+											      ufokn:region "" ; 
+											      ufokn:state "NC";
+											      ufokn:postcode "28480".
+### RiskPoint for ElectricUtilityAsset coded as UFOKN-dkk-Transmission01
+    <ufokn-data:RiskPoint/UFOKN-dkk-Transmission01> rdf:type owl:NamedIndividual ,
+                                                             ufokn:RiskPoint ;
+                                                    <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654303 1397431)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
