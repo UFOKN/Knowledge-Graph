@@ -70,11 +70,11 @@ dcterms:title rdf:type owl:AnnotationProperty .
 #    Datatypes
 #################################################################
 
-###  http://schema.ufokn.org/core/v1/depth
+###  http://schema.ufokn.org/core/v2/depth
 ufokn:depth rdf:type rdfs:Datatype .
 
 
-###  http://schema.ufokn.org/core/v1/elevation
+###  http://schema.ufokn.org/core/v2/elevation
 ufokn:elevation rdf:type rdfs:Datatype .
 
 
@@ -110,7 +110,7 @@ ufokn:hasRelativeRiskPointLocation rdf:type owl:ObjectProperty ;
                                    owl:inverseOf ufokn:locationForRiskPoint ;
                                    rdfs:domain ufokn:RiskPoint ;
                                    rdfs:range ufokn:RelativeRiskPointLocation ;
-                                   rdfs:comment "Relationship between a RiskPoint and its Localication Relative to the Spatial Model used by a Specific Modeling or Observation System. The relative location allows associating different elevations with a RiskPoint based on different spatial interpolation methods."@en ;
+                                   rdfs:comment "Relationship between a RiskPoint and its Localisation Relative to the Spatial Model used by a Specific Modeling or Observation System. The relative location allows associating different elevations with a RiskPoint based on different spatial interpolation methods."@en ;
                                    rdfs:label "hasRelativeRiskPointLocation"@en .
 
 
@@ -126,8 +126,11 @@ sosa:hasFeatureOfInterest rdf:type owl:ObjectProperty .
 
 ###  http://schema.ufokn.org/ufokn-features/v2/hasAddress
 ufokn:hasAddress rdf:type owl:ObjectProperty ;
-			rdfs:domain ufokn:FeatureAtRisk ; 
-			rdfs:range ufokn:Address .
+			rdfs:domain _:FeatureAtRiskOrUnitAddress ; 
+			rdfs:range ufokn:Address ;
+			rdfs:comment "Used to attach an address to a FeatureAtRisk or to a UnitAddress. UnitAddresses can use this to point to a common shared StreetAddress via the hasStreetAddress property, which is a subproperty of hasAddress. IndividualFeatureAtRisk that are members of a collection (i.e. units) use the subproperty hasUnitAddress to specify a combination of a unit number and street address."@en ;
+			rdfs:isDefinedBy ufokn: ;
+			rdfs:label "hasAddress"@en .
 
 
 ###  http://schema.ufokn.org/ufokn-features/v2/hasUnitAddress
@@ -135,7 +138,10 @@ ufokn:hasAddress rdf:type owl:ObjectProperty ;
 ufokn:hasUnitAddress rdf:type owl:ObjectProperty ;
 			rdfs:subPropertyOf ufokn:hasAddress ;
 			rdfs:domain ufokn:IndividualFeatureAtRisk ; 
-			rdfs:range ufokn:UnitAddress .
+			rdfs:range ufokn:UnitAddress ;
+			rdfs:comment "The unit address of an IndividualFeatureAtRisk. UnitAddresses require a unit number and all reusing a shared StreetAddress via the hasUnitAddress property."@en ;
+			rdfs:isDefinedBy ufokn: ;
+			rdfs:label "hasUnitAddress"@en .
 
 
 ###  http://schema.ufokn.org/ufokn-features/v2/hasStreetAddress
@@ -146,7 +152,10 @@ ufokn:hasStreetAddress rdf:type owl:ObjectProperty ;
 			rdfs:range ufokn:StreetAddress .
 # adding a property chain to more easily retrieve the address that is buried inside 
 # the UnitAddress of a Collection's individual FeaturesAtRisk 
-#			owl:propertyChainAxiom (ufokn:hasMember ufokn:hasUnitAddress ufokn:hasStreetAddress ).
+#			owl:propertyChainAxiom (ufokn:hasMember ufokn:hasUnitAddress ufokn:hasStreetAddress ) ;
+			rdfs:comment "The street address of a FeatureAtRisk or of a UnitAddress. UnitAddresses that are in the same building (i.e. have the same StreetAddress) can use this to point to a single shared StreetAddress and avoid repetition of the information in the street address."@en ;
+			rdfs:isDefinedBy ufokn: ;
+			rdfs:label "hasStreetAddress"@en .
 
 ###  http://schema.ufokn.org/ufokn-features/v2/hasMember
 ufokn:hasMember rdf:type owl:ObjectProperty ;
@@ -185,7 +194,7 @@ ufokn:unitNumber rdf:type owl:DatatypeProperty ;
 ufokn:unitCount rdf:type owl:DatatypeProperty ;
 				rdf:type owl:FunctionalProperty ;
 				rdfs:domain ufokn:Address ;
-				rdfs:range xsd:positiveInteger . 
+				rdfs:range xsd:nonNegativeInteger . 
 				
 ###  http://schema.ufokn.org/core/v2/areaSize
 ufokn:areaSize rdf:type owl:DatatypeProperty ;
@@ -392,7 +401,7 @@ ufokn:IndividualFeatureAtRiskInCollection rdf:type owl:Class ;
 
 ### Renamed: StandaloneFeatureAtRisk							   
 ###  http://schema.ufokn.org/core/v2/StandaloneFeatureAtRisk
-### All StandaloneFeaturesAtRisk are IndividualFeaturesAtRisk that are also not a member of some CollectionOfFeatures
+### All StandaloneFeaturesAtRisk are IndividualFeatureAtRisk that are also not a member of some CollectionOfFeatures
 ufokn:StandaloneFeatureAtRisk rdf:type owl:Class ;
 				rdfs:subClassOf ufokn:IndividualFeatureAtRisk ,
 								[rdf:type owl:Restriction ;
@@ -468,7 +477,11 @@ ufokn:UnitAddress rdf:type owl:Class ;
 							] ,
 							[rdf:type owl:Restriction ;
 							 owl:onProperty ufokn:unitCount ;
-							 owl:hasValue "1"^^xsd:nonNegativeInteger
+							 owl:hasValue "0"^^xsd:nonNegativeInteger
+							] ;
+							[rdf:type owl:Restriction ;
+							 owl:onProperty ufokn:hasAddress ;
+							 owl:allValuesFrom  ufokn:StreetAddress
 							] ;
 				owl:equivalentClass _:DefAddressesWithUnit .
 
@@ -511,12 +524,12 @@ ufokn:RiskPoint rdf:type owl:Class ;
 								sosa:FeatureOfInterest ,
                                 [ rdf:type owl:Restriction ;
                                   owl:onProperty geo:hasGeometry ;
-                                  owl:allValuesFrom geo:Point
+                                  owl:allValuesFrom ufokn-:Point_EPSG-5070
                                 ] ,
                                 [ rdf:type owl:Restriction ;
                                   owl:onProperty geo:hasGeometry ;
                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                  owl:onClass geo:Point
+                                  owl:onClass ufokn-:Point_EPSG-5070
                                 ] .
 
 

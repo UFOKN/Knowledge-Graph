@@ -193,14 +193,14 @@ geo:Point rdf:type owl:Class ;
 
 
 ### Defining a point geometry that uses EPSG 5070 as spatial reference system.
-ufokn-geo:PointEPSG507 rdf:type owl:Class ;
+ufokn-geo:Point_EPSG-5070 rdf:type owl:Class ;
 		rdfs:subClassOf geo:Point ,
 						[ rdf:type owl:Restriction ;
                                owl:onProperty ufokn-geo:spatialRS ;
                                owl:hasValue ufokn-geo:SRS_EPSG-5070 ;
 						] ,
 		rdfs:comment "A point (geometry of dimension 0) specified using EPSG 5070 as spatial reference system. This is the standard spatial reference system used by UFOKN."@en ;
-		rdfs:label "PointEPSG5070" .
+		rdfs:label "Point_EPSG-5070" .
 		
 
 
