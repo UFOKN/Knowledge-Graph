@@ -22,7 +22,7 @@
                                     <http://orcid.org/0000-0003-4486-9448> ;
                                     dcterms:description "Part of the UFOKN ontology for describing infrastructure at risk due to flooding events."@en-us ;
                                     dcterms:issued "2021-12-15"^^xsd:date ;
-                                    dcterms:modified "2021-12-15"^^xsd:date ;
+                                    dcterms:modified "2022-06-27"^^xsd:date ;
                                     dcterms:publisher <http://ufokn.org> ;
                                     dcterms:source "https://github.com/UFOKN/Knowledge-Graph/ontologies/v2/core.owl"^^<xsd:anyURI> ;
                                     dcterms:title "Core of the UFOKN Ontology"@en-us ;
@@ -110,14 +110,16 @@ ufokn:hasRelativeRiskPointLocation rdf:type owl:ObjectProperty ;
                                    owl:inverseOf ufokn:locationForRiskPoint ;
                                    rdfs:domain ufokn:RiskPoint ;
                                    rdfs:range ufokn:RelativeRiskPointLocation ;
-                                   rdfs:comment "Relationship between a RiskPoint and its Localisation Relative to the Spatial Model used by a Specific Modeling or Observation System. The relative location allows associating different elevations with a RiskPoint based on different spatial interpolation methods."@en ;
+                                   rdfs:comment "Relationship between a RiskPoint and its Localisation relative to the Spatial Model used by a Specific Modeling or Observation System. The relative location allows associating different elevations with a RiskPoint based on different spatial interpolation methods."@en ;
                                    rdfs:label "hasRelativeRiskPointLocation"@en .
 
 
 
 
 ###  http://schema.ufokn.org/core/v2/locationForRiskPoint
-ufokn:locationForRiskPoint rdf:type owl:ObjectProperty .
+ufokn:locationForRiskPoint rdf:type owl:ObjectProperty ;
+                           rdfs:domain ufokn:RelativeRiskPointLocation ;
+						   rdfs:range ufokn:RiskPoint .
 
 
 ###  http://www.w3.org/ns/sosa/hasFeatureOfInterest
@@ -137,7 +139,7 @@ ufokn:hasAddress rdf:type owl:ObjectProperty ;
 # only individual FeaturesAtRisk but not Collections can have unit addresses 
 ufokn:hasUnitAddress rdf:type owl:ObjectProperty ;
 			rdfs:subPropertyOf ufokn:hasAddress ;
-			rdfs:domain ufokn:IndividualFeatureAtRisk ; 
+			rdfs:domain ufokn:IndividualFeatureAtRiskInCollection ; 
 			rdfs:range ufokn:UnitAddress ;
 			rdfs:comment "The unit address of an IndividualFeatureAtRisk. UnitAddresses require a unit number and all reusing a shared StreetAddress via the hasUnitAddress property."@en ;
 			rdfs:isDefinedBy ufokn: ;
@@ -256,7 +258,7 @@ ufokn:postcode rdf:type owl:DatatypeProperty ;
 				rdfs:domain ufokn:Address ;
 				rdfs:range xsd:string . 
 				
-### Data Properties for Features-at-risk
+### Data Properties for FeaturesAtRisk
 				
 ###  http://schema.ufokn.org/core/v2/key
 ufokn:key rdf:type owl:DatatypeProperty ;
@@ -268,15 +270,6 @@ ufokn:value rdf:type owl:DatatypeProperty ;
 				rdfs:domain ufokn:FeatureAtRisk ;
 				rdfs:range xsd:string . 
 
-###  http://schema.ufokn.org/core/v2/osm_id
-ufokn:osm_id rdf:type owl:DatatypeProperty ;
-				rdfs:domain ufokn:FeatureAtRisk ;
-				rdfs:range xsd:string . 
-
-###  http://schema.ufokn.org/core/v2/ms_id
-ufokn:ms_id rdf:type owl:DatatypeProperty ;
-				rdfs:domain ufokn:FeatureAtRisk ;
-				rdfs:range xsd:string . 
 
 ###  http://schema.ufokn.org/core/v2/id
 ufokn:id rdf:type owl:DatatypeProperty ;
@@ -284,15 +277,21 @@ ufokn:id rdf:type owl:DatatypeProperty ;
 
 ###  http://schema.ufokn.org/core/v2/osm_id
 ufokn:osm_id rdf:type owl:DatatypeProperty ;
-                   rdfs:subPropertyOf ufokn:id.
+                rdfs:subPropertyOf ufokn:id.
+				rdfs:domain ufokn:FeatureAtRisk ;
+				rdfs:range xsd:string . 
 
 ###  http://schema.ufokn.org/core/v2/ms_id
 ufokn:ms_id rdf:type owl:DatatypeProperty ;
-                   rdfs:subPropertyOf ufokn:id.
+                rdfs:subPropertyOf ufokn:id ;
+				rdfs:domain ufokn:FeatureAtRisk ;
+				rdfs:range xsd:string . 
 
 ###  http://schema.ufokn.org/core/v2/oa_id
 ufokn:oa_id rdf:type owl:DatatypeProperty ;
-                   rdfs:subPropertyOf ufokn:id.
+                rdfs:subPropertyOf ufokn:id ;
+				rdfs:domain ufokn:FeatureAtRisk ;
+				rdfs:range xsd:string . 
 				   
 ### other datatype properties 
 				   
