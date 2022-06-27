@@ -192,6 +192,18 @@ geo:Point rdf:type owl:Class ;
           rdfs:label "Point"@en .
 
 
+### Defining a point geometry that uses EPSG 5070 as spatial reference system.
+ufokn-geo:PointEPSG507 rdf:type owl:Class ;
+		rdfs:subClassOf geo:Point ,
+						[ rdf:type owl:Restriction ;
+                               owl:onProperty ufokn-geo:spatialRS ;
+                               owl:hasValue ufokn-geo:SRS_EPSG-5070 ;
+						] ,
+		rdfs:comment "A point (geometry of dimension 0) specified using EPSG 5070 as spatial reference system. This is the standard spatial reference system used by UFOKN."@en ;
+		rdfs:label "PointEPSG5070" .
+		
+
+
 ###  http://www.opengis.net/ont/geosparql#PolyedralSurface
 geo:PolyedralSurface rdf:type owl:Class ;
                      rdfs:subClassOf geo:Surface ,
