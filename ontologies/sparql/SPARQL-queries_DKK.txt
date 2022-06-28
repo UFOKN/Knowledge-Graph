@@ -1,37 +1,252 @@
-###
-# Attempts to retrieve all ufokn:IndividualFeatureAtRisk or all ufokn:StandaloneFeatureAtRisk (comment one out)
-# Results on UFOKN-Basic dataset
-#    IndividualFeatureAtRisk does not retrieve SFaR coded as FaR (but does retrieve IFaRiC coded as FaR)
-#    StandaloneFeatureAtRisk does not retrieve SFaR coded as FaR
-# Results on UFOKN-2500 / UFOKN-mini datasets
-#    IndividualFeatureAtRisk only retrieves IFaRiC coded as FaR
-#    StandaloneFeatureAtRisk retrieves nothing
+# The queries below are in reverse order of how they were originally created
+# Therefore, the most complex ones come first
+# Note that some lines have been commented out of some queries
+#    There may be two different queries that can be run by changing what is commented
+#	 There may be functionality that is not yet supported in the ontology
+
+
+
+### Cascade! ###
+# A cascading query: Asset1 provides service to Asset2 which provides service to Asset3 which provides service to features
+# Can filter for only assets that are flooded (when supported)
+# Does not use the same design as in the May 2021 Utility Connectin Pattern presentation
+# Works as expected
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select ?feature where { 
-    ?feature rdf:type ufokn:IndividualFeatureAtRisk.
-#    ?feature rdf:type ufokn:StandaloneFeatureAtRisk.
-}  
+select ?utilAsset1 ?utilAsset2 ?utilAsset3 ?feature where { 
+	?utilAsset1 rdf:type ufokn-c:UtilityAsset ;
+#                ufokn:hasFloodLevel "critical"^^xsd:string ;
+                ufokn-c:providesUtilityService ?utilServ1 .  
+	?utilServ1 ufokn-c:serves ?utilAsset2 ;
+			   ufokn-c:ofUtilityType ?utilType2 .
+    ?utilAsset2 ufokn-c:providesUtilityService ?utilServ2 .
+    ?utilServ2 ufokn-c:serves ?utilAsset3 ;
+               ufokn-c:ofUtilityType ?utilType3.
+	?utilAsset3 ufokn-c:providesUtilityService ?utilServ3 .
+    ?utilServ3 ufokn-c:serves ?feature .
+    ?feature rdf:type ufokn:FeatureAtRisk .
+}
 
 
 
-###
-# Retrieves all ufokn:CollectionOfFeatures
+### FaRInAssetArea ###
+# Retrieves all features at risk served in an electric utility asset's service area
+# Can filter for only assets that are flooded (when supported)
+# Works as expected
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn-geo: <http://schema.ufokn.org/geo/v2/>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+select ?eua ?feature where { 
+	?eua rdf:type ufokn-c:ElectricUtilityAsset;
+#	      ufokn:hasFloodLevel "critical"^^xsd:string;
+         ufokn-c:providesUtilityService ?utilServ.
+	?utilServ ufokn-c:servesArea ?serviceArea.
+    ?serviceArea ufokn-geo:hasWktGeometry ?area.
+    ?feature ufokn:hasRiskPoint ?riskPoint.
+    ?riskPoint ufokn-geo:hasWktGeometry ?point.
+    
+    FILTER(geof:sfWithin(?point, ?area))
+}
+
+
+
+### FaRServedBy ###
+# Retrieves all features at risk served by electric utility assets
+# Can filter for only assets that are flooded (when supported)
+# Works as expected
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+select ?eua ?feature where { 
+	?eua rdf:type ufokn-c:ElectricUtilityAsset;
+#		  ufokn:hasFloodLevel "critical"^^xsd:string;
+    	 ufokn-c:providesUtilityService ?utilServ.
+	?utilServ ufokn-c:serves ?feature.
+    ?feature rdf:type ufokn:FeatureAtRisk.
+}
+
+
+
+### servesArea ###
+# Retrieves each ufokn-c:UtilityService and returns all ufokn:FeatureAtRisk within the ufokn-c:UtilityServiceArea.
+# Works as expected.
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn-geo: <http://schema.ufokn.org/geo/v2/>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+
+select ?utilityService ?feature where { 
+    ?utilityService rdf:type ufokn-c:UtilityService;
+    				ufokn-c:servesArea ?utilityArea.
+    ?utilityArea ufokn-geo:hasWktGeometry ?area.
+    ?feature rdf:type ufokn:FeatureAtRisk;
+    		 ufokn:hasRiskPoint ?riskPoint.
+    ?riskPoint ufokn-geo:hasWktGeometry ?point.
+    
+    FILTER(geof:sfWithin(?point, ?area))
+} 
+
+
+
+### FeaturesInServiceAreas ###
+# Retrieves each FaR with a Risk Point and indicates all service areas they belong to
+# Works as expected
+
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn-geo: <http://schema.ufokn.org/geo/v2/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+
+select ?feature ?serviceArea where {
+    ?feature ufokn:hasRiskPoint ?riskPoint.
+    ?riskPoint ufokn-geo:hasWktGeometry ?point.
+    ?serviceArea rdf:type ufokn-c:UtilityServiceArea;
+    			 ufokn-geo:hasWktGeometry ?area.
+				 
+    FILTER(geof:sfWithin(?point, ?area))
+#    FILTER(geof:sfDisjoint(?point, ?area))
+}
+
+
+
+### serves ###
+# Retrieves each ufokn-c:UtilityService, its ufokn-c:UtilityType, each ufokn:FeatureOrRegionAtRisk it serves,
+#     and the ufokn-c:UtilityAsset that provides the service.
+# Works as expected.
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+
+select ?utilityService ?serviceType ?serves ?providedByAsset where { 
+    ?utilityService rdf:type ufokn-c:UtilityService;
+    				ufokn-c:ofUtilityType ?serviceType;
+    				ufokn-c:providedByUtilityAsset ?providedByAsset;
+    				ufokn-c:serves ?serves.
+} 
+
+
+
+### UtilityService ###
+# Retrieves each ufokn-c:UtilityService, its ufokn-c:UtilityType, and the ufokn-c:UtilityAsset that provides the service
+# Works as expected.
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+
+select ?utilityService ?serviceType ?providedByAsset where { 
+    ?utilityService rdf:type ufokn-c:UtilityService.
+    				ufokn-c:ofUtilityType ?serviceType;
+    				ufokn-c:providedByUtilityAsset ?providedByAsset.
+} 
+
+
+
+### UtilityAsset ###
+# Retrieves all ufokn-c:UtilityAsset entries along with their ufokn-c:UtilityType and ufokn-c:UtilityService
+# Works as expected.
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+
+select distinct ?utilityAsset ?serviceType ?utilityService where { 
+    ?utilityAsset rdf:type ufokn-c:UtilityAsset.
+    			  ufokn-c:ofUtilityType ?serviceType;
+    			  ufokn-c:providesUtilityService ?utilityService.
+} 
+
+
+
+### hasMember_counts ###
+# Retrieves a count of how many ufokn:IndividualFeatureAtRiskInCollection are in each ufokn:CollectionOfFeatures
 # Works as expected
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 
-select distinct ?collection where { 
+select ?collection (count(?collection) as ?count) where { 
 	?collection rdf:type ufokn:CollectionOfFeatures.
-    ?collection ufokn:hasMember ?ifaric.
+    			ufokn:hasMember ?x.
+} group by ?collection
+
+
+
+### FaR_w-Address ###
+# Retrieves all ufokn:FeatureAtRisk and attempts to retrieve address information for each
+# Each part works as exected (see notes below)
+# Need to create a single query that pulls both simultaneously
+# Can the second query be simplified using the proposed owl:propertyChainAxiom?
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+
+select ?feature ?st_add where { 
+	?feature rdf:type ufokn:FeatureAtRisk.
+    
+    ### Retrieves addresses for anything that does not have a unit number
+#    ?feature ufokn:hasAddress ?address.
+#    ?address ufokn:streetNumber ?st_num;
+#    		 ufokn:street ?street;
+#    		 ufokn:city ?city;
+#    		 ufokn:state ?state;
+#    		 ufokn:postcode ?zip.
+#    BIND(concat(str(?st_num), str(" "), str(?street), str(" "), str(", "), str(?city), str(", "), str(?state), str("  "), str(?zip)) as ?st_add).
+    
+    ### Retrieves addresses for anything with a unit number.
+    ?feature ufokn:hasAddress ?address.
+    ?address ufokn:hasStreetAddress ?st_address;
+    		 ufokn:unitNumber ?u_num.
+    ?st_address ufokn:streetNumber ?st_num;
+    			ufokn:street ?street;
+    			ufokn:city ?city;
+    			ufokn:state ?state;
+    			ufokn:postcode ?zip.
+    BIND(concat(str(?st_num), str(" "), str(?street), str(" "), str(?u_num), str(", "), str(?city), str(", "), str(?state), str("  "), str(?zip)) as ?st_add).
+}
+
+
+
+### IFaRiC ###
+# Retrieves all ufokn:IndividualFeatureAtRiskInCollection along with address information
+# Does not retrieve ufokn:FeatureAtRisk that satisfies definition of ufokn:IndividualFeatureAtRiskInCollection
+#    Did before 6/27/22 ufokn-core update
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+
+select ?feature ?st_add where { 
+	?feature rdf:type ufokn:IndividualFeatureAtRiskInCollection.
+    ?feature ufokn:hasAddress ?address.
+    ?address ufokn:hasStreetAddress ?st_address;
+    		 ufokn:unitNumber ?u_num.
+    ?st_address ufokn:streetNumber ?st_num;
+    			ufokn:street ?street;
+    			ufokn:city ?city;
+    			ufokn:state ?state;
+    			ufokn:postcode ?zip.
+    BIND(concat(str(?st_num), str(" "), str(?street), str(" "), str(?u_num), str(", "), str(?city), str(", "), str(?state), str("  "), str(?zip)) as ?st_add).
 } 
 
 
 
-###
+### CoF-alt ###
 # Retrieves all ufokn:CollectionOfFeatures (alternate)
 # Works as expected
 
@@ -46,89 +261,64 @@ having (count(distinct ?unit) > 1)
 
 
 
-###
-# Retrieves all ufokn:IndividualFeatureAtRiskInCollection along with address information
-# Works as expected, including retrieveing ufokn:FeatureAtRisk that satisfy definition of ufokn:FeatureAtRiskInCollection.
-
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
-
-select ?feature ?st_add where { 
-	?feature rdf:type ufokn:IndividualFeatureAtRiskInCollection.
-    ?feature ufokn:hasAddress ?address.
-    ?address ufokn:hasStreetAddress ?st_address.
-    ?st_address ufokn:streetNumber ?st_num.
-    ?st_address ufokn:street ?street.
-    ?address ufokn:unitNumber ?u_num.
-    ?st_address ufokn:city ?city.
-    ?st_address ufokn:state ?state.
-    ?st_address ufokn:postcode ?zip.
-    BIND(concat(str(?st_num), str(" "), str(?street), str(" "), str(?u_num), str(", "), str(?city), str(", "), str(?state), str("  "), str(?zip)) as ?st_add).
-} 
-
-
-
-###
-# Retrieves all ufokn:FeatureAtRisk and attempts to retrieve address information for each
-#    Does retrieve all ufokn:FeatureAtRisk when all address lines are commented out.
-# The first code to retrieve an address returns nothing, even with the owl:propertyChainAxiom
-# The second code only retrieves addresses for ufokn:IndividualFeatureAtRiskInCollection
-#    This makes sense as nothing else will have a unit number
-
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
-
-select ?feature ?st_add where { 
-	?feature rdf:type ufokn:FeatureAtRisk.
-#    ?feature ufokn:hasAddress ?address.
-#    ?address ufokn:streetNumber ?st_num.
-#    ?address ufokn:street ?street.
-#    ?address ufokn:unitNumber ?u_num.
-#    ?address ufokn:city ?city.
-#    ?address ufokn:state ?state.
-#    ?address ufokn:postcode ?zip.
-#    BIND(concat(str(?st_num), str(" "), str(?street), str(" "), str(?u_num), str(", "), str(?city), str(", "), str(?state), str("  "), str(?zip)) as ?st_add).
-    ?feature ufokn:hasAddress ?address.
-    ?address ufokn:hasStreetAddress ?st_address.
-    ?st_address ufokn:streetNumber ?st_num.
-    ?st_address ufokn:street ?street.
-    ?address ufokn:unitNumber ?u_num.
-    ?st_address ufokn:city ?city.
-    ?st_address ufokn:state ?state.
-    ?st_address ufokn:postcode ?zip.
-    BIND(concat(str(?st_num), str(" "), str(?street), str(" "), str(?u_num), str(", "), str(?city), str(", "), str(?state), str("  "), str(?zip)) as ?st_add).
-}
-
-
-
-###
-# Retrieves a count of how many ufokn:IndividualFeatureAtRiskInCollection are in each ufokn:CollectionOfFeatures
+### CoF ###
+# Retrieves all ufokn:CollectionOfFeatures
 # Works as expected
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 
-select ?collection (count(?collection) as ?count) where { 
-	?collection rdf:type ufokn:CollectionOfFeatures.
-    ?collection ufokn:hasMember ?x.
-} group by ?collection
+select distinct ?collection where { 
+	?collection rdf:type ufokn:CollectionOfFeatures;
+    			ufokn:hasMember ?ifaric.
+} 
 
 
 
-###
+### IFaR_SFaR ###
+# Attempts to retrieve all ufokn:IndividualFeatureAtRisk or all ufokn:StandaloneFeatureAtRisk (comment one out)
+# Results on UFOKN-Basic dataset
+#    IndividualFeatureAtRisk does not retrieve SFaR or IFaRiC coded as FaR
+#		 Did retrieve IFaRiC coded as FaR before 6/27/22 ufokn-core update
+#    StandaloneFeatureAtRisk does not retrieve SFaR coded as FaR
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+
+select ?feature where { 
+#    ?feature rdf:type ufokn:IndividualFeatureAtRisk.
+    ?feature rdf:type ufokn:StandaloneFeatureAtRisk.
+} 
+
+
+
+### FaR ###
+# Retrieves all ufokn:FeatureAtRisk
+# Works as expected
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+
+select ?feature where { 
+	?feature rdf:type ufokn:FeatureAtRisk.
+}
+
+
+
+### K-V_Pairs ###
 # Retrieves all distinct key-value pairs
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 
 select distinct ?key ?value where { 
-	?x ufokn:key ?key.
-    ?x ufokn:value ?value.
+	?x ufokn:key ?key;
+       ufokn:value ?value.
 } order by ?key ?value
 
 
 
-###
+### Value_Count ###
 # Retrieves all distinct values and the number of times they occur
 # Easily adapted to do the same for keys
 
@@ -138,53 +328,3 @@ PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 select ?val (count(?val) as ?count) where { 
 	?X ufokn:value ?val.
 } group by ?val
-
-
-
-###
-# Retrieves all ufokn-c:UtilityAsset entries along with their ufokn-c:UtilityType and ufokn-c:UtilityService
-# Works as expected.
-
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
-
-select distinct ?utilityAsset ?serviceType ?utilityService where { 
-    ?utilityAsset rdf:type ufokn-c:UtilityAsset.
-    ?utilityAsset ufokn-c:ofUtilityType ?serviceType.
-    ?utilityAsset ufokn-c:providesUtilityService ?utilityService.
-}
-
-
-
-###
-# Retrieves each ufokn-c:UtilityService, its ufokn-c:UtilityType, and the ufokn-c:UtilityAsset that provides the service
-# Works as expected.
-
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
-
-select ?utilityService ?serviceType ?providedByAsset where { 
-    ?utilityService rdf:type ufokn-c:UtilityService.
-    ?utilityService ufokn-c:ofUtilityType ?serviceType.
-    ?utilsutilityServiceerv ufokn-c:providedByUtilityAsset ?providedByAsset.
-} 
-
-
-
-###
-# Retrieves each ufokn-c:UtilityService, its ufokn-c:UtilityType, each ufokn:FeatureOrRegionAtRisk it serves,
-#     and the ufokn-c:UtilityAsset that provides the service.
-# Works as expected.
-
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
-
-select ?utilityService ?serviceType ?serves ?providedByAsset where { 
-    ?utilityService rdf:type ufokn-c:UtilityService.
-    ?utilityService ufokn-c:ofUtilityType ?serviceType.
-    ?utilityService ufokn-c:providedByUtilityAsset ?providedByAsset.
-    ?utilityService ufokn-c:serves ?serves.
-} 
