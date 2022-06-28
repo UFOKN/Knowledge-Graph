@@ -153,228 +153,404 @@
 									 rdfs:range ufokn:elevation .
 
 
-### A FeatureAtRisk coded as UFOKN-dkk-FaR01
-    <ufokn-data:FeatureAtRisk/UFOKN-dkk-FaR01> rdf:type owl:NamedIndividual ,
-														ufokn:FeatureAtRisk ;
-											   ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-FaR01> ;
-											   ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-FaR01> ;
-											   ufokn:id "dkk-FaR01" ;
-											   ufokn:key "building" ;
-											   ufokn:value "detached" .
-### Address for FeatureAtRisk coded as UFOKN-dkk-FaR01
-    <ufokn-data:Address/UFOKN-dkk-FaR01> rdf:type owl:NamedIndividual ,
-                                                  ufokn:StreetAddress ;
-                                         ufokn:street "North Channel Drive" ;
-                                         ufokn:streetNumber "100";
-                                         ufokn:city "Wrightsville Beach" ; 
-                                         ufokn:region "" ; 
-                                         ufokn:state "NC";
-                                         ufokn:postcode "28480";
-										 ufokn:unitCount "1"^^xsd:positiveInteger .
-### RiskPoint for FeatureAtRisk coded as UFOKN-dkk-FaR01
-    <ufokn-data:RiskPoint/UFOKN-dkk-FaR01> rdf:type owl:NamedIndividual ,
-                                                    ufokn:RiskPoint ;
-                                           <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654323 1397477)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+### A FeatureAtRisk coded as dkk-FaR-2-1
+    <ufokn-data:FeatureAtRisk/dkk-FaR-2-1> rdf:type owl:NamedIndividual ,
+											    	ufokn:FeatureAtRisk ;
+										   ufokn:hasAddress <ufokn-data:Address/dkk-FaR-2-1> ;
+										   ufokn:hasRiskPoint <ufokn-data:RiskPoint/dkk-FaR-2-1> ;
+										   ufokn:id "dkk-FaR-2-1" ;
+										   ufokn:key "building" ;
+										   ufokn:value "detached" .
+### Address for FeatureAtRisk coded as dkk-FaR-2-1
+    <ufokn-data:Address/dkk-FaR-2-1> rdf:type owl:NamedIndividual ,
+                                              ufokn:StreetAddress ;
+                                     ufokn:street "North Lumina Avenue" ;
+                                     ufokn:streetNumber "513";
+                                     ufokn:city "Wrightsville Beach" ; 
+                                     ufokn:region "" ; 
+                                     ufokn:state "NC";
+                                     ufokn:postcode "28480";
+									 ufokn:unitCount "1"^^xsd:positiveInteger .
+### RiskPoint for FeatureAtRisk coded as dkk-FaR-2-1
+    <ufokn-data:RiskPoint/dkk-FaR-2-1> rdf:type owl:NamedIndividual ,
+                                                ufokn:RiskPoint ;
+                                       ufokn-geo:hasWktGeometry "POINT (1654750 1397681)"^^geo:wktLiteral .
 
 
-### An IndividualFeatureAtRisk coded as UFOKN-dkk-IFaR01
-    <ufokn-data:FeatureAtRisk/UFOKN-dkk-IFaR01> rdf:type owl:NamedIndividual ,
-                                                         ufokn:IndividualFeatureAtRisk ;
-                                                ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-IFaR01> ;
-                                                ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-IFaR01> ;
-											    ufokn:id "dkk-IFaR01" ;
-											    ufokn:key "building" ;
-											    ufokn:value "detached" .
-### Address for IndividualFeatureAtRisk coded as UFOKN-dkk-IFaR01
-    <ufokn-data:Address/UFOKN-dkk-IFaR01> rdf:type owl:NamedIndividual ,
-                                                   ufokn:StreetAddress ;
-										  ufokn:street "North Channel Drive" ;
-										  ufokn:streetNumber "102";
+### An IndividualFeatureAtRisk coded as dkk-IFaR-2-2
+    <ufokn-data:FeatureAtRisk/dkk-IFaR-2-2> rdf:type owl:NamedIndividual ,
+                                                     ufokn:IndividualFeatureAtRisk ;
+                                            ufokn:hasAddress <ufokn-data:Address/dkk-IFaR-2-2> ;
+                                            ufokn:hasRiskPoint <ufokn-data:RiskPoint/dkk-IFaR-2-2> ;
+											ufokn:id "dkk-IFaR-2-2" ;
+											ufokn:key "building" ;
+											ufokn:value "detached" .
+### Address for IndividualFeatureAtRisk coded as dkk-IFaR-2-2
+    <ufokn-data:Address/dkk-IFaR-2-2> rdf:type owl:NamedIndividual ,
+                                               ufokn:StreetAddress ;
+									  ufokn:street "Shearwater Street" ;
+									  ufokn:streetNumber "6";
+									  ufokn:city "Wrightsville Beach" ; 
+									  ufokn:region "" ; 
+									  ufokn:state "NC";
+									  ufokn:postcode "28480".
+### RiskPoint for IndividualFeatureAtRisk coded as dkk-IFaR-2-2
+    <ufokn-data:RiskPoint/dkk-IFaR-2-2> rdf:type owl:NamedIndividual ,
+                                                 ufokn:RiskPoint ;
+                                        ufokn-geo:hasWktGeometry "POINT (1654963 1398156)"^^geo:wktLiteral .
+
+
+### A StandaloneFeatureAtRisk coded as dkk-SFaR-3-1
+    <ufokn-data:FeatureAtRisk/dkk-SFaR-3-1> rdf:type owl:NamedIndividual ,
+                                                     ufokn:StandaloneFeatureAtRisk ;
+										    ufokn:hasAddress <ufokn-data:Address/dkk-SFaR-3-1> ;
+											ufokn:hasRiskPoint <ufokn-data:RiskPoint/dkk-SFaR-3-1> ;
+										    ufokn:id "dkk-SFaR-3-1" ;
+										    ufokn:key "building" ;
+										    ufokn:value "detached" .
+### Address for StandaloneFeatureAtRisk coded as dkk-SFaR-3-1
+    <ufokn-data:Address/dkk-SFaR-3-1> rdf:type owl:NamedIndividual ,
+                                               ufokn:StreetAddress ;
+									  ufokn:street "Sunset Avenue" ;
+									  ufokn:streetNumber "700";
+									  ufokn:city "Wrightsville Beach" ; 
+									  ufokn:region "" ; 
+									  ufokn:state "NC";
+									  ufokn:postcode "28480".
+### RiskPoint for StandaloneFeatureAtRisk coded as dkk-SFaR-3-1
+    <ufokn-data:RiskPoint/dkk-SFaR-3-1> rdf:type owl:NamedIndividual ,
+                                                 ufokn:RiskPoint ;
+                                        ufokn-geo:hasWktGeometry "POINT (1653854 1395435)"^^geo:wktLiteral .
+
+
+### An IndividualFeatureAtRiskInCollection coded as dkk-CoF-3-1/01
+    <ufokn-data:FeatureAtRisk/dkk-CoF-3-1/01> rdf:type owl:NamedIndividual ,
+                                                       ufokn:IndividualFeatureAtRiskInCollection ;
+									 		  ufokn:hasAddress <ufokn-data:Address/dkk-CoF-3-1/01> ;
+									 		  ufokn:hasRiskPoint <ufokn-data:RiskPoint/dkk-CoF-3-1> ;
+											  ufokn:id "dkk-CoF-3-1/01" ;
+											  ufokn:key "building:part" ;
+											  ufokn:value "yes" .
+### Address for IndividualFeatureAtRiskInCollection coded as dkk-CoF-3-1/01
+    <ufokn-data:Address/dkk-CoF-3-1/01> rdf:type owl:NamedIndividual ,
+                                                 ufokn:UnitAddress ;
+                                        ufokn:hasStreetAddress <ufokn-data:Address/dkk-CoF-3-1> ;
+										ufokn:unitNumber "A" .
+
+
+### An IndividualFeatureAtRiskInCollection coded as dkk-CoF-3-1/02 (a FeatureAtRisk)
+    <ufokn-data:FeatureAtRisk/dkk-CoF-3-1/02> rdf:type owl:NamedIndividual ,
+                                                       ufokn:FeatureAtRisk ;
+											  ufokn:hasAddress <ufokn-data:Address/dkk-CoF-3-1/02> ;
+											  ufokn:hasRiskPoint <ufokn-data:RiskPoint/dkk-CoF-3-1> ;
+											  ufokn:id "dkk-CoF-3-1/02" ;
+											  ufokn:key "building:part" ;
+											  ufokn:value "yes" .
+### Address for IndividualFeatureAtRiskInCollection coded as dkk-CoF-3-1/02
+    <ufokn-data:Address/dkk-CoF-3-1/02> rdf:type owl:NamedIndividual ,
+                                                 ufokn:UnitAddress ;
+                                        ufokn:hasStreetAddress <ufokn-data:Address/dkk-CoF-3-1> ;
+										ufokn:unitNumber "B" .
+
+
+### A CollectionOfFeatures coded as dkk-CoF-3-1
+    <ufokn-data:CollectionOfFeatures/dkk-CoF-3-1> rdf:type owl:NamedIndividual ,
+                                                           ufokn:CollectionOfFeatures ;
+                                                  ufokn:hasAddress <ufokn-data:Address/dkk-CoF-3-1> ;
+                                                  ufokn:hasRiskPoint <ufokn-data:RiskPoint/dkk-CoF-3-1> ;
+                                                  ufokn:id "dkk-CoF-3-1" ;
+                                                  ufokn:key "building" ;
+                                                  ufokn:value "apartments" ;
+												  ufokn:hasMember <ufokn-data:FeatureAtRisk/dkk-CoF-3-1/01> ,
+												                      <ufokn-data:FeatureAtRisk/dkk-CoF-3-1/02> .
+### Address for CollectionOfFeatures coded as dkk-CoF-3-1
+    <ufokn-data:Address/dkk-CoF-3-1> rdf:type owl:NamedIndividual ,
+                                              ufokn:StreetAddress ;
+									 ufokn:street "South Lumina Avenue" ;
+									 ufokn:streetNumber "819";
+									 ufokn:city "Wrightsville Beach" ; 
+									 ufokn:region "" ; 
+									 ufokn:state "NC";
+									 ufokn:postcode "28480";
+									 ufokn:unitCount "2"^^xsd:integer .
+### RiskPoint for CollectionOfFeatures coded as dkk-CoF-3-1
+    <ufokn-data:RiskPoint/dkk-CoF-3-1> rdf:type owl:NamedIndividual ,
+                                                ufokn:RiskPoint ;
+                                       ufokn-geo:hasWktGeometry "POINT (1653812 1394983)"^^geo:wktLiteral .
+
+
+### An ElectricService coded as dkk-ElectricServ01
+    <ufokn-data:UtilityService/dkk-ElectricServ01> rdf:type owl:NamedIndividual ,
+														    ufokn-c:UtilityService ;
+												   ufokn-c:servesArea <ufokn-data:ServiceArea/dkk-ElectricServArea-1> ;
+												   ufokn-c:ofUtilityType ufokn-c:ElectricService .
+
+
+### An ElectricUtilityAsset coded as dkk-Substation-1 (ElectricServ01)
+    <ufokn-data:UtilityAsset/dkk-Substation-1> rdf:type owl:NamedIndividual ,
+														ufokn-c:ElectricUtilityAsset ;
+											   ufokn:hasAddress <ufokn-data:Address/dkk-Substation-1> ;
+											   ufokn:hasRiskPoint <ufokn-data:RiskPoint/dkk-Substation-1> ;
+											   ufokn:id "dkk-Substation-1" ;
+											   ufokn:key "power" ;
+											   ufokn:value "substation" ;
+											   ufokn-c:providesUtilityService <ufokn-data:UtilityService/dkk-ElectricServ01> ;
+											   ufokn-c:ofUtilityType ufokn-c:ElectricService .
+### Address for ElectricUtilityAsset coded as dkk-Substation-1
+    <ufokn-data:Address/dkk-Substation-1> rdf:type owl:NamedIndividual ,
+												   ufokn:StreetAddress ;
+										  ufokn:street "Causeway Drive" ;
+										  ufokn:streetNumber "563";
 										  ufokn:city "Wrightsville Beach" ; 
 										  ufokn:region "" ; 
 										  ufokn:state "NC";
 										  ufokn:postcode "28480".
-### RiskPoint for IndividualFeatureAtRisk coded as UFOKN-dkk-IFaR01
-    <ufokn-data:RiskPoint/UFOKN-dkk-IFaR01> rdf:type owl:NamedIndividual ,
+### RiskPoint for ElectricUtilityAsset coded as dkk-Substation-1
+    <ufokn-data:RiskPoint/dkk-Substation-1> rdf:type owl:NamedIndividual ,
                                                      ufokn:RiskPoint ;
-                                            <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654323 1397477)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+                                            ufokn-geo:hasWktGeometry "POINT (1654092 1397456)"^^geo:wktLiteral .
 
 
-### A StandaloneFeatureAtRisk coded as UFOKN-dkk-SFaR01
-    <ufokn-data:FeatureAtRisk/UFOKN-dkk-SFaR01> rdf:type owl:NamedIndividual ,
-                                                         ufokn:StandaloneFeatureAtRisk ;
-											    ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-SFaR01> ;
-											    ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-SFaR01> ;
-											    ufokn:id "dkk-SFaR01" ;
-											    ufokn:key "building" ;
-											    ufokn:value "detached" .
-### Address for StandaloneFeatureAtRisk coded as UFOKN-dkk-SFaR01
-    <ufokn-data:Address/UFOKN-dkk-SFaR01> rdf:type owl:NamedIndividual ,
-                                                   ufokn:StreetAddress ;
-										  ufokn:street "North Channel Drive" ;
-										  ufokn:streetNumber "104";
+### An ElectricService coded as dkk-ElectricServ02
+    <ufokn-data:UtilityService/dkk-ElectricServ02> rdf:type owl:NamedIndividual ,
+																  ufokn-c:UtilityService ;
+#														#ufokn-c:servesArea <ufokn-data:ServiceArea/dkk-ElectricServArea-2> ;
+														 ufokn-c:serves <ufokn-data:FeatureAtRisk/dkk-FaR-2-1> ,
+																		<ufokn-data:FeatureAtRisk/dkk-IFaR-2-2> ,
+																		<ufokn-data:UtilityAsset/dkk-WaterServ2> ;
+														 ufokn-c:ofUtilityType ufokn-c:ElectricService .
+														 
+														 
+### An ElectricUtilityAsset coded as dkk-Substation-2 (ElectricServ02)
+    <ufokn-data:UtilityAsset/dkk-Substation-2> rdf:type owl:NamedIndividual ,
+														ufokn-c:ElectricUtilityAsset ;
+											   ufokn:hasAddress <ufokn-data:Address/dkk-Substation-2> ;
+											   ufokn:hasRiskPoint <ufokn-data:RiskPoint/dkk-Substation-2> ;
+											   ufokn:id "dkk-Substation-2" ;
+											   ufokn:key "power" ;
+											   ufokn:value "substation" ;
+											   ufokn-c:providesUtilityService <ufokn-data:UtilityService/dkk-ElectricServ02> ;
+											   ufokn-c:ofUtilityType ufokn-c:ElectricService .
+### Address for ElectricUtilityAsset coded as dkk-Substation-2
+    <ufokn-data:Address/dkk-Substation-2> rdf:type owl:NamedIndividual ,
+												   ufokn:StreetAddress ;
+										  ufokn:street "East Atlanta Street" ;
+										  ufokn:streetNumber "82";
 										  ufokn:city "Wrightsville Beach" ; 
 										  ufokn:region "" ; 
 										  ufokn:state "NC";
 										  ufokn:postcode "28480".
-### RiskPoint for StandaloneFeatureAtRisk coded as UFOKN-dkk-SFaR01
-    <ufokn-data:RiskPoint/UFOKN-dkk-SFaR01> rdf:type owl:NamedIndividual ,
+### RiskPoint for ElectricUtilityAsset coded as dkk-Substation-2
+    <ufokn-data:RiskPoint/dkk-Substation-2> rdf:type owl:NamedIndividual ,
                                                      ufokn:RiskPoint ;
-                                            <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654323 1397477)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+                                            ufokn-geo:hasWktGeometry "POINT (1654785 1397382)"^^geo:wktLiteral .
 
 
-### An IndividualFeatureAtRiskInCollection coded as UFOKN-dkk-CoF01/01
-    <ufokn-data:FeatureAtRisk/UFOKN-dkk-CoF01/01> rdf:type owl:NamedIndividual ,
-                                                           ufokn:IndividualFeatureAtRiskInCollection ;
-										 		  ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-CoF01/01> ;
-										 		  ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-CoF01> ;
-												  ufokn:id "dkk-CoF01/01" ;
-												  ufokn:key "building" ;
-												  ufokn:value "apartments" .
-### Address for IndividualFeatureAtRiskInCollection coded as UFOKN-dkk-CoF01/01
-    <ufokn-data:Address/UFOKN-dkk-CoF01/01> rdf:type owl:NamedIndividual ,
-                                                     ufokn:UnitAddress ;
-                                            ufokn:hasStreetAddress <ufokn-data:Address/UFOKN-dkk-CoF01> ;
-											ufokn:unitNumber "A" .
-
-
-### An IndividualFeatureAtRiskInCollection coded as UFOKN-dkk-CoF01/02 (a FeatureAtRisk)
-    <ufokn-data:FeatureAtRisk/UFOKN-dkk-CoF01/02> rdf:type owl:NamedIndividual ,
-                                                           ufokn:FeatureAtRisk ;
-												  ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-CoF01/02> ;
-												  ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-CoF01> ;
-												  ufokn:id "dkk-CoF01/02" ;
-												  ufokn:key "building" ;
-												  ufokn:value "apartments" .
-### Address for IndividualFeatureAtRiskInCollection coded as UFOKN-dkk-CoF01/02
-    <ufokn-data:Address/UFOKN-dkk-CoF01/02> rdf:type owl:NamedIndividual ,
-                                                     ufokn:UnitAddress ;
-                                            ufokn:hasStreetAddress <ufokn-data:Address/UFOKN-dkk-CoF01> ;
-											ufokn:unitNumber "B" .
-
-
-### A CollectionOfFeatures coded as UFOKN-dkk-CoF01
-    <ufokn-data:CollectionOfFeatures/UFOKN-dkk-CoF01> rdf:type owl:NamedIndividual ,
-                                                               ufokn:CollectionOfFeatures ;
-                                                      ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-CoF01> ;
-                                                      ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-CoF01> ;
-                                                      ufokn:id "dkk-CoF01" ;
-                                                      ufokn:key "building" ;
-                                                      ufokn:value "apartments" ;
-													  ufokn:hasMember <ufokn-data:FeatureAtRisk/UFOKN-dkk-CoF01/01> ,
-												                      <ufokn-data:FeatureAtRisk/UFOKN-dkk-CoF01/02> .
-### Address for CollectionOfFeatures coded as UFOKN-dkk-CoF01
-    <ufokn-data:Address/UFOKN-dkk-CoF01> rdf:type owl:NamedIndividual ,
-                                                  ufokn:StreetAddress ;
-										 ufokn:street "North Channel Drive" ;
-										 ufokn:streetNumber "101";
-										 ufokn:city "Wrightsville" ; 
-										 ufokn:region "" ; 
-										 ufokn:state "NC";
-										 ufokn:postcode "28480";
-										 ufokn:unitCount "2"^^xsd:integer .
-### RiskPoint for CollectionOfFeatures coded as UFOKN-dkk-CoF01
-    <ufokn-data:RiskPoint/UFOKN-dkk-CoF01> rdf:type owl:NamedIndividual ,
-                                                    ufokn:RiskPoint ;
-                                           <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654323 1397477)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
-
-
-### An ElectricService coded as UFOKN-dkk-ElectricServ01
-    <ufokn-data:UtilityService/UFOKN-dkk-ElectricServ01> rdf:type owl:NamedIndividual ,
+### An ElectricService coded as dkk-ElectricServ03
+    <ufokn-data:UtilityService/dkk-ElectricServ03> rdf:type owl:NamedIndividual ,
 																  ufokn-c:UtilityService ;
-														 ufokn-c:serves <ufokn-data:FeatureAtRisk/UFOKN-dkk-FaR01> ,
-																		<ufokn-data:FeatureAtRisk/UFOKN-dkk-IFaR01> ;
-														 ufokn-c:ofUtilityType ufokn-c:ElectricService .
-
-
-### An ElectricUtilityAsset coded as UFOKN-dkk-Substation01 (ElectricServ01)
-    <ufokn-data:UtilityAsset/UFOKN-dkk-Substation01> rdf:type owl:NamedIndividual ,
-															  ufokn-c:ElectricUtilityAsset ;
-													 ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-Substation01> ;
-													 ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-Substation01> ;
-													 ufokn:id "dkk-Substation01" ;
-													 ufokn:key "power" ;
-													 ufokn:value "substation" ;
-													 ufokn-c:providesUtilityService <ufokn-data:UtilityService/UFOKN-dkk-ElectricServ01> ;
-													 ufokn-c:ofUtilityType ufokn-c:ElectricService .
-### Address for ElectricUtilityAsset coded as UFOKN-dkk-Substation01
-    <ufokn-data:Address/UFOKN-dkk-Substation01> rdf:type owl:NamedIndividual ,
-														 ufokn:StreetAddress ;
-											    ufokn:street "North Channel Drive" ;
-											    ufokn:streetNumber "12";
-											    ufokn:city "Wrightsville Beach" ; 
-											    ufokn:region "" ; 
-											    ufokn:state "NC";
-											    ufokn:postcode "28480".
-### RiskPoint for ElectricUtilityAsset coded as UFOKN-dkk-Substation01
-    <ufokn-data:RiskPoint/UFOKN-dkk-Substation01> rdf:type owl:NamedIndividual ,
-                                                           ufokn:RiskPoint ;
-                                                  <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654303 1397431)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
-
-
-### An ElectricService coded as UFOKN-dkk-ElectricServ02
-    <ufokn-data:UtilityService/UFOKN-dkk-ElectricServ02> rdf:type owl:NamedIndividual ,
-																  ufokn-c:UtilityService ;
-														 ufokn-c:serves <ufokn-data:FeatureAtRisk/UFOKN-dkk-SFaR01> ,
-																	    <ufokn-data:FeatureAtRisk/UFOKN-dkk-Cof01> ,
-																	    <ufokn-data:FeatureAtRisk/UFOKN-dkk-Cof01/01> ,
-																	    <ufokn-data:FeatureAtRisk/UFOKN-dkk-Cof01/02> ;
+														 ufokn-c:servesArea <ufokn-data:ServiceArea/dkk-ElectricServArea-3> ;
+#														#ufokn-c:serves	<ufokn-data:FeatureAtRisk/dkk-SFaR-3-1> ,
+#														#			    <ufokn-data:FeatureAtRisk/dkk-CoF-3-1> ,
+#														#			    <ufokn-data:FeatureAtRisk/dkk-CoF-3-1/01> ,
+#														#			    <ufokn-data:FeatureAtRisk/dkk-CoF-3-1/02> ;
 														 ufokn-c:ofUtilityType ufokn-c:ElectricService .
 														 
 														 
-### An ElectricUtilityAsset coded as UFOKN-dkk-Substation02 (ElectricServ02)
-    <ufokn-data:UtilityAsset/UFOKN-dkk-Substation02> rdf:type owl:NamedIndividual ,
-                                                              ufokn-c:ElectricUtilityAsset ;
-													 ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-Substation02> ;
-													 ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-Substation01> ;
-													 ufokn:id "dkk-Substation02" ;
-													 ufokn:key "power" ;
-													 ufokn:value "substation" ;
-													 ufokn-c:providesUtilityService <ufokn-data:UtilityService/UFOKN-dkk-ElectricServ02> ;
-													 ufokn-c:ofUtilityType ufokn-c:ElectricService .
-### Address for ElectricUtilityAsset coded as UFOKN-dkk-Substation02
-    <ufokn-data:Address/UFOKN-dkk-Substation02> rdf:type owl:NamedIndividual ,
-                                                         ufokn:StreetAddress ;
-											    ufokn:street "North Channel Drive" ;
-											    ufokn:streetNumber "12";
-											    ufokn:city "Wrightsville Beach" ; 
-											    ufokn:region "" ; 
-											    ufokn:state "NC";
-											    ufokn:postcode "28480".
-### RiskPoint for ElectricUtilityAsset coded as UFOKN-dkk-Substation02
-    <ufokn-data:RiskPoint/UFOKN-dkk-Substation02> rdf:type owl:NamedIndividual ,
-                                                           ufokn:RiskPoint ;
-                                                  <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654303 1397431)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+### An ElectricUtilityAsset coded as dkk-Substation-3 (ElectricServ03)
+    <ufokn-data:UtilityAsset/dkk-Substation-3> rdf:type owl:NamedIndividual ,
+                                                        ufokn-c:ElectricUtilityAsset ;
+											   ufokn:hasAddress <ufokn-data:Address/dkk-Substation-3> ;
+											   ufokn:hasRiskPoint <ufokn-data:RiskPoint/dkk-Substation-3> ;
+											   ufokn:id "dkk-Substation-3" ;
+											   ufokn:key "power" ;
+											   ufokn:value "substation" ;
+											   ufokn-c:providesUtilityService <ufokn-data:UtilityService/dkk-ElectricServ03> ;
+											   ufokn-c:ofUtilityType ufokn-c:ElectricService .
+### Address for ElectricUtilityAsset coded as dkk-Substation-3
+    <ufokn-data:Address/dkk-Substation-3> rdf:type owl:NamedIndividual ,
+                                                   ufokn:StreetAddress ;
+										  ufokn:street "Chadbourn Street" ;
+										  ufokn:streetNumber "175";
+										  ufokn:city "Wrightsville Beach" ; 
+										  ufokn:region "" ; 
+										  ufokn:state "NC";
+										  ufokn:postcode "28480".
+### RiskPoint for ElectricUtilityAsset coded as dkk-Substation-3
+    <ufokn-data:RiskPoint/dkk-Substation-3> rdf:type owl:NamedIndividual ,
+                                                     ufokn:RiskPoint ;
+                                            ufokn-geo:hasWktGeometry "POINT (1654547 1396968)"^^geo:wktLiteral .
 												  
 												  
-### An ElectricService coded as UFOKN-dkk-ElectricServ03
-    <ufokn-data:UtilityService/UFOKN-dkk-ElectricServ03> rdf:type owl:NamedIndividual ,
-																  ufokn-c:UtilityService ;
-														 ufokn-c:serves <ufokn-data:UtilityAsset/UFOKN-dkk-Substation01> ,
-																	    <ufokn-data:UtilityAsset/UFOKN-dkk-Substation02> ;
-														 ufokn-c:ofUtilityType ufokn-c:ElectricService .
-														 
-														 
-### An ElectricUtilityAsset coded as UFOKN-dkk-Transmission01 (ElectricServ03)
-    <ufokn-data:UtilityAsset/UFOKN-dkk-Transmission01> rdf:type owl:NamedIndividual ,
-                                                                ufokn-c:ElectricUtilityAsset ;
-													   ufokn:hasAddress <ufokn-data:Address/UFOKN-dkk-Transmission01> ;
-													   ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dkk-Transmission01> ;
-													   ufokn:id "dkk-Transmission01" ;
-													   ufokn:key "power" ;
-													   ufokn:value "transmission-lines" ;
-													   ufokn-c:providesUtilityService <ufokn-data:UtilityService/UFOKN-dkk-ElectricServ03> ;
-													   ufokn-c:ofUtilityType ufokn-c:ElectricService .
-### Address for ElectricUtilityAsset coded as UFOKN-dkk-Transmission01
-    <ufokn-data:Address/UFOKN-dkk-Transmission01> rdf:type owl:NamedIndividual ,
-                                                           ufokn:StreetAddress ;
-											      ufokn:street "North Channel Drive" ;
-											      ufokn:streetNumber "12";
-											      ufokn:city "Wrightsville Beach" ; 
-											      ufokn:region "" ; 
-											      ufokn:state "NC";
-											      ufokn:postcode "28480".
-### RiskPoint for ElectricUtilityAsset coded as UFOKN-dkk-Transmission01
-    <ufokn-data:RiskPoint/UFOKN-dkk-Transmission01> rdf:type owl:NamedIndividual ,
-                                                             ufokn:RiskPoint ;
-                                                    <http://www.opengis.net/spec/geosparql/1.0#hasGeometry> "POINT (1654303 1397431)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+### An ElectricService coded as dkk-ElectricServ04
+    <ufokn-data:UtilityService/dkk-ElectricServ04> rdf:type owl:NamedIndividual ,
+															ufokn-c:UtilityService ;
+												   ufokn-c:serves <ufokn-data:UtilityAsset/dkk-Substation-1> ,
+																  <ufokn-data:UtilityAsset/dkk-Substation-2> ,
+																  <ufokn-data:UtilityAsset/dkk-Substation-3> ;
+											       ufokn-c:ofUtilityType ufokn-c:ElectricService .
+
+
+### An ElectricUtilityAsset coded as dkk-Transmission01 (ElectricServ04)
+    <ufokn-data:UtilityAsset/dkk-Transmission01> rdf:type owl:NamedIndividual ,
+                                                          ufokn-c:ElectricUtilityAsset ;
+											     ufokn:hasAddress <ufokn-data:Address/dkk-Transmission01> ;
+												 ufokn:hasRiskPoint <ufokn-data:RiskPoint/dkk-Transmission01> ;
+												 ufokn:id "dkk-Transmission01" ;
+												 ufokn:key "power" ;
+												 ufokn:value "line" ;
+												 ufokn-c:providesUtilityService <ufokn-data:UtilityService/dkk-ElectricServ04> ;
+												 ufokn-c:ofUtilityType ufokn-c:ElectricService .
+### Address for ElectricUtilityAsset coded as dkk-Transmission01
+    <ufokn-data:Address/dkk-Transmission01> rdf:type owl:NamedIndividual ,
+                                                     ufokn:StreetAddress ;
+											ufokn:street "" ;
+											ufokn:streetNumber "";
+											ufokn:city "Wrightsville Beach" ; 
+											ufokn:region "" ; 
+											ufokn:state "NC";
+											ufokn:postcode "28480".
+### RiskPoint for ElectricUtilityAsset coded as dkk-Transmission01
+    <ufokn-data:RiskPoint/dkk-Transmission01> rdf:type owl:NamedIndividual ,
+                                                       ufokn:RiskPoint ;
+                                              ufokn-geo:hasWktGeometry "POINT (1652924 1397989)"^^geo:wktLiteral .
+													
+													
+### A Medical Service coded as dkk-MedicalServ123
+    <ufokn-data:UtilityService/dkk-MedicalServ123> rdf:type owl:NamedIndividual ,
+															ufokn-c:UtilityService ;
+												   ufokn-c:servesArea <ufokn-data:ServiceArea/dkk-MedicalServArea-123> ;
+											       ufokn-c:ofUtilityType ufokn-c:MedicalService .
+
+
+### A MedicalUtilityAsset coded as dkk-MedicalServ123 (MedicalServ123)
+    <ufokn-data:UtilityAsset/dkk-MedicalServ123> rdf:type owl:NamedIndividual ,
+                                                          ufokn-c:MedicalUtilityAsset ;
+											     ufokn:hasAddress <ufokn-data:Address/dkk-MedicalServ123> ;
+												 ufokn:hasRiskPoint <ufokn-data:RiskPoint/dkk-MedicalServ123> ;
+												 ufokn:id "dkk-MedicalServ123" ;
+												 ufokn:key "building" ;
+												 ufokn:value "hospital" ;
+												 ufokn-c:providesUtilityService <ufokn-data:UtilityService/dkk-MedicalServ123> ;
+												 ufokn-c:ofUtilityType ufokn-c:MedicalService .
+### Address for MedicalUtilityAsset coded as dkk-MedicalServ123
+    <ufokn-data:Address/dkk-MedicalServ123> rdf:type owl:NamedIndividual ,
+                                                     ufokn:StreetAddress ;
+											ufokn:street "Short Street" ;
+											ufokn:streetNumber "120";
+											ufokn:city "Wrightsville Beach" ; 
+											ufokn:region "" ; 
+											ufokn:state "NC";
+											ufokn:postcode "28480".
+### RiskPoint for MedicalUtilityAsset coded as dkk-MedicalServ123
+    <ufokn-data:RiskPoint/dkk-MedicalServ123> rdf:type owl:NamedIndividual ,
+                                                       ufokn:RiskPoint ;
+                                              ufokn-geo:hasWktGeometry "POINT (1652928 1397727)"^^geo:wktLiteral .
+													
+													
+### A Water Service coded as dkk-WaterServ13
+    <ufokn-data:UtilityService/dkk-WaterServ13> rdf:type owl:NamedIndividual ,
+															ufokn-c:UtilityService ;
+												   ufokn-c:servesArea <ufokn-data:ServiceArea/dkk-WaterServArea-13> ;
+											       ufokn-c:ofUtilityType ufokn-c:WaterService .
+
+
+### A WaterUtilityAsset coded as dkk-WaterServ13 (WaterServ13)
+    <ufokn-data:UtilityAsset/dkk-WaterServ13> rdf:type owl:NamedIndividual ,
+                                                          ufokn-c:WaterUtilityAsset ;
+											     ufokn:hasAddress <ufokn-data:Address/dkk-WaterServ13> ;
+												 ufokn:hasRiskPoint <ufokn-data:RiskPoint/dkk-WaterServ13> ;
+												 ufokn:id "dkk-WaterServ13" ;
+												 ufokn:key "man_made" ;
+												 ufokn:value "pumping_station" ;
+												 ufokn-c:providesUtilityService <ufokn-data:UtilityService/dkk-WaterServ13> ;
+												 ufokn-c:ofUtilityType ufokn-c:WaterService .
+### Address for WaterUtilityAsset coded as dkk-WaterServ13
+    <ufokn-data:Address/dkk-WaterServ13> rdf:type owl:NamedIndividual ,
+                                                     ufokn:StreetAddress ;
+											ufokn:street "Auditorium Circle" ;
+											ufokn:streetNumber "1";
+											ufokn:city "Wrightsville Beach" ; 
+											ufokn:region "" ; 
+											ufokn:state "NC";
+											ufokn:postcode "28480".
+### RiskPoint for WaterUtilityAsset coded as dkk-WaterServ13
+    <ufokn-data:RiskPoint/dkk-WaterServ13> rdf:type owl:NamedIndividual ,
+                                                       ufokn:RiskPoint ;
+                                              ufokn-geo:hasWktGeometry "POINT (1654280 1397322)"^^geo:wktLiteral .
+													
+													
+### A Water Service coded as dkk-WaterServ2
+    <ufokn-data:UtilityService/dkk-WaterServ2> rdf:type owl:NamedIndividual ,
+															ufokn-c:UtilityService ;
+												   ufokn-c:servesArea <ufokn-data:ServiceArea/dkk-WaterServArea-2> ;
+												   ufokn-c:serves <ufokn-data:FeatureAtRisk/dkk-FaR-2-1> ,
+																  <ufokn-data:FeatureAtRisk/dkk-IFaR-2-2> ;
+											       ufokn-c:ofUtilityType ufokn-c:WaterService .
+
+
+### A WaterUtilityAsset coded as dkk-WaterServ2 (WaterServ2)
+    <ufokn-data:UtilityAsset/dkk-WaterServ2> rdf:type owl:NamedIndividual ,
+                                                          ufokn-c:WaterUtilityAsset ;
+											     ufokn:hasAddress <ufokn-data:Address/dkk-WaterServ2> ;
+												 ufokn:hasRiskPoint <ufokn-data:RiskPoint/dkk-WaterServ2> ;
+												 ufokn:id "dkk-WaterServ2" ;
+												 ufokn:key "man_made" ;
+												 ufokn:value "pumping_station" ;
+												 ufokn-c:providesUtilityService <ufokn-data:UtilityService/dkk-WaterServ2> ;
+												 ufokn-c:ofUtilityType ufokn-c:WaterService .
+### Address for WaterUtilityAsset coded as dkk-WaterServ2
+    <ufokn-data:Address/dkk-WaterServ2> rdf:type owl:NamedIndividual ,
+                                                     ufokn:StreetAddress ;
+											ufokn:street "Mallard Street" ;
+											ufokn:streetNumber "15";
+											ufokn:city "Wrightsville Beach" ; 
+											ufokn:region "" ; 
+											ufokn:state "NC";
+											ufokn:postcode "28480".
+### RiskPoint for WaterUtilityAsset coded as dkk-WaterServ2
+    <ufokn-data:RiskPoint/dkk-WaterServ2> rdf:type owl:NamedIndividual ,
+                                                       ufokn:RiskPoint ;
+                                              ufokn-geo:hasWktGeometry "POINT (1655074 1398436)"^^geo:wktLiteral .
+													
+													
+### ServiceArea for MedicalServ123 coded as dkk-MedicalServArea-123
+	<ufokn-data:ServiceArea/dkk-MedicalServArea-123> rdf:type owl:NamedIndividual ,
+																	 ufokn-c:MedicalServiceArea ;
+															ufokn-c:ofUtilityType ufokn-c:MedicalService ;
+															ufokn-geo:hasWktGeometry "POLYGON ((1656227 1400465, 1655776 1400732, 1654858 1398416, 1653123 1398278, 1652709 1397574, 1654076 1396659, 1653339 1394546, 1653899 1394339, 1656227 1400465))"^^geo:wktLiteral .
+																 
+																 
+### ServiceArea for ElectricServ1 coded as dkk-ElectricServArea-1
+	<ufokn-data:ServiceArea/dkk-ElectricServArea-1> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   ufokn-geo:hasWktGeometry "POLYGON ((1654858 1398416, 1653123 1398278, 1652709 1397574, 1654076 1396659, 1654858 1398416))"^^geo:wktLiteral .
+																 
+																 
+### ServiceArea for ElectricServ2 coded as dkk-ElectricServArea-2
+	<ufokn-data:ServiceArea/dkk-ElectricServArea-2> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   ufokn-geo:hasWktGeometry "POLYGON ((1656227 1400465, 1655776 1400732, 1654381 1397292, 1654976 1396995, 1656227 1400465))"^^geo:wktLiteral .
+																 
+																 
+### ServiceArea for ElectricServ3 coded as dkk-ElectricServArea-3
+	<ufokn-data:ServiceArea/dkk-ElectricServArea-3> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   ufokn-geo:hasWktGeometry "POLYGON ((1653339 1394546, 1653899 1394339, 1654976 1396995, 1654381 1397292, 1654076 1396659, 1653339 1394546))"^^geo:wktLiteral .
+																 
+																 
+### ServiceArea for WaterServ13 coded as dkk-WaterServArea-13
+	<ufokn-data:ServiceArea/dkk-WaterServArea-13> rdf:type owl:NamedIndividual ,
+																  ufokn-c:WaterServiceArea ;
+														 ufokn-c:ofUtilityType ufokn-c:WaterService ;
+														 ufokn-geo:hasWktGeometry "POLYGON ((1654858 1398416, 1653123 1398278, 1652709 1397574, 1654076 1396659, 1653339 1394546, 1653899 1394339, 1654976 1396995, 1654381 1397292, 1654858 1398416))"^^geo:wktLiteral .
+																 
+																 
+### ServiceArea for WaterServ2 coded as dkk-WaterServArea-2
+	<ufokn-data:ServiceArea/dkk-WaterServArea-2> rdf:type owl:NamedIndividual ,
+																ufokn-c:WaterServiceArea ;
+													   ufokn-c:ofUtilityType ufokn-c:WaterService ;
+													   ufokn-geo:hasWktGeometry "POLYGON ((1656227 1400465, 1655776 1400732, 1654381 1397292, 1654976 1396995, 1656227 1400465))"^^geo:wktLiteral .
