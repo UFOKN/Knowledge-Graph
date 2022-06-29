@@ -4,49 +4,55 @@
 # developed in collaboration with other members of the Open Knowledge Network (UFOKN) team
 
 # usage:
-# python3 monoparser.py input_file.pqt output_file.ttl
+# python3 monoparser.py input_file.pqt output_file.ttl limit postcode
 
 import sys
-import pandas as pd 
+import time
+import numpy
+import pandas as pd
 
 
-# this routes each row of the incoming data steam
+# this routes each row of the incoming data stream
 # 
 def router(df, lim: int) -> None:
-    total = 0 
+    total_rows = 0
+    no_build_ID = 0
+
     for index, row in df.iterrows():
-    
+
         #print(row['units'])
         if row['buildID'] == None:
             # TODO there is a problem here: we have no buildID to identify the building
-            ...
+            no_build_ID += 1
     
         else:
             #if row['unit_count'] < 1.0:
-            if len(row['units']) == None:
-
-                ...
+            if isinstance(row['units'], numpy.ndarray) and len(row['units']) == 0:
+                print("Skipping row with no units entry.")
             
-            #elif row['unit_count'] == 1.0: 
+            #elif row['unit_count'] == 1.0:
             # 
-            elif len(row['units']) <= 1:
+            elif isinstance(row['units'], numpy.ndarray) and len(row['units']) <= 1:
                 #print("mono found")
-                new_feature = monoProc(total)   
+                new_feature = monoProc(total_rows)
                 writeFeature(new_feature)
-        
+
             #elif row['unit_count'] > 1.0: 
-            elif len(row['units']) > 1:
+            elif isinstance(row['units'], numpy.ndarray) and len(row['units']) > 1:
                 #print("poly")
-                new_feature = polyProc(total)   
+                new_feature = polyProc(total_rows)
                 writeFeature(new_feature)
-    
+
             else:
                 ...
-        
-            total += 1
-    
-            if total == lim:
-                break 
+
+            total_rows += 1
+
+            if total_rows == lim:
+                break
+
+    print("Processed ", total_rows, " rows in the parquet file.")
+    print("Processed ", no_build_ID, " rows with no buildID.")
 
 def loadParquet(pqt_file: str) -> None:
     return pd.read_parquet(pqt_file, engine='pyarrow')
@@ -108,7 +114,7 @@ def monoProc(temp_pointer: int) -> str:
     ftAtRisk1_3 = '''###  http://schema.ufokn.org/ufokn-data/v2/RiskPoint/''' + str(df.loc[temp_pointer]['buildID']) + '''
     <ufokn-data:RiskPoint/''' + str(df.loc[temp_pointer]['buildID']) + '''> rdf:type owl:NamedIndividual ,
                                                                                 ufokn:RiskPoint ;
-                                                                       ufokn-geo:hasWktGeometry "''' + str(df.loc[temp_pointer]['geometry']) + '''"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .'''+'\n'
+                                                                       ufokn-geo:hasWktGeometry "''' + str(df.loc[temp_pointer]['geometry']) + '''"^^geo:wktLiteral .'''+'\n'
     
     
     return ftAtRisk1_1 + '\n' + ftAtRisk1_2 + '\n' + ftAtRisk1_3 + '\n'
@@ -179,7 +185,7 @@ def polyProc(temp_pointer) -> str:
     ###  http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/RiskPoint/''' + str(df.loc[temp_pointer]['buildID']) + '''
     <ufokn-data:RiskPoint/''' + str(df.loc[temp_pointer]['buildID']) + '''> rdf:type owl:NamedIndividual ,
                                                                                 ufokn:RiskPoint ;
-                                                                       ufokn-geo:hasWktGeometry "''' + str(df.loc[temp_pointer]['geometry']) + '''"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .'''+'\n'
+                                                                       ufokn-geo:hasWktGeometry "''' + str(df.loc[temp_pointer]['geometry']) + '''"^^geo:wktLiteral .'''+'\n'
                                             
     ftAtRisk2_4 = '''                           
     ###  http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/''' + str(df.loc[temp_pointer]['buildID']) + '''
@@ -358,4 +364,4 @@ if __name__ == '__main__':
 
     df = loadParquet(parquet_file) 
 
-    router(df, 2500) 
+    router(df, -1)  #set limit to -1 to parse entire parquet file
