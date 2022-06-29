@@ -177,7 +177,7 @@
 ###  http://schema.ufokn.org/ufokn-data/v2/RiskPoint/UFOKN-dq0dtevjev
     <ufokn-data:RiskPoint/UFOKN-dq0dtevjev> rdf:type owl:NamedIndividual ,
                                                                                 ufokn:RiskPoint ;
-                                                                       ufokn-geo:hasWktGeometry "POINT (1654323 1397477)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+                                                                       ufokn-geo:hasWktGeometry "POINT (1654323 1397477)"^^geo:wktLiteral .
 
 
 ### http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/UFOKN-dq09e0n1dt
@@ -204,7 +204,7 @@
 ###  http://schema.ufokn.org/ufokn-data/v2/RiskPoint/UFOKN-dq09e0n1dt
     <ufokn-data:RiskPoint/UFOKN-dq09e0n1dt> rdf:type owl:NamedIndividual ,
                                                                                 ufokn:RiskPoint ;
-                                                                       ufokn-geo:hasWktGeometry "POINT (1648746 1373964)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+                                                                       ufokn-geo:hasWktGeometry "POINT (1648746 1373964)"^^geo:wktLiteral .
 
 
 ### http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/UFOKN-dq0dk3bp96
@@ -231,7 +231,7 @@
 ###  http://schema.ufokn.org/ufokn-data/v2/RiskPoint/UFOKN-dq0dk3bp96
     <ufokn-data:RiskPoint/UFOKN-dq0dk3bp96> rdf:type owl:NamedIndividual ,
                                                                                 ufokn:RiskPoint ;
-                                                                       ufokn-geo:hasWktGeometry "POINT (1649923 1390408)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+                                                                       ufokn-geo:hasWktGeometry "POINT (1649923 1390408)"^^geo:wktLiteral .
 
 
 ### http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/UFOKN-dq0d5b0yhd
@@ -258,7 +258,7 @@
 ###  http://schema.ufokn.org/ufokn-data/v2/RiskPoint/UFOKN-dq0d5b0yhd
     <ufokn-data:RiskPoint/UFOKN-dq0d5b0yhd> rdf:type owl:NamedIndividual ,
                                                                                 ufokn:RiskPoint ;
-                                                                       ufokn-geo:hasWktGeometry "POINT (1649194 1384141)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+                                                                       ufokn-geo:hasWktGeometry "POINT (1649194 1384141)"^^geo:wktLiteral .
 
 
 ### http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/UFOKN-dq0ep32tfu
@@ -285,8 +285,7 @@
 ###  http://schema.ufokn.org/ufokn-data/v2/RiskPoint/UFOKN-dq0ep32tfu
     <ufokn-data:RiskPoint/UFOKN-dq0ep32tfu> rdf:type owl:NamedIndividual ,
                                                                                 ufokn:RiskPoint ;
-                                                                       ufokn-geo:hasWktGeometry "POINT (1659082 1406851)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
-
+                                                                       ufokn-geo:hasWktGeometry "POINT (1659082 1406851)"^^geo:wktLiteral .
 
 
     ###  http://schema.ufokn.org/ufokn-data/v2/CollectionOfFeatures/UFOKN-dq0df60vzh
@@ -310,7 +309,7 @@
     ###  http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/RiskPoint/UFOKN-dq0df60vzh
     <ufokn-data:RiskPoint/UFOKN-dq0df60vzh> rdf:type owl:NamedIndividual ,
                                                                                 ufokn:RiskPoint ;
-                                                                       ufokn-geo:hasWktGeometry "POINT (1640262 1398675)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+                                                                       ufokn-geo:hasWktGeometry "POINT (1640262 1398675)"^^geo:wktLiteral .
 
 
     ###  http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/UFOKN-dq0df60vzh/1
