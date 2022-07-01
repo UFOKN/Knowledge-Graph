@@ -151,7 +151,7 @@ ufokn:hasUnitAddress rdf:type owl:ObjectProperty ;
 ufokn:hasStreetAddress rdf:type owl:ObjectProperty ;
 			rdfs:subPropertyOf ufokn:hasAddress ;
 			rdfs:domain _:FeatureAtRiskOrUnitAddress ; 
-			rdfs:range ufokn:StreetAddress .
+			rdfs:range ufokn:StreetAddress ;
 # adding a property chain to more easily retrieve the address that is buried inside 
 # the UnitAddress of a Collection's individual FeaturesAtRisk 
 #			owl:propertyChainAxiom (ufokn:hasMember ufokn:hasUnitAddress ufokn:hasStreetAddress ) ;
@@ -277,7 +277,7 @@ ufokn:id rdf:type owl:DatatypeProperty ;
 
 ###  http://schema.ufokn.org/core/v2/osm_id
 ufokn:osm_id rdf:type owl:DatatypeProperty ;
-                rdfs:subPropertyOf ufokn:id.
+                rdfs:subPropertyOf ufokn:id ;
 				rdfs:domain ufokn:FeatureAtRisk ;
 				rdfs:range xsd:string . 
 
@@ -477,7 +477,7 @@ ufokn:UnitAddress rdf:type owl:Class ;
 							[rdf:type owl:Restriction ;
 							 owl:onProperty ufokn:unitCount ;
 							 owl:hasValue "0"^^xsd:nonNegativeInteger
-							] ;
+							] ,
 							[rdf:type owl:Restriction ;
 							 owl:onProperty ufokn:hasAddress ;
 							 owl:allValuesFrom  ufokn:StreetAddress
@@ -523,12 +523,12 @@ ufokn:RiskPoint rdf:type owl:Class ;
 								sosa:FeatureOfInterest ,
                                 [ rdf:type owl:Restriction ;
                                   owl:onProperty geo:hasGeometry ;
-                                  owl:allValuesFrom ufokn-:Point_EPSG-5070
+                                  owl:allValuesFrom ufokn-geo:Point_EPSG-5070
                                 ] ,
                                 [ rdf:type owl:Restriction ;
                                   owl:onProperty geo:hasGeometry ;
                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                  owl:onClass ufokn-:Point_EPSG-5070
+                                  owl:onClass ufokn-geo:Point_EPSG-5070
                                 ] .
 
 

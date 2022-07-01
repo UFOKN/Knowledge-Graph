@@ -198,7 +198,7 @@ ufokn-geo:Point_EPSG-5070 rdf:type owl:Class ;
 						[ rdf:type owl:Restriction ;
                                owl:onProperty ufokn-geo:spatialRS ;
                                owl:hasValue ufokn-geo:SRS_EPSG-5070 ;
-						] ,
+						] ;
 		rdfs:comment "A point (geometry of dimension 0) specified using EPSG 5070 as spatial reference system. This is the standard spatial reference system used by UFOKN."@en ;
 		rdfs:label "Point_EPSG-5070" .
 		
@@ -267,6 +267,6 @@ ufokn-geo:SRS_EPSG-4326 rdf:type owl:NamedIndividual ,
 ###  http://schema.ufokn.org/geo/v2/SRS_EPSG-5070
 ufokn-geo:SRS_EPSG-5070 rdf:type owl:NamedIndividual ,
                                  ufokn-geo:SpatialReferenceSystem ;
-                        rdfs:isDefinedBy <http://www.opengis.net/def/crs/EPSG/0/4326> .
+                        rdfs:isDefinedBy <http://www.opengis.net/def/crs/EPSG/0/5070> .
 
 
