@@ -43,6 +43,13 @@ def router(df, lim: int) -> None:
                 new_feature = polyProc(total_rows)
                 writeFeature(new_feature)
 
+
+            # elif row['units'] is empty but row['geometry'] is not:
+            elif row['geometry'] is not None:
+                # print("mono found")
+                new_feature = monoProc(total_rows)
+                writeFeature(new_feature)
+
             else:
                 ...
 
@@ -95,7 +102,7 @@ def monoProc(temp_pointer: int) -> str:
                                                                          ufokn:hasRiskPoint <ufokn-data:RiskPoint/''' + str(df.loc[temp_pointer]['buildID']) + '''> ;
                                                                          ufokn:ms_id "''' + str(df.loc[temp_pointer]['ms_id']) + '''" ;
                                                                          ufokn:key "''' + str(df.loc[temp_pointer]['KEY']) + '''" ;
-                                                                         ufokn:oa_id "''' + str(df.loc[temp_pointer]['oa_id'][0]) + '''" ;
+                                                                         ufokn:oa_id "''' + (str(df.loc[temp_pointer]['oa_id'][0]) if isinstance(df.loc[temp_pointer]['oa_id'], numpy.ndarray) else '') + '''" ;
                                                                          ''' + sourceHarness(df.loc[temp_pointer].loc['source']) + ''' 
                                                                          ufokn:value "''' + str(df.loc[temp_pointer]['VALUE']).lower() + '''" .''' + '\n'             
     
@@ -104,7 +111,7 @@ def monoProc(temp_pointer: int) -> str:
     <ufokn-data:Address/''' + str(df.loc[temp_pointer]['buildID'])+'''> rdf:type owl:NamedIndividual ,
                                                                               ufokn:StreetAddress ;
                                                                      ufokn:street "''' + str(df.loc[temp_pointer]['street']) + '''" ;
-                                                                     ufokn:streetNumber "''' + str(df.loc[temp_pointer]['number'][0]) + '''";
+                                                                     ufokn:streetNumber "''' + (str(df.loc[temp_pointer]['number'][0]) if isinstance(df.loc[temp_pointer]['number'], numpy.ndarray) else '') + '''";
                                                                      ufokn:city "''' + str(df.loc[temp_pointer]['city']) + '''" ; 
                                                                      ufokn:region "" ; 
                                                                      ufokn:state "";
@@ -365,4 +372,4 @@ if __name__ == '__main__':
 
     df = loadParquet(parquet_file) 
 
-    router(df, 1000)  #set limit to -1 to parse entire parquet file
+    router(df, -1)  #set limit to -1 to parse entire parquet file
