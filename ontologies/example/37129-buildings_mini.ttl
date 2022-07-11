@@ -24,17 +24,17 @@
             
             ###  http://schema.ufokn.org/geo/v2/hasWktGeometry
             ufokn-geo:hasWktGeometry rdf:type owl:DatatypeProperty ;
-                rdfs:domain geo:Feature ;
-                rdfs:range geo:wktLiteral .
+									 rdfs:domain geo:Feature ;
+									 rdfs:range geo:wktLiteral .
             
             
             ### datatype properties for addresses
             
             ###  http://schema.ufokn.org/core/v2/unitNumber
             ufokn:unitNumber rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:UnitAddress ;
-                            rdfs:range xsd:string . 
+                             rdf:type owl:FunctionalProperty ;
+                             rdfs:domain ufokn:UnitAddress ;
+                             rdfs:range xsd:string . 
                             
             ###  http://schema.ufokn.org/core/v2/unitCount
             ufokn:unitCount rdf:type owl:DatatypeProperty ;
@@ -44,101 +44,101 @@
                             
             ###  http://schema.ufokn.org/core/v2/areaSize
             ufokn:areaSize rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:nonNegativeInteger . 
+                           rdf:type owl:FunctionalProperty ;
+                           rdfs:domain ufokn:Address ;
+                           rdfs:range xsd:nonNegativeInteger . 
                             
             ###  http://schema.ufokn.org/core/v2/street
             ufokn:street rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:string . 
+                         rdf:type owl:FunctionalProperty ;
+                         rdfs:domain ufokn:Address ;
+                         rdfs:range xsd:string . 
                             
             ###  http://schema.ufokn.org/core/v2/streetNumber
             ufokn:streetNumber rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:string . 
+                               rdf:type owl:FunctionalProperty ;
+                               rdfs:domain ufokn:Address ;
+                               rdfs:range xsd:string . 
             
             ###  http://schema.ufokn.org/core/v2/secondAddressLine
             ufokn:secondAddressLine rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:string . 
+									rdf:type owl:FunctionalProperty ;
+									rdfs:domain ufokn:Address ;
+									rdfs:range xsd:string . 
             
             ###  http://schema.ufokn.org/core/v2/region
             ufokn:region rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:string . 
+                         rdf:type owl:FunctionalProperty ;
+                         rdfs:domain ufokn:Address ;
+                         rdfs:range xsd:string . 
             
             ###  http://schema.ufokn.org/core/v2/city
             ufokn:city rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:string . 
+                       rdf:type owl:FunctionalProperty ;
+                       rdfs:domain ufokn:Address ;
+                       rdfs:range xsd:string . 
             
             ###  http://schema.ufokn.org/core/v2/state
             ufokn:state rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:string . 
+                        rdf:type owl:FunctionalProperty ;
+                        rdfs:domain ufokn:Address ;
+                        rdfs:range xsd:string . 
                             
             ###  http://schema.ufokn.org/core/v2/country
             ufokn:country rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:string . 
+                          rdf:type owl:FunctionalProperty ;
+                          rdfs:domain ufokn:Address ;
+                          rdfs:range xsd:string . 
                             
             ###  http://schema.ufokn.org/core/v2/district
             ufokn:district rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:string . 
+                           rdf:type owl:FunctionalProperty ;
+                           rdfs:domain ufokn:Address ;
+                           rdfs:range xsd:string . 
             
             ###  http://schema.ufokn.org/core/v2/postcode
             ufokn:postcode rdf:type owl:DatatypeProperty ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain ufokn:Address ;
-                            rdfs:range xsd:string . 
+                           rdf:type owl:FunctionalProperty ;
+                           rdfs:domain ufokn:Address ;
+                           rdfs:range xsd:string . 
                             
             ### Data Properties for Features-at-risk
                             
             ###  http://schema.ufokn.org/core/v2/key
             ufokn:key rdf:type owl:DatatypeProperty ;
-                            rdfs:domain ufokn:FeatureAtRisk ;
-                            rdfs:range xsd:string . 
+                      rdfs:domain ufokn:FeatureAtRisk ;
+                      rdfs:range xsd:string . 
             
             ###  http://schema.ufokn.org/core/v2/value
             ufokn:value rdf:type owl:DatatypeProperty ;
-                            rdfs:domain ufokn:FeatureAtRisk ;
-                            rdfs:range xsd:string . 
+                        rdfs:domain ufokn:FeatureAtRisk ;
+                        rdfs:range xsd:string . 
             
             ###  http://schema.ufokn.org/core/v2/osm_id
             ufokn:osm_id rdf:type owl:DatatypeProperty ;
-                            rdfs:domain ufokn:FeatureAtRisk ;
-                            rdfs:range xsd:string . 
+                         rdfs:domain ufokn:FeatureAtRisk ;
+                         rdfs:range xsd:string . 
             
             ###  http://schema.ufokn.org/core/v2/ms_id
             ufokn:ms_id rdf:type owl:DatatypeProperty ;
-                            rdfs:domain ufokn:FeatureAtRisk ;
-                            rdfs:range xsd:string . 
+                        rdfs:domain ufokn:FeatureAtRisk ;
+                        rdfs:range xsd:string . 
             
             ###  http://schema.ufokn.org/core/v2/id
             ufokn:id rdf:type owl:DatatypeProperty ;
-                               rdfs:range xsd:string .
+                     rdfs:range xsd:string .
             
             ###  http://schema.ufokn.org/core/v2/osm_id
             ufokn:osm_id rdf:type owl:DatatypeProperty ;
-                               rdfs:subPropertyOf ufokn:id.
+                         rdfs:subPropertyOf ufokn:id.
             
             ###  http://schema.ufokn.org/core/v2/ms_id
             ufokn:ms_id rdf:type owl:DatatypeProperty ;
-                               rdfs:subPropertyOf ufokn:id.
+                        rdfs:subPropertyOf ufokn:id.
             
             ###  http://schema.ufokn.org/core/v2/oa_id
             ufokn:oa_id rdf:type owl:DatatypeProperty ;
-                               rdfs:subPropertyOf ufokn:id.
+                        rdfs:subPropertyOf ufokn:id.
                                
             ### other datatype properties 
                                
@@ -155,223 +155,229 @@
 
 ### http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/UFOKN-dq0dtevjev
     <ufokn-data:FeatureAtRisk/UFOKN-dq0dtevjev> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:FeatureAtRisk ;
-                                                                         ufokn:hasAddress <ufokn-data:Address/UFOKN-dq0dtevjev> ;
-                                                                         ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dq0dtevjev> ;
-                                                                         ufokn:ms_id "dq0dtevjev" ;
-                                                                         ufokn:key "building" ;
-                                                                         ufokn:oa_id "00027c4330b507c6" ;
-                                                                         ufokn:fromDataSource ufokn:OSMdataSource,ufokn:MSdataSource,ufokn:OAdataSource; 
-                                                                         ufokn:value "yes" .
+                                                         ufokn:FeatureAtRisk ;
+														 ufokn:hasAddress <ufokn-data:Address/UFOKN-dq0dtevjev> ;
+														 ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dq0dtevjev> ;
+														 ufokn:ms_id "dq0dtevjev" ;
+														 ufokn:key "building" ;
+														 ufokn:oa_id "00027c4330b507c6" ;
+														 ufokn:fromDataSource ufokn:OSMdataSource,ufokn:MSdataSource,ufokn:OAdataSource; 
+														 ufokn:value "yes" .
 
 ###  http://schema.ufokn.org/ufokn-data/v2/Address/UFOKN-dq0dtevjev
     <ufokn-data:Address/UFOKN-dq0dtevjev> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:StreetAddress ;
-                                                                     ufokn:street "NORTH CHANNEL DRIVE" ;
-                                                                     ufokn:streetNumber "102";
-                                                                     ufokn:city "" ; 
-                                                                     ufokn:region "" ; 
-                                                                     ufokn:state "";
-                                                                     ufokn:postcode "28480".
+                                                   ufokn:StreetAddress ;
+										  ufokn:street "NORTH CHANNEL DRIVE" ;
+										  ufokn:streetNumber "102";
+										  ufokn:city "" ; 
+										  ufokn:region "" ; 
+										  ufokn:state "";
+										  ufokn:postcode "28480".
 
 ###  http://schema.ufokn.org/ufokn-data/v2/RiskPoint/UFOKN-dq0dtevjev
     <ufokn-data:RiskPoint/UFOKN-dq0dtevjev> rdf:type owl:NamedIndividual ,
-                                                                                ufokn:RiskPoint ;
-                                                                       ufokn-geo:hasWktGeometry "POINT (1654323 1397477)"^^geo:wktLiteral .
+                                                     ufokn:RiskPoint ;
+                                            ufokn-geo:hasWktGeometry "POINT (1654323 1397477)"^^geo:wktLiteral .
 
 
 ### http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/UFOKN-dq09e0n1dt
     <ufokn-data:FeatureAtRisk/UFOKN-dq09e0n1dt> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:FeatureAtRisk ;
-                                                                         ufokn:hasAddress <ufokn-data:Address/UFOKN-dq09e0n1dt> ;
-                                                                         ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dq09e0n1dt> ;
-                                                                         ufokn:ms_id "dq09e0n1dt" ;
-                                                                         ufokn:key "None" ;
-                                                                         ufokn:oa_id "000ceb17dfafd634" ;
-                                                                         ufokn:fromDataSource ufokn:MSdataSource,ufokn:OAdataSource; 
-                                                                         ufokn:value "none" .
+                                                         ufokn:FeatureAtRisk ;
+                                                ufokn:hasAddress <ufokn-data:Address/UFOKN-dq09e0n1dt> ;
+												ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dq09e0n1dt> ;
+												ufokn:ms_id "dq09e0n1dt" ;
+												ufokn:key "None" ;
+												ufokn:oa_id "000ceb17dfafd634" ;
+												ufokn:fromDataSource ufokn:MSdataSource,ufokn:OAdataSource; 
+												ufokn:value "none" .
 
 ###  http://schema.ufokn.org/ufokn-data/v2/Address/UFOKN-dq09e0n1dt
     <ufokn-data:Address/UFOKN-dq09e0n1dt> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:StreetAddress ;
-                                                                     ufokn:street "MISSISSIPPI AVENUE" ;
-                                                                     ufokn:streetNumber "800";
-                                                                     ufokn:city "" ; 
-                                                                     ufokn:region "" ; 
-                                                                     ufokn:state "";
-                                                                     ufokn:postcode "28428".
+                                                   ufokn:StreetAddress ;
+                                          ufokn:street "MISSISSIPPI AVENUE" ;
+										  ufokn:streetNumber "800";
+										  ufokn:city "" ; 
+										  ufokn:region "" ; 
+										  ufokn:state "";
+										  ufokn:postcode "28428".
 
 ###  http://schema.ufokn.org/ufokn-data/v2/RiskPoint/UFOKN-dq09e0n1dt
     <ufokn-data:RiskPoint/UFOKN-dq09e0n1dt> rdf:type owl:NamedIndividual ,
-                                                                                ufokn:RiskPoint ;
-                                                                       ufokn-geo:hasWktGeometry "POINT (1648746 1373964)"^^geo:wktLiteral .
+                                                     ufokn:RiskPoint ;
+                                            ufokn-geo:hasWktGeometry "POINT (1648746 1373964)"^^geo:wktLiteral .
 
 
 ### http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/UFOKN-dq0dk3bp96
     <ufokn-data:FeatureAtRisk/UFOKN-dq0dk3bp96> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:FeatureAtRisk ;
-                                                                         ufokn:hasAddress <ufokn-data:Address/UFOKN-dq0dk3bp96> ;
-                                                                         ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dq0dk3bp96> ;
-                                                                         ufokn:ms_id "dq0dk3bp96" ;
-                                                                         ufokn:key "None" ;
-                                                                         ufokn:oa_id "001299ad8064bc54" ;
-                                                                         ufokn:fromDataSource ufokn:MSdataSource,ufokn:OAdataSource; 
-                                                                         ufokn:value "none" .
+                                                         ufokn:FeatureAtRisk ;
+                                                ufokn:hasAddress <ufokn-data:Address/UFOKN-dq0dk3bp96> ;
+												ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dq0dk3bp96> ;
+												ufokn:ms_id "dq0dk3bp96" ;
+												ufokn:key "None" ;
+												ufokn:oa_id "001299ad8064bc54" ;
+												ufokn:fromDataSource ufokn:MSdataSource,ufokn:OAdataSource; 
+												ufokn:value "none" .
 
 ###  http://schema.ufokn.org/ufokn-data/v2/Address/UFOKN-dq0dk3bp96
     <ufokn-data:Address/UFOKN-dq0dk3bp96> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:StreetAddress ;
-                                                                     ufokn:street "TRAILS END ROAD" ;
-                                                                     ufokn:streetNumber "440";
-                                                                     ufokn:city "" ; 
-                                                                     ufokn:region "" ; 
-                                                                     ufokn:state "";
-                                                                     ufokn:postcode "28409".
+                                                   ufokn:StreetAddress ;
+                                          ufokn:street "TRAILS END ROAD" ;
+										  ufokn:streetNumber "440";
+										  ufokn:city "" ; 
+										  ufokn:region "" ; 
+										  ufokn:state "";
+										  ufokn:postcode "28409".
 
 ###  http://schema.ufokn.org/ufokn-data/v2/RiskPoint/UFOKN-dq0dk3bp96
     <ufokn-data:RiskPoint/UFOKN-dq0dk3bp96> rdf:type owl:NamedIndividual ,
-                                                                                ufokn:RiskPoint ;
-                                                                       ufokn-geo:hasWktGeometry "POINT (1649923 1390408)"^^geo:wktLiteral .
+                                                     ufokn:RiskPoint ;
+                                            ufokn-geo:hasWktGeometry "POINT (1649923 1390408)"^^geo:wktLiteral .
 
 
 ### http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/UFOKN-dq0d5b0yhd
     <ufokn-data:FeatureAtRisk/UFOKN-dq0d5b0yhd> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:FeatureAtRisk ;
-                                                                         ufokn:hasAddress <ufokn-data:Address/UFOKN-dq0d5b0yhd> ;
-                                                                         ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dq0d5b0yhd> ;
-                                                                         ufokn:ms_id "dq0d5b0yhd" ;
-                                                                         ufokn:key "None" ;
-                                                                         ufokn:oa_id "0017217782797ede" ;
-                                                                         ufokn:fromDataSource ufokn:MSdataSource,ufokn:OAdataSource; 
-                                                                         ufokn:value "none" .
+                                                         ufokn:FeatureAtRisk ;
+                                                ufokn:hasAddress <ufokn-data:Address/UFOKN-dq0d5b0yhd> ;
+												ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dq0d5b0yhd> ;
+												ufokn:ms_id "dq0d5b0yhd" ;
+												ufokn:key "None" ;
+												ufokn:oa_id "0017217782797ede" ;
+												ufokn:fromDataSource ufokn:MSdataSource,ufokn:OAdataSource; 
+												ufokn:value "none" .
 
 ###  http://schema.ufokn.org/ufokn-data/v2/Address/UFOKN-dq0d5b0yhd
     <ufokn-data:Address/UFOKN-dq0d5b0yhd> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:StreetAddress ;
-                                                                     ufokn:street "SAND BAR LANE" ;
-                                                                     ufokn:streetNumber "1638";
-                                                                     ufokn:city "" ; 
-                                                                     ufokn:region "" ; 
-                                                                     ufokn:state "";
-                                                                     ufokn:postcode "28409".
+                                                   ufokn:StreetAddress ;
+                                          ufokn:street "SAND BAR LANE" ;
+										  ufokn:streetNumber "1638";
+										  ufokn:city "" ; 
+										  ufokn:region "" ; 
+										  ufokn:state "";
+										  ufokn:postcode "28409".
 
 ###  http://schema.ufokn.org/ufokn-data/v2/RiskPoint/UFOKN-dq0d5b0yhd
     <ufokn-data:RiskPoint/UFOKN-dq0d5b0yhd> rdf:type owl:NamedIndividual ,
-                                                                                ufokn:RiskPoint ;
-                                                                       ufokn-geo:hasWktGeometry "POINT (1649194 1384141)"^^geo:wktLiteral .
+                                                     ufokn:RiskPoint ;
+                                            ufokn-geo:hasWktGeometry "POINT (1649194 1384141)"^^geo:wktLiteral .
 
 
 ### http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/UFOKN-dq0ep32tfu
     <ufokn-data:FeatureAtRisk/UFOKN-dq0ep32tfu> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:FeatureAtRisk ;
-                                                                         ufokn:hasAddress <ufokn-data:Address/UFOKN-dq0ep32tfu> ;
-                                                                         ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dq0ep32tfu> ;
-                                                                         ufokn:ms_id "dq0ep32tfu" ;
-                                                                         ufokn:key "None" ;
-                                                                         ufokn:oa_id "001910b839fb1302" ;
-                                                                         ufokn:fromDataSource ufokn:MSdataSource,ufokn:OAdataSource; 
-                                                                         ufokn:value "none" .
+                                                         ufokn:FeatureAtRisk ;
+                                                ufokn:hasAddress <ufokn-data:Address/UFOKN-dq0ep32tfu> ;
+												ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dq0ep32tfu> ;
+												ufokn:ms_id "dq0ep32tfu" ;
+												ufokn:key "None" ;
+												ufokn:oa_id "001910b839fb1302" ;
+												ufokn:fromDataSource ufokn:MSdataSource,ufokn:OAdataSource; 
+												ufokn:value "none" .
 
 ###  http://schema.ufokn.org/ufokn-data/v2/Address/UFOKN-dq0ep32tfu
     <ufokn-data:Address/UFOKN-dq0ep32tfu> rdf:type owl:NamedIndividual ,
-                                                                              ufokn:StreetAddress ;
-                                                                     ufokn:street "CLAMDIGGER POINT ROAD" ;
-                                                                     ufokn:streetNumber "1";
-                                                                     ufokn:city "" ; 
-                                                                     ufokn:region "" ; 
-                                                                     ufokn:state "";
-                                                                     ufokn:postcode "28411".
+                                                   ufokn:StreetAddress ;
+                                          ufokn:street "CLAMDIGGER POINT ROAD" ;
+										  ufokn:streetNumber "1";
+										  ufokn:city "" ; 
+										  ufokn:region "" ; 
+										  ufokn:state "";
+										  ufokn:postcode "28411".
 
 ###  http://schema.ufokn.org/ufokn-data/v2/RiskPoint/UFOKN-dq0ep32tfu
     <ufokn-data:RiskPoint/UFOKN-dq0ep32tfu> rdf:type owl:NamedIndividual ,
-                                                                                ufokn:RiskPoint ;
-                                                                       ufokn-geo:hasWktGeometry "POINT (1659082 1406851)"^^geo:wktLiteral .
+                                                     ufokn:RiskPoint ;
+                                            ufokn-geo:hasWktGeometry "POINT (1659082 1406851)"^^geo:wktLiteral .
 
 
     ###  http://schema.ufokn.org/ufokn-data/v2/CollectionOfFeatures/UFOKN-dq0df60vzh
     <ufokn-data:CollectionOfFeatures/UFOKN-dq0df60vzh> rdf:type owl:NamedIndividual ,
-                                                                                               ufokn:CollectionOfFeatures ;ufokn:hasMember <ufokn-data:FeatureAtRisk/UFOKN-dq0df60vzh/1>,
-<ufokn-data:FeatureAtRisk/UFOKN-dq0df60vzh/2>,
-<ufokn-data:FeatureAtRisk/UFOKN-dq0df60vzh/3>,
-<ufokn-data:FeatureAtRisk/UFOKN-dq0df60vzh/4>; 
-                                                                                      ufokn:hasAddress <ufokn-data:AddressUFOKN-dq0df60vzh> .
+                                                                ufokn:CollectionOfFeatures ;
+													   ufokn:hasMember <ufokn-data:FeatureAtRisk/UFOKN-dq0df60vzh/1>,
+																	   <ufokn-data:FeatureAtRisk/UFOKN-dq0df60vzh/2>,
+																	   <ufokn-data:FeatureAtRisk/UFOKN-dq0df60vzh/3>,
+																	   <ufokn-data:FeatureAtRisk/UFOKN-dq0df60vzh/4>; 
+													   ufokn:hasAddress <ufokn-data:Address/UFOKN-dq0df60vzh> ;
+													   ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dq0df60vzh> .
 
     ###  http://schema.ufokn.org/ufokn-data/v2/Address/UFOKN-dq0df60vzh
     <ufokn-data:Address/UFOKN-dq0df60vzh> rdf:type owl:NamedIndividual ,
-                                                                                          ufokn:StreetAddress ; 
-                                                                                ufokn:street "NORTH 3RD STREET" ;
-                                                                                ufokn:streetNumber "814";
-                                                                                ufokn:city "" ;
-                                                                                ufokn:region "" ; 
-                                                                                ufokn:state "";
-                                                                                ufokn:postcode "28401".
+                                                   ufokn:StreetAddress ; 
+                                          ufokn:street "NORTH 3RD STREET" ;
+										  ufokn:streetNumber "814";
+										  ufokn:city "" ;
+										  ufokn:region "" ; 
+										  ufokn:state "";
+										  ufokn:postcode "28401".
     
     ###  http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/RiskPoint/UFOKN-dq0df60vzh
     <ufokn-data:RiskPoint/UFOKN-dq0df60vzh> rdf:type owl:NamedIndividual ,
-                                                                                ufokn:RiskPoint ;
-                                                                       ufokn-geo:hasWktGeometry "POINT (1640262 1398675)"^^geo:wktLiteral .
+                                                     ufokn:RiskPoint ;
+                                            ufokn-geo:hasWktGeometry "POINT (1640262 1398675)"^^geo:wktLiteral .
 
 
     ###  http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/UFOKN-dq0df60vzh/1
     <ufokn-data:FeatureAtRisk/UFOKN-dq0df60vzh/1> rdf:type owl:NamedIndividual ,
-                                                                                  ufokn:FeatureAtRisk ;
-                                                                         ufokn:hasAddress <ufokn-data:Address/UFOKN-dq0df60vzh/1> ;ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dq0df60vzh> ; 
-                                                                         ufokn:ms_id "dq0df60vzh" ;
-                                                                             ufokn:key "None" ;
-                                                                             ufokn:oa_id "0e3306e89f946731" ;
-                                                                             ufokn:fromDataSource ufokn:MSdataSource,ufokn:OAdataSource; 
-                                                                             ufokn:value "none" .
+                                                           ufokn:FeatureAtRisk ;
+                                                  ufokn:hasAddress <ufokn-data:Address/UFOKN-dq0df60vzh/1> ;
+												  ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dq0df60vzh> ; 
+												  ufokn:ms_id "dq0df60vzh" ;
+												  ufokn:key "None" ;
+												  ufokn:oa_id "0e3306e89f946731" ;
+												  ufokn:fromDataSource ufokn:MSdataSource,ufokn:OAdataSource; 
+												  ufokn:value "none" .
 
     ###  http://schema.ufokn.org/ufokn-data/v2/Address/UFOKN-dq0df60vzh/1
     <ufokn-data:Address/UFOKN-dq0df60vzh/1> rdf:type owl:NamedIndividual ,
-                                                                                          ufokn:UnitAddress ;  
-                                                                                 ufokn:hasStreetAddress <ufokn-data:Address/UFOKN-dq0df60vzh> ; 
-                                                                                 ufokn:unitNumber "UNIT 100".
+                                                     ufokn:UnitAddress ;  
+                                            ufokn:hasStreetAddress <ufokn-data:Address/UFOKN-dq0df60vzh> ; 
+                                            ufokn:unitNumber "UNIT 100".
 
     ###  http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/UFOKN-dq0df60vzh/2
     <ufokn-data:FeatureAtRisk/UFOKN-dq0df60vzh/2> rdf:type owl:NamedIndividual ,
-                                                                                  ufokn:FeatureAtRisk ;
-                                                                         ufokn:hasAddress <ufokn-data:Address/UFOKN-dq0df60vzh/2> ;ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dq0df60vzh> ; 
-                                                                         ufokn:ms_id "dq0df60vzh" ;
-                                                                             ufokn:key "None" ;
-                                                                             ufokn:oa_id "0e3306e89f946731" ;
-                                                                             ufokn:fromDataSource ufokn:MSdataSource,ufokn:OAdataSource; 
-                                                                             ufokn:value "none" .
+                                                           ufokn:FeatureAtRisk ;
+                                                  ufokn:hasAddress <ufokn-data:Address/UFOKN-dq0df60vzh/2> ;
+												  ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dq0df60vzh> ; 
+												  ufokn:ms_id "dq0df60vzh" ;
+												  ufokn:key "None" ;
+												  ufokn:oa_id "0e3306e89f946731" ;
+												  ufokn:fromDataSource ufokn:MSdataSource,ufokn:OAdataSource; 
+												  ufokn:value "none" .
 
     ###  http://schema.ufokn.org/ufokn-data/v2/Address/UFOKN-dq0df60vzh/2
     <ufokn-data:Address/UFOKN-dq0df60vzh/2> rdf:type owl:NamedIndividual ,
-                                                                                          ufokn:UnitAddress ;  
-                                                                                 ufokn:hasStreetAddress <ufokn-data:Address/UFOKN-dq0df60vzh> ; 
-                                                                                 ufokn:unitNumber "UNIT 200".
+                                                     ufokn:UnitAddress ;  
+                                            ufokn:hasStreetAddress <ufokn-data:Address/UFOKN-dq0df60vzh> ; 
+											ufokn:unitNumber "UNIT 200".
 
     ###  http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/UFOKN-dq0df60vzh/3
     <ufokn-data:FeatureAtRisk/UFOKN-dq0df60vzh/3> rdf:type owl:NamedIndividual ,
-                                                                                  ufokn:FeatureAtRisk ;
-                                                                         ufokn:hasAddress <ufokn-data:Address/UFOKN-dq0df60vzh/3> ;ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dq0df60vzh> ; 
-                                                                         ufokn:ms_id "dq0df60vzh" ;
-                                                                             ufokn:key "None" ;
-                                                                             ufokn:oa_id "0e3306e89f946731" ;
-                                                                             ufokn:fromDataSource ufokn:MSdataSource,ufokn:OAdataSource; 
-                                                                             ufokn:value "none" .
+                                                           ufokn:FeatureAtRisk ;
+                                                  ufokn:hasAddress <ufokn-data:Address/UFOKN-dq0df60vzh/3> ;
+												  ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dq0df60vzh> ; 
+												  ufokn:ms_id "dq0df60vzh" ;
+												  ufokn:key "None" ;
+												  ufokn:oa_id "0e3306e89f946731" ;
+												  ufokn:fromDataSource ufokn:MSdataSource,ufokn:OAdataSource; 
+												  ufokn:value "none" .
 
     ###  http://schema.ufokn.org/ufokn-data/v2/Address/UFOKN-dq0df60vzh/3
     <ufokn-data:Address/UFOKN-dq0df60vzh/3> rdf:type owl:NamedIndividual ,
-                                                                                          ufokn:UnitAddress ;  
-                                                                                 ufokn:hasStreetAddress <ufokn-data:Address/UFOKN-dq0df60vzh> ; 
-                                                                                 ufokn:unitNumber "UNIT 300".
+                                                     ufokn:UnitAddress ;  
+                                            ufokn:hasStreetAddress <ufokn-data:Address/UFOKN-dq0df60vzh> ; 
+											ufokn:unitNumber "UNIT 300".
 
     ###  http://schema.ufokn.org/ufokn-data/v2/FeatureAtRisk/UFOKN-dq0df60vzh/4
     <ufokn-data:FeatureAtRisk/UFOKN-dq0df60vzh/4> rdf:type owl:NamedIndividual ,
-                                                                                  ufokn:FeatureAtRisk ;
-                                                                         ufokn:hasAddress <ufokn-data:Address/UFOKN-dq0df60vzh/4> ;ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dq0df60vzh> ; 
-                                                                         ufokn:ms_id "dq0df60vzh" ;
-                                                                             ufokn:key "None" ;
-                                                                             ufokn:oa_id "0e3306e89f946731" ;
-                                                                             ufokn:fromDataSource ufokn:MSdataSource,ufokn:OAdataSource; 
-                                                                             ufokn:value "none" .
+                                                           ufokn:FeatureAtRisk ;
+                                                  ufokn:hasAddress <ufokn-data:Address/UFOKN-dq0df60vzh/4> ;
+												  ufokn:hasRiskPoint <ufokn-data:RiskPoint/UFOKN-dq0df60vzh> ; 
+												  ufokn:ms_id "dq0df60vzh" ;
+												  ufokn:key "None" ;
+												  ufokn:oa_id "0e3306e89f946731" ;
+												  ufokn:fromDataSource ufokn:MSdataSource,ufokn:OAdataSource; 
+												  ufokn:value "none" .
 
     ###  http://schema.ufokn.org/ufokn-data/v2/Address/UFOKN-dq0df60vzh/4
     <ufokn-data:Address/UFOKN-dq0df60vzh/4> rdf:type owl:NamedIndividual ,
-                                                                                          ufokn:UnitAddress ;  
-                                                                                 ufokn:hasStreetAddress <ufokn-data:Address/UFOKN-dq0df60vzh> ; 
-                                                                                 ufokn:unitNumber "UNIT 400".
+                                                     ufokn:UnitAddress ;  
+                                            ufokn:hasStreetAddress <ufokn-data:Address/UFOKN-dq0df60vzh> ; 
+											ufokn:unitNumber "UNIT 400".
