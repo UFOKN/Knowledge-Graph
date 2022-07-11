@@ -2,7 +2,55 @@
 # Therefore, the most complex ones come first
 # Note that some lines have been commented out of some queries
 #    There may be two different queries that can be run by changing what is commented
-#	 There may be functionality that is not yet supported in the ontology
+#    There may be functionality that is not yet supported in the ontology
+
+
+
+### Cascade_by_areas ###
+# A cascading query using UtilityServiceArea
+#   Assumes first UtilityAsset serves others (not servesArea)
+#   Two levels of areas (missing things that don't have two levels)
+# Appears to work as expected
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX ufokn-geo: <http://schema.ufokn.org/geo/v2/>
+
+select ?utilAsset1 ?utilAsset2 ?feature2 ?feature3 where { 
+	?utilAsset1 rdf:type ufokn-c:UtilityAsset ;
+#                ufokn:hasFloodLevel "critical"^^xsd:string ;
+                ufokn-c:providesUtilityService ?utilServ1 .  
+	?utilServ1 ufokn-c:serves ?utilAsset2 ;
+			   ufokn-c:ofUtilityType ?utilType1 .
+    
+    ?utilAsset2 rdf:type ufokn-c:UtilityAsset ;
+                ufokn-c:providesUtilityService ?utilServ2 .  
+	?utilServ2 ufokn-c:servesArea ?utilArea2 ;
+			   ufokn-c:ofUtilityType ?utilType2 .
+    ?utilArea2 ufokn-geo:hasWktGeometry ?area2 .
+    ?feature2 rdf:type ufokn:FeatureAtRisk ;
+              ufokn:hasRiskPoint ?fRiskPoint2 .
+    ?fRiskPoint2 ufokn-geo:hasWktGeometry ?fPoint2 .
+    FILTER(geof:sfWithin(?fPoint2, ?area2))
+    FILTER(?feature2 != ?utilAsset2)
+    FILTER(?feature2 != ?utilAsset1)
+    
+    ?feature2 rdf:type ufokn-c:UtilityAsset ;
+              ufokn-c:providesUtilityService ?utilServ3 .  
+	?utilServ3 ufokn-c:servesArea ?utilArea3 ;
+			   ufokn-c:ofUtilityType ?utilType4 .
+    ?utilArea3 ufokn-geo:hasWktGeometry ?area3 .
+    ?feature3 rdf:type ufokn:FeatureAtRisk ;
+              ufokn:hasRiskPoint ?fRiskPoint3 .
+    ?fRiskPoint3 ufokn-geo:hasWktGeometry ?fPoint3 .
+    FILTER(geof:sfWithin(?fPoint3, ?area3))
+    FILTER(?feature3 != ?feature2)
+    FILTER(?feature3 != ?utilAsset2)
+    FILTER(?feature3 != ?utilAsset1)
+}
 
 
 
@@ -30,6 +78,29 @@ select ?utilAsset1 ?utilAsset2 ?utilAsset3 ?feature where {
     ?utilServ3 ufokn-c:serves ?feature .
     ?feature rdf:type ufokn:FeatureAtRisk .
 }
+
+
+
+### count_FaR_in_serviceArea ###
+# Counts the number of FeatureAtRisk in each UtilityServiceArea
+# Works as expected
+# Takes about 35 seconds on a dataset with 76k FeatureAtRisk across 32 UtilityServiceArea
+
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn-geo: <http://schema.ufokn.org/geo/v2/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+
+select ?serviceArea (count(?serviceArea) as ?count) where {
+    ?serviceArea rdf:type ufokn-c:UtilityServiceArea;
+                 ufokn-geo:hasWktGeometry ?area.
+    ?feature ufokn:hasRiskPoint ?riskPoint.
+    ?riskPoint ufokn-geo:hasWktGeometry ?point.
+    
+    FILTER(geof:sfContains(?area, ?point))
+#    FILTER(geof:sfDisjoint(?point, ?area))
+} group by ?serviceArea
 
 
 
