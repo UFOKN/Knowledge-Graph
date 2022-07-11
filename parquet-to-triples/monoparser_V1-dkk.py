@@ -165,7 +165,8 @@ def polyProc(temp_pointer) -> str:
     ###  http://schema.ufokn.org/ufokn-data/v2/CollectionOfFeatures/''' + str(df.loc[temp_pointer]['buildID']) + '''
     <ufokn-data:CollectionOfFeatures/''' + str(df.loc[temp_pointer]['buildID']) + '''> rdf:type owl:NamedIndividual ,
                                                                                                ufokn:CollectionOfFeatures ;''' + "ufokn:hasMember " + ",\n".join(subLink2) + ";" + ''' 
-                                                                                      ufokn:hasAddress <ufokn-data:Address''' + str(df.loc[temp_pointer].loc['buildID']) + '''> .'''
+                                                                                      ufokn:hasRiskPoint <ufokn-data:RiskPoint/''' + str(df.loc[temp_pointer].loc['buildID']) + "> ;" + ''' 
+                                                                                      ufokn:hasAddress <ufokn-data:Address/''' + str(df.loc[temp_pointer].loc['buildID']) + '''> .'''
                                                                                       
     
 
@@ -364,4 +365,4 @@ if __name__ == '__main__':
 
     df = loadParquet(parquet_file) 
 
-    router(df, -1)  #set limit to -1 to parse entire parquet file
+    router(df, 1000)  #set limit to -1 to parse entire parquet file
