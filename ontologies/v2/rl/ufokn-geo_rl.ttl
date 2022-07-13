@@ -1,0 +1,270 @@
+@prefix ufokn: <http://schema.ufokn.org/core/v2/> .
+@prefix ufokn-geo: <http://schema.ufokn.org/geo/v2/> .
+
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <http://schema.ufokn.org/geo/v2/> .
+
+<http://schema.ufokn.org/geo/v2/> rdf:type owl:Ontology ;
+                                   owl:versionIRI <http://schema.ufokn.org/geo/v2/> ;
+                                   dcterms:created "2020-02-04"@en-us ;
+                                   dcterms:creator <http://orcid.org/0000-0002-5331-5052> ;
+                                   dcterms:description "Part of the UFOKN ontology for describing features and their geometry."@en-us ;
+                                   dcterms:issued "2022-02-02"^^xsd:date ;
+                                   dcterms:modified "2022-02-02"^^xsd:date ;
+                                   dcterms:publisher <http://ufokn.org> ;
+                                   dcterms:source "https://github.com/UFOKN/Knowledge-Graph/ontologies/v2/ufokn-geo.owl"^^<xsd:anyURI> ;
+                                   dcterms:title "Spatial part of the UFOKN Ontology"@en-us ;
+                                   rdfs:label "Spatial part of the UFOKN Ontology"@en-us ;
+                                   owl:versionInfo "1"@en-us .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/created
+dcterms:created rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/issued
+dcterms:issued rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/modified
+dcterms:modified rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/publisher
+dcterms:publisher rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/source
+dcterms:source rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+dcterms:title rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://schema.ufokn.org/geo/v1#hasNode
+ufokn-geo:hasNode rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf geo:sfContains ;
+                  rdfs:domain geo:Geometry ;
+                  rdfs:range geo:Point .
+
+###  http://www.opengis.net/ont/geosparql#hasGeometry
+geo:hasGeometry rdf:type owl:ObjectProperty ;
+                rdfs:domain geo:Feature ;
+                rdfs:range geo:Geometry .
+#                rdfs:comment "A spatial representation for a given feature."@en ;
+#                rdfs:isDefinedBy geo: ;
+#                rdfs:label "has Geometry"@en .
+
+###  http://schema.ufokn.org/geo/v1#spatialRS
+ufokn-geo:spatialRS rdf:type owl:ObjectProperty ;
+                    rdfs:domain geo:Geometry ;
+                    rdfs:range ufokn-geo:SpatialReferenceSystem ;
+                    rdfs:comment "The spatial reference system used to specify the geometry."@en ;
+                    rdfs:isDefinedBy geo: ;
+                    rdfs:label "spatialRS"@en .
+
+
+###  http://www.opengis.net/ont/geosparql#hasPatch
+geo:hasPatch rdf:type owl:ObjectProperty ;
+             owl:inverseOf geo:patchOf .
+
+
+###  http://www.opengis.net/ont/geosparql#patchOf
+geo:patchOf rdf:type owl:ObjectProperty ;
+          rdfs:domain geo:Polygon ;
+          rdfs:range geo:PolyedralSurface .
+
+
+###  http://www.opengis.net/ont/geosparql#sfContains
+geo:sfContains rdf:type owl:ObjectProperty ;
+               rdfs:domain geo:SpatialObject ;
+               rdfs:range geo:SpatialObject ;
+               rdfs:comment "The contains relation from Simple Features."@en ;
+               rdfs:isDefinedBy geo: ;
+               rdfs:label "sfContains"@en .
+
+
+###  http://www.opengis.net/ont/geosparql#sfWithin
+geo:sfWithin rdf:type owl:ObjectProperty ;
+             rdfs:domain geo:SpatialObject ;
+             rdfs:range geo:SpatialObject ;
+             rdfs:comment "The within relation from Simple Features."@en ;
+             rdfs:isDefinedBy geo: ;
+             rdfs:label "sfWithin"@en .
+
+
+#################################################################
+#    Datatype Properties
+#################################################################
+
+
+###  http://schema.ufokn.org/geo/v2/hasWktGeometry
+ufokn-geo:hasWktGeometry rdf:type owl:DatatypeProperty ;
+                rdfs:domain geo:Feature ;
+                rdfs:range geo:wktLiteral .
+#                rdfs:comment "A spatial representation for a given feature as a wkt literal."@en .
+
+
+#################################################################
+#    Datatype
+#################################################################
+
+
+###  http://www.opengis.net/ont/geosparql#wktLiteral
+geo:wktLiteral rdf:type rdfs:Datatype ;
+               rdfs:label "Well-known Text Literal"@en ;
+               rdfs:comment "A Well-known Text serialization of a geometry object."@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://schema.ufokn.org/geo/v2/SpatialReferenceSystem
+ufokn-geo:SpatialReferenceSystem rdf:type owl:Class ;
+                                 owl:disjointWith geo:SpatialObject ;
+                                 rdfs:comment "The class represents a type of Spatial Reference Systems (SRS). It is intended to be instantiated by individuals that represent concrete SRS."@en ;
+                                 rdfs:label "SpatialReferenceSystem"@en .
+
+
+###  http://www.opengis.net/ont/geosparql#Curve
+geo:Curve rdf:type owl:Class ;
+          rdfs:subClassOf geo:Geometry ;
+          rdfs:comment "A geometry of dimension 1"@en ;
+          rdfs:isDefinedBy geo: ;
+          rdfs:label "Curve"@en .
+
+
+###  http://www.opengis.net/ont/geosparql#Feature
+geo:Feature rdf:type owl:Class ;
+            rdfs:subClassOf geo:SpatialObject ;
+            owl:disjointWith geo:Geometry ;
+            rdfs:comment "The class represents the top-level type of features located in space that are not abstract geometric."@en ;
+            rdfs:isDefinedBy geo: ;
+            rdfs:label "Feature"@en .
+
+
+###  http://www.opengis.net/ont/geosparql#Geometry
+geo:Geometry rdf:type owl:Class ;
+             rdfs:subClassOf geo:SpatialObject ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty ufokn-geo:spatialRS ;
+                               owl:allValuesFrom ufokn-geo:SpatialReferenceSystem
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty ufokn-geo:spatialRS ;
+                               owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               owl:onClass ufokn-geo:SpatialReferenceSystem
+                             ] ;
+             rdfs:comment "The class represents the top-level geometry type. This class is equivalent to the UML class GM_Object defined in ISO 19107, and it is superclass of all geometry types."@en ;
+             rdfs:isDefinedBy geo: ;
+             rdfs:label "Geometry"@en .
+
+
+###  http://www.opengis.net/ont/geosparql#Point
+geo:Point rdf:type owl:Class ;
+          rdfs:subClassOf geo:Geometry ;
+          rdfs:comment "A single point as a geometry of dimension 0"@en ;
+          rdfs:isDefinedBy geo: ;
+          rdfs:label "Point"@en .
+
+
+### Defining a point geometry that uses EPSG 5070 as spatial reference system.
+ufokn-geo:Point_EPSG-5070 rdf:type owl:Class ;
+		rdfs:subClassOf geo:Point ,
+						[ rdf:type owl:Restriction ;
+                               owl:onProperty ufokn-geo:spatialRS ;
+                               owl:hasValue ufokn-geo:SRS_EPSG-5070 ;
+						] ;
+		rdfs:comment "A point (geometry of dimension 0) specified using EPSG 5070 as spatial reference system. This is the standard spatial reference system used by UFOKN."@en ;
+		rdfs:label "Point_EPSG-5070" .
+		
+
+
+###  http://www.opengis.net/ont/geosparql#PolyedralSurface
+geo:PolyedralSurface rdf:type owl:Class ;
+                     rdfs:subClassOf geo:Surface ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty geo:hasPatch ;
+                                       owl:someValuesFrom geo:Surface
+                                     ] ;
+                     rdfs:comment "A polyhedral surface as agglomeration of polygon patches"@en ;
+                     rdfs:isDefinedBy geo: ;
+                     rdfs:label "Polyhedral Surface"@en .
+
+
+###  http://www.opengis.net/ont/geosparql#Polygon
+geo:Polygon rdf:type owl:Class ;
+            rdfs:subClassOf geo:Surface ;
+            rdfs:comment """A planar surface defined by 1 exterior boundary and 0 or
+more interior boundaries"""@en ;
+            rdfs:isDefinedBy geo: ;
+            rdfs:label "Polygon"@en .
+
+
+###  http://www.opengis.net/ont/geosparql#SpatialObject
+geo:SpatialObject rdf:type owl:Class ;
+                  rdfs:isDefinedBy geo: ;
+                  rdfs:label "SpatialObject"@en .
+
+
+###  http://www.opengis.net/ont/geosparql#/Surface
+geo:Surface rdf:type owl:Class ;
+            rdfs:subClassOf geo:Geometry ;
+            rdfs:comment "A surface as a 2-dimensional spatial geometry"@en ;
+            rdfs:isDefinedBy geo: ;
+			owl:disjointWith geo:Point ;
+            rdfs:label "Surface"@en .
+
+
+###  http://www.opengis.net/ont/geosparql#/Triangle
+geo:Triangle rdf:type owl:Class ;
+             rdfs:subClassOf geo:Polygon ;
+             rdfs:comment "A triangle as a polygon that has three nodes"@en ;
+             rdfs:isDefinedBy geo: ;
+             rdfs:label "Triangle"@en .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://schema.ufokn.org/geo/v2/SRS_CRS84
+ufokn-geo:SRS_CRS84 rdf:type owl:NamedIndividual ,
+                             ufokn-geo:SpatialReferenceSystem ;
+                    rdfs:isDefinedBy <http://www.opengis.net/def/crs/OGC/1.3/CRS84> .
+
+
+###  http://schema.ufokn.org/geo/v2/SRS_EPSG-4326
+ufokn-geo:SRS_EPSG-4326 rdf:type owl:NamedIndividual ,
+                                 ufokn-geo:SpatialReferenceSystem ;
+                        rdfs:isDefinedBy <http://www.opengis.net/def/crs/EPSG/0/4326> .
+
+###  http://schema.ufokn.org/geo/v2/SRS_EPSG-5070
+ufokn-geo:SRS_EPSG-5070 rdf:type owl:NamedIndividual ,
+                                 ufokn-geo:SpatialReferenceSystem ;
+                        rdfs:isDefinedBy <http://www.opengis.net/def/crs/EPSG/0/5070> .
+
+
