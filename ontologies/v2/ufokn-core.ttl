@@ -388,7 +388,11 @@ ufokn:IndividualFeatureAtRiskInCollection rdf:type owl:Class ;
 							   ] ,
 							   [rdf:type owl:Restriction ;
 								owl:onProperty ufokn:isMemberOf ;
-                                owl:cardinality "1"^^xsd:nonNegativeInteger
+                                owl:maxCardinality "1"^^xsd:nonNegativeInteger
+								] ,
+							   [rdf:type owl:Restriction ;
+								owl:onProperty ufokn:isMemberOf ;
+                                owl:minCardinality "1"^^xsd:nonNegativeInteger
 								] ,
 							   [rdf:type owl:Restriction ;
 								owl:onProperty ufokn:hasAddress ;
@@ -452,19 +456,8 @@ ufokn:Address rdf:type owl:Class .
 
 ###  http://schema.ufokn.org/core/v2/StreetAddress
 ufokn:StreetAddress rdf:type owl:Class ;
-		rdfs:subClassOf ufokn:Address ,
-						[rdf:type owl:Restriction ;
-						 owl:onProperty ufokn:street ;
-                         owl:cardinality "1"^^xsd:nonNegativeInteger
-						] ,
-						[rdf:type owl:Restriction ;
-						 owl:onProperty ufokn:postcode ;
-                         owl:cardinality "1"^^xsd:nonNegativeInteger
-						] ,
-						[rdf:type owl:Restriction ;
-						 owl:onProperty ufokn:unitCount ;
-                         owl:cardinality "1"^^xsd:nonNegativeInteger
-						].
+		rdfs:subClassOf ufokn:Address ;
+		owl:disjointWith ufokn:UnitAddress.
 
 
 ###  http://schema.ufokn.org/core/v2/UnitAddress
@@ -482,14 +475,13 @@ ufokn:UnitAddress rdf:type owl:Class ;
 							 owl:onProperty ufokn:hasAddress ;
 							 owl:allValuesFrom  ufokn:StreetAddress
 							] ;
-				owl:equivalentClass _:DefAddressesWithUnit .
+				owl:equivalentClass _:DefAddressWithUnit .
 
-_:DefAddressesWithUnit owl:intersectionOf (ufokn:Address _:HasUnitNumber) .
+_:DefAddressWithUnit rdfs:subClassOf ufokn:Address .
 
-_:HasUnitNumber rdf:type owl:Restriction ;
-						owl:onProperty ufokn:unitNumber ;
-						owl:minCardinality "1"^^xsd:nonNegativeInteger . 
-
+[rdf:type owl:Restriction ;
+		  owl:onProperty ufokn:unitNumber ;
+          owl:someValueFrom xsd:string ] rdfs:subClassOf _:DefAddressWithUnit.
 
 
 
