@@ -202,17 +202,29 @@ ufokn-c:servesStormwater rdf:type owl:ObjectProperty ;
 ufokn-c:servesWater rdf:type owl:ObjectProperty ;
              rdfs:subPropertyOf ufokn-c:serves .
 
+### defined property that is a shortcut between an asset that provide a utility service and the asset that consumes the service
+###  http://schema.ufokn.org/utility-connection/v2/assetServes
+ufokn-c:assetServes rdf:type owl:ObjectProperty ;
+              owl:propertyChainAxiom (ufokn-c:providesUtilityService ufokn-c:serves).
+
+### Transitive closure of the assetServes relation
+###  http://schema.ufokn.org/utility-connection/v2/assetServesTC
+ufokn-c:assetServesTC rdf:type 	owl:ObjectProperty ,
+								owl:TransitiveProperty .
+
+ufokn-c:assetServes rdfs:subPropertyOf ufokn-c:assetServesTC . 
+
 
 #################################################################
 #    Classes
 #################################################################
 
 ### included here for reference purposes only in Protege; defined in Geosparql
-###  http://www.opengis.net/spec/geosparql/1.0/Feature
+###  http://www.opengis.net/ont/geosparql#Feature
 geo:Feature rdf:type owl:Class .
 
 ### included here for reference purposes only in Protege; defined in Geosparql
-###  http://www.opengis.net/spec/geosparql/1.0/Geometry
+###  http://www.opengis.net/ont/geosparql#Geometry
 geo:Geometry rdf:type owl:Class .
 
 
@@ -233,7 +245,7 @@ ufokn:RegionOfInterest rdf:type owl:Class ;
 					rdfs:subClassOf geo:Feature .
 
 
-###  http://schema.ufokn.org/core/v1/StormwaterServiceArea
+###  http://schema.ufokn.org/utility-connection/v2/StormwaterServiceArea
 ufokn-c:StormwaterServiceArea rdf:type owl:Class ;
                             owl:equivalentClass [ owl:intersectionOf ( ufokn-c:UtilityServiceArea
                                                                        [ rdf:type owl:Restriction ;
