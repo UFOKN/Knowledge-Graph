@@ -6,6 +6,87 @@
 
 
 
+### assetServesTC-p2p ###
+# Tests the new ufokn-c:assetServesTC transitive closure of ufokn-c:assetServes
+# Works as expected
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+select ?utilAsset1 ?feature where { 
+	?utilAsset1 ufokn-c:assetServesTC ?feature .
+    ?feature rdf:type ufokn:FeatureAtRisk .
+}
+
+
+
+### assetServes-p2p ###
+# Tests the new ufokn-c:assetServes propertyChainAxiom
+# Works as expected
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+select ?utilAsset1 ?feature where { 
+	?utilAsset1 ufokn-c:assetServes ?feature .
+    ?feature rdf:type ufokn:FeatureAtRisk .
+}
+
+
+
+### enable-GeoSPARQL ###
+# Enables the GeoSPARQL plugin in GraphDB so indexed predicate operations work
+
+PREFIX geoSparql: <http://www.ontotext.com/plugins/geosparql#>
+INSERT DATA { _:s geoSparql:enabled "true" . }
+
+
+
+### count_FaR_predicate ###
+# Counts the number of FeatureAtRisk in each UtilityServiceArea
+# Uses the relation version of geo:sfContains
+# Works as expected
+# Takes ~10 seconds on a dataset with about 83k FeatureAtRisk across 33 UtilityServiceArea
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+
+SELECT ?serviceArea (count(?serviceArea) as ?count) WHERE {
+    ?serviceArea rdf:type ufokn-c:UtilityServiceArea .
+    ?feature ufokn:hasRiskPoint ?riskPoint.
+    ?serviceArea geo:sfContains ?riskPoint.
+} GROUP BY ?serviceArea
+
+
+
+### count_FaR_function ###
+# Counts the number of FeatureAtRisk in each UtilityServiceArea
+# Uses the function version of geof:sfContains
+# Works as expected
+# Takes 35-40 seconds on a dataset with about 83k FeatureAtRisk across 33 UtilityServiceArea
+
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+select ?serviceArea (count(?serviceArea) as ?count) where {
+    ?serviceArea rdf:type ufokn-c:UtilityServiceArea ;
+                 geo:asWKT ?area.
+    ?feature ufokn:hasRiskPoint ?riskPoint.
+    ?riskPoint geo:asWKT ?point.
+    FILTER(geof:sfContains(?area, ?point))
+} group by ?serviceArea
+
+
+
 ### Cascade_by_areas ###
 # A cascading query using UtilityServiceArea
 #   Assumes first UtilityAsset serves others (not servesArea)
@@ -81,29 +162,6 @@ select ?utilAsset1 ?utilAsset2 ?utilAsset3 ?feature where {
 
 
 
-### count_FaR_in_serviceArea ###
-# Counts the number of FeatureAtRisk in each UtilityServiceArea
-# Works as expected
-# Takes about 35 seconds on a dataset with 76k FeatureAtRisk across 32 UtilityServiceArea
-
-PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
-PREFIX ufokn-geo: <http://schema.ufokn.org/geo/v2/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
-
-select ?serviceArea (count(?serviceArea) as ?count) where {
-    ?serviceArea rdf:type ufokn-c:UtilityServiceArea;
-                 ufokn-geo:hasWktGeometry ?area.
-    ?feature ufokn:hasRiskPoint ?riskPoint.
-    ?riskPoint ufokn-geo:hasWktGeometry ?point.
-    
-    FILTER(geof:sfContains(?area, ?point))
-#    FILTER(geof:sfDisjoint(?point, ?area))
-} group by ?serviceArea
-
-
-
 ### FaRInAssetArea ###
 # Retrieves all features at risk served in an electric utility asset's service area
 # Can filter for only assets that are flooded (when supported)
@@ -112,21 +170,18 @@ select ?serviceArea (count(?serviceArea) as ?count) where {
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
-PREFIX ufokn-geo: <http://schema.ufokn.org/geo/v2/>
-PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 select ?eua ?feature where { 
 	?eua rdf:type ufokn-c:ElectricUtilityAsset;
 #	      ufokn:hasFloodLevel "critical"^^xsd:string;
          ufokn-c:providesUtilityService ?utilServ.
-	?utilServ ufokn-c:servesArea ?serviceArea.
-    ?serviceArea ufokn-geo:hasWktGeometry ?area.
+    ?utilServ ufokn-c:servesArea ?serviceArea.
     ?feature ufokn:hasRiskPoint ?riskPoint.
-    ?riskPoint ufokn-geo:hasWktGeometry ?point.
-    
-    FILTER(geof:sfWithin(?point, ?area))
+    ?serviceArea geo:sfContains ?riskPoint
 }
+
 
 
 
@@ -157,25 +212,42 @@ select ?eua ?feature where {
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
-PREFIX ufokn-geo: <http://schema.ufokn.org/geo/v2/>
-PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 select ?utilityService ?feature where { 
     ?utilityService rdf:type ufokn-c:UtilityService;
     				ufokn-c:servesArea ?utilityArea.
-    ?utilityArea ufokn-geo:hasWktGeometry ?area.
     ?feature rdf:type ufokn:FeatureAtRisk;
-    		 ufokn:hasRiskPoint ?riskPoint.
-    ?riskPoint ufokn-geo:hasWktGeometry ?point.
-    
-    FILTER(geof:sfWithin(?point, ?area))
+    		 ufokn:hasRiskPoint ?riskPoint.    
+    ?utilityArea geo:sfContains ?riskPoint.
 } 
+
+
+
+### FaR_in_serviceArea ###
+# Works through all service areas and retrieves all FaR with a Risk Point in each area
+# Works as expected (but need to download to get the full results with a large dataset)
+# Uses the predicate form of sfContains
+# Same results as FeaturesInServiceAreas below
+
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+select ?feature ?serviceArea where {
+    ?serviceArea rdf:type ufokn-c:UtilityServiceArea .
+    ?feature ufokn:hasRiskPoint ?riskPoint.
+    ?serviceArea geo:sfContains ?riskPoint.
+}
 
 
 
 ### FeaturesInServiceAreas ###
 # Retrieves each FaR with a Risk Point and indicates all service areas they belong to
+# Uses the function form of sfContains
 # Works as expected
+#    May need to replace ufokn-geo:hasWktGeometry with geo:asWKT depending on how data is coded
 
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
@@ -188,9 +260,7 @@ select ?feature ?serviceArea where {
     ?riskPoint ufokn-geo:hasWktGeometry ?point.
     ?serviceArea rdf:type ufokn-c:UtilityServiceArea;
     			 ufokn-geo:hasWktGeometry ?area.
-				 
-    FILTER(geof:sfWithin(?point, ?area))
-#    FILTER(geof:sfDisjoint(?point, ?area))
+    FILTER(geof:sfContains(?area, ?point))
 }
 
 
@@ -294,15 +364,32 @@ select ?feature ?st_add where {
 
 
 
-### IFaRiC ###
-# Retrieves all ufokn:IndividualFeatureAtRiskInCollection along with address information
-# Does not retrieve ufokn:FeatureAtRisk that satisfies definition of ufokn:IndividualFeatureAtRiskInCollection
-#    Did before 6/27/22 ufokn-core update
+### FaR-minus-IFaRiC ###
+# A helper query for comparing parquet data against ttl data
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 
-select ?feature ?st_add where { 
+select ?feature where { 
+	?feature rdf:type ufokn:FeatureAtRisk.
+    MINUS { ?feature ufokn:isMemberOf ?x }.
+}
+
+
+
+### IFaRiC ###
+# Retrieves all ufokn:IndividualFeatureAtRiskInCollection along with address information
+# Works as expected (mostly)
+#    Returns 1921 entries on IFaRiC hasAddress and Address hasStreetAddress & unitNumber (this is the expected number)
+#    Returns 8 more entries on streetNumber
+#    Returns 25 more entries on street
+# Did not retrieve any ufokn:IndividualFeatureAtRiskInCollection after 6/27/22 ufokn-core update
+#    hasMember and isMemberOf require range and domain updates, respectively
+
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+select ?feature ?st_add where {
 	?feature rdf:type ufokn:IndividualFeatureAtRiskInCollection.
     ?feature ufokn:hasAddress ?address.
     ?address ufokn:hasStreetAddress ?st_address;
@@ -313,7 +400,7 @@ select ?feature ?st_add where {
     			ufokn:state ?state;
     			ufokn:postcode ?zip.
     BIND(concat(str(?st_num), str(" "), str(?street), str(" "), str(?u_num), str(", "), str(?city), str(", "), str(?state), str("  "), str(?zip)) as ?st_add).
-} 
+}
 
 
 
@@ -348,17 +435,16 @@ select distinct ?collection where {
 
 ### IFaR_SFaR ###
 # Attempts to retrieve all ufokn:IndividualFeatureAtRisk or all ufokn:StandaloneFeatureAtRisk (comment one out)
-# Results on UFOKN-Basic dataset
-#    IndividualFeatureAtRisk does not retrieve SFaR or IFaRiC coded as FaR
-#		 Did retrieve IFaRiC coded as FaR before 6/27/22 ufokn-core update
-#    StandaloneFeatureAtRisk does not retrieve SFaR coded as FaR
+# Does not retrieve ufokn:StandaloneFeatureAtRisk unless explicitly coded as such in data
+# Does not retrieve ufokn:IndividualFeatureAtRisk unless explicilty coded as such in data
+#    Does retreve ufokn:IndividualFeatureAtRiskInCollection (because range of hasMember / domain of isMemberOf)
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 
 select ?feature where { 
-#    ?feature rdf:type ufokn:IndividualFeatureAtRisk.
-    ?feature rdf:type ufokn:StandaloneFeatureAtRisk.
+    ?feature rdf:type ufokn:IndividualFeatureAtRisk.
+#    ?feature rdf:type ufokn:StandaloneFeatureAtRisk.
 } 
 
 
