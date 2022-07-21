@@ -163,13 +163,13 @@ ufokn:hasStreetAddress rdf:type owl:ObjectProperty ;
 ufokn:hasMember rdf:type owl:ObjectProperty ;
 			rdf:type owl:InverseFunctionalProperty ;
 			rdfs:domain ufokn:CollectionOfFeatures ;
-			rdfs:range ufokn:FeatureAtRiskInCollection .
+			rdfs:range ufokn:IndividualFeatureAtRiskInCollection .
 
 
 ###  http://schema.ufokn.org/ufokn-features/v2/isMemberOf
 ufokn:isMemberOf rdf:type owl:ObjectProperty ;
 			rdf:type owl:FunctionalProperty ;
-			rdfs:domain ufokn:FeatureAtRiskInCollection ;
+			rdfs:domain ufokn:IndividualFeatureAtRiskInCollection ;
 			rdfs:range ufokn:CollectionOfFeatures ;
 			owl:inverseOf ufokn:hasMember .
 
