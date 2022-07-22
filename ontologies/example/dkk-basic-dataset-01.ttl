@@ -174,7 +174,7 @@
 ### RiskPoint for FeatureAtRisk coded as dkk-FaR-2-1
     <ufokn-data:RiskPoint/dkk-FaR-2-1> rdf:type owl:NamedIndividual ,
                                                 ufokn:RiskPoint ;
-                                       ufokn-geo:hasWktGeometry "POINT (1654750 1397681)"^^geo:wktLiteral .
+                                       geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1654750 1397681)"^^geo:wktLiteral .
 
 
 ### An IndividualFeatureAtRisk coded as dkk-IFaR-2-2
@@ -197,7 +197,7 @@
 ### RiskPoint for IndividualFeatureAtRisk coded as dkk-IFaR-2-2
     <ufokn-data:RiskPoint/dkk-IFaR-2-2> rdf:type owl:NamedIndividual ,
                                                  ufokn:RiskPoint ;
-                                        ufokn-geo:hasWktGeometry "POINT (1654963 1398156)"^^geo:wktLiteral .
+                                        geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1654963 1398156)"^^geo:wktLiteral .
 
 
 ### A StandaloneFeatureAtRisk coded as dkk-SFaR-3-1
@@ -220,7 +220,7 @@
 ### RiskPoint for StandaloneFeatureAtRisk coded as dkk-SFaR-3-1
     <ufokn-data:RiskPoint/dkk-SFaR-3-1> rdf:type owl:NamedIndividual ,
                                                  ufokn:RiskPoint ;
-                                        ufokn-geo:hasWktGeometry "POINT (1653854 1395435)"^^geo:wktLiteral .
+                                        geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1653854 1395435)"^^geo:wktLiteral .
 
 
 ### An IndividualFeatureAtRiskInCollection coded as dkk-CoF-3-1/01
@@ -276,7 +276,7 @@
 ### RiskPoint for CollectionOfFeatures coded as dkk-CoF-3-1
     <ufokn-data:RiskPoint/dkk-CoF-3-1> rdf:type owl:NamedIndividual ,
                                                 ufokn:RiskPoint ;
-                                       ufokn-geo:hasWktGeometry "POINT (1653812 1394983)"^^geo:wktLiteral .
+                                       geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1653812 1394983)"^^geo:wktLiteral .
 
 
 ### An ElectricService coded as dkk-ElectricServ01
@@ -308,7 +308,7 @@
 ### RiskPoint for ElectricUtilityAsset coded as dkk-Substation-1
     <ufokn-data:RiskPoint/dkk-Substation-1> rdf:type owl:NamedIndividual ,
                                                      ufokn:RiskPoint ;
-                                            ufokn-geo:hasWktGeometry "POINT (1654092 1397456)"^^geo:wktLiteral .
+                                            geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1654092 1397456)"^^geo:wktLiteral .
 
 
 ### An ElectricService coded as dkk-ElectricServ02
@@ -343,7 +343,7 @@
 ### RiskPoint for ElectricUtilityAsset coded as dkk-Substation-2
     <ufokn-data:RiskPoint/dkk-Substation-2> rdf:type owl:NamedIndividual ,
                                                      ufokn:RiskPoint ;
-                                            ufokn-geo:hasWktGeometry "POINT (1654785 1397382)"^^geo:wktLiteral .
+                                            geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1654785 1397382)"^^geo:wktLiteral .
 
 
 ### An ElectricService coded as dkk-ElectricServ03
@@ -379,7 +379,7 @@
 ### RiskPoint for ElectricUtilityAsset coded as dkk-Substation-3
     <ufokn-data:RiskPoint/dkk-Substation-3> rdf:type owl:NamedIndividual ,
                                                      ufokn:RiskPoint ;
-                                            ufokn-geo:hasWktGeometry "POINT (1654547 1396968)"^^geo:wktLiteral .
+                                            geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1654547 1396968)"^^geo:wktLiteral .
 												  
 												  
 ### An ElectricService coded as dkk-ElectricServ04
@@ -413,7 +413,7 @@
 ### RiskPoint for ElectricUtilityAsset coded as dkk-Transmission01
     <ufokn-data:RiskPoint/dkk-Transmission01> rdf:type owl:NamedIndividual ,
                                                        ufokn:RiskPoint ;
-                                              ufokn-geo:hasWktGeometry "POINT (1652924 1397989)"^^geo:wktLiteral .
+                                              geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1652924 1397989)"^^geo:wktLiteral .
 													
 													
 ### A Medical Service coded as dkk-MedicalServ123
@@ -445,7 +445,7 @@
 ### RiskPoint for MedicalUtilityAsset coded as dkk-MedicalServ123
     <ufokn-data:RiskPoint/dkk-MedicalServ123> rdf:type owl:NamedIndividual ,
                                                        ufokn:RiskPoint ;
-                                              ufokn-geo:hasWktGeometry "POINT (1652928 1397727)"^^geo:wktLiteral .
+                                              geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1652928 1397727)"^^geo:wktLiteral .
 													
 													
 ### A Water Service coded as dkk-WaterServ13
@@ -477,7 +477,7 @@
 ### RiskPoint for WaterUtilityAsset coded as dkk-WaterServ13
     <ufokn-data:RiskPoint/dkk-WaterServ13> rdf:type owl:NamedIndividual ,
                                                        ufokn:RiskPoint ;
-                                              ufokn-geo:hasWktGeometry "POINT (1654280 1397322)"^^geo:wktLiteral .
+                                              geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1654280 1397322)"^^geo:wktLiteral .
 													
 													
 ### A Water Service coded as dkk-WaterServ2
@@ -511,46 +511,46 @@
 ### RiskPoint for WaterUtilityAsset coded as dkk-WaterServ2
     <ufokn-data:RiskPoint/dkk-WaterServ2> rdf:type owl:NamedIndividual ,
                                                        ufokn:RiskPoint ;
-                                              ufokn-geo:hasWktGeometry "POINT (1655074 1398436)"^^geo:wktLiteral .
+                                              geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1655074 1398436)"^^geo:wktLiteral .
 													
 													
 ### ServiceArea for MedicalServ123 coded as dkk-MedicalServArea-123
 	<ufokn-data:ServiceArea/dkk-MedicalServArea-123> rdf:type owl:NamedIndividual ,
 																	 ufokn-c:MedicalServiceArea ;
 															ufokn-c:ofUtilityType ufokn-c:MedicalService ;
-															ufokn-geo:hasWktGeometry "POLYGON ((1656227 1400465, 1655776 1400732, 1654858 1398416, 1653123 1398278, 1652709 1397574, 1654076 1396659, 1653339 1394546, 1653899 1394339, 1656227 1400465))"^^geo:wktLiteral .
+															geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON ((1655992 1400626,1655743 1400750,1654444 1398384,1653018 1398266,1652682 1397609,1654199 1396744,1653275 1394465,1653835 1394284,1655992 1400626))"^^geo:wktLiteral .
 																 
 																 
 ### ServiceArea for ElectricServ1 coded as dkk-ElectricServArea-1
 	<ufokn-data:ServiceArea/dkk-ElectricServArea-1> rdf:type owl:NamedIndividual ,
 																	ufokn-c:ElectricServiceArea ;
 														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
-														   ufokn-geo:hasWktGeometry "POLYGON ((1654858 1398416, 1653123 1398278, 1652709 1397574, 1654076 1396659, 1654858 1398416))"^^geo:wktLiteral .
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON ((1654488 1398386, 1653019 1398268, 1652684 1397605, 1654124 1396808, 1654453 1397667, 1654488 1398386))"^^geo:wktLiteral .
 																 
 																 
 ### ServiceArea for ElectricServ2 coded as dkk-ElectricServArea-2
 	<ufokn-data:ServiceArea/dkk-ElectricServArea-2> rdf:type owl:NamedIndividual ,
 																	ufokn-c:ElectricServiceArea ;
 														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
-														   ufokn-geo:hasWktGeometry "POLYGON ((1656227 1400465, 1655776 1400732, 1654381 1397292, 1654976 1396995, 1656227 1400465))"^^geo:wktLiteral .
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON ((1655998 1400622, 1655744 1400751, 1654781 1399039, 1654479 1397252, 1654842 1397117, 1655998 1400622))"^^geo:wktLiteral .
 																 
 																 
 ### ServiceArea for ElectricServ3 coded as dkk-ElectricServArea-3
 	<ufokn-data:ServiceArea/dkk-ElectricServArea-3> rdf:type owl:NamedIndividual ,
 																	ufokn-c:ElectricServiceArea ;
 														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
-														   ufokn-geo:hasWktGeometry "POLYGON ((1653339 1394546, 1653899 1394339, 1654976 1396995, 1654381 1397292, 1654076 1396659, 1653339 1394546))"^^geo:wktLiteral .
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON ((1653274 1394468, 1653837 1394281, 1654841 1397112, 1654427 1397269, 1653274 1394468))"^^geo:wktLiteral .
 																 
 																 
 ### ServiceArea for WaterServ13 coded as dkk-WaterServArea-13
 	<ufokn-data:ServiceArea/dkk-WaterServArea-13> rdf:type owl:NamedIndividual ,
 																  ufokn-c:WaterServiceArea ;
 														 ufokn-c:ofUtilityType ufokn-c:WaterService ;
-														 ufokn-geo:hasWktGeometry "POLYGON ((1654858 1398416, 1653123 1398278, 1652709 1397574, 1654076 1396659, 1653339 1394546, 1653899 1394339, 1654976 1396995, 1654381 1397292, 1654858 1398416))"^^geo:wktLiteral .
+														 geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON ((1654715 1398380,1653020 1398267,1652680 1397604,1654184 1396752,1653276 1394466,1653840 1394283,1654843 1397115,1654380 1397285,1654715 1398380))"^^geo:wktLiteral .
 																 
 																 
 ### ServiceArea for WaterServ2 coded as dkk-WaterServArea-2
 	<ufokn-data:ServiceArea/dkk-WaterServArea-2> rdf:type owl:NamedIndividual ,
 																ufokn-c:WaterServiceArea ;
 													   ufokn-c:ofUtilityType ufokn-c:WaterService ;
-													   ufokn-geo:hasWktGeometry "POLYGON ((1656227 1400465, 1655776 1400732, 1654381 1397292, 1654976 1396995, 1656227 1400465))"^^geo:wktLiteral .
+													   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON ((1655998 1400622, 1655744 1400751, 1654781 1399039, 1654479 1397252, 1654842 1397117, 1655998 1400622))"^^geo:wktLiteral .

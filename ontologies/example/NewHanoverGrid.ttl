@@ -1,0 +1,250 @@
+@prefix : <http://schema.ufokn.org/data/v2/> .
+@prefix ufokn-data: <http://schema.ufokn.org/data/v2/> .
+@prefix ufokn: <http://schema.ufokn.org/core/v2/> .
+@prefix ufokn-c: <http://schema.ufokn.org/utility-connection/v2/> .
+@prefix ufokn-geo: <http://schema.ufokn.org/geo/v2/> .
+    
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+    
+@base <http://schema.ufokn.org/data#> .
+
+
+### ElectricServArea-11
+	<ufokn-data:ServiceArea/ElectricServArea-11> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1630500 1417000, 1635500 1417000, 1635500 1412000, 1630500 1412000, 1630500 1417000))"^^geo:wktLiteral .
+
+### ElectricServArea-12
+	<ufokn-data:ServiceArea/ElectricServArea-12> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1635500 1417000, 1640500 1417000, 1640500 1412000, 1635500 1412000, 1635500 1417000))"^^geo:wktLiteral .
+
+### ElectricServArea-13
+	<ufokn-data:ServiceArea/ElectricServArea-13> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1640500 1417000, 1645500 1417000, 1645500 1412000, 1640500 1412000, 1640500 1417000))"^^geo:wktLiteral .
+
+### ElectricServArea-14
+	<ufokn-data:ServiceArea/ElectricServArea-14> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1645500 1417000, 1650500 1417000, 1650500 1412000, 1645500 1412000, 1645500 1417000))"^^geo:wktLiteral .
+
+### ElectricServArea-15
+	<ufokn-data:ServiceArea/ElectricServArea-15> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1650500 1417000, 1655500 1417000, 1655500 1412000, 1650500 1412000, 1650500 1417000))"^^geo:wktLiteral .
+
+### ElectricServArea-21
+	<ufokn-data:ServiceArea/ElectricServArea-21> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1630500 1412000, 1635500 1412000, 1635500 1407000, 1630500 1407000, 1630500 1412000))"^^geo:wktLiteral .
+
+### ElectricServArea-22
+	<ufokn-data:ServiceArea/ElectricServArea-22> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1635500 1412000, 1640500 1412000, 1640500 1407000, 1635500 1407000, 1635500 1412000))"^^geo:wktLiteral .
+
+### ElectricServArea-23
+	<ufokn-data:ServiceArea/ElectricServArea-23> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1640500 1412000, 1645500 1412000, 1645500 1407000, 1640500 1407000, 1640500 1412000))"^^geo:wktLiteral .
+
+### ElectricServArea-24
+	<ufokn-data:ServiceArea/ElectricServArea-24> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1645500 1412000, 1650500 1412000, 1650500 1407000, 1645500 1407000, 1645500 1412000))"^^geo:wktLiteral .
+
+### ElectricServArea-25
+	<ufokn-data:ServiceArea/ElectricServArea-25> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1650500 1412000, 1655500 1412000, 1655500 1407000, 1650500 1407000, 1650500 1412000))"^^geo:wktLiteral .
+
+### ElectricServArea-26
+	<ufokn-data:ServiceArea/ElectricServArea-26> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1655500 1412000, 1660500 1412000, 1660500 1407000, 1655500 1407000, 1655500 1412000))"^^geo:wktLiteral .
+
+### ElectricServArea-31
+	<ufokn-data:ServiceArea/ElectricServArea-31> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1630500 1407000, 1635500 1407000, 1635500 1402000, 1630500 1402000, 1630500 1407000))"^^geo:wktLiteral .
+
+### ElectricServArea-32
+	<ufokn-data:ServiceArea/ElectricServArea-32> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1635500 1407000, 1640500 1407000, 1640500 1402000, 1635500 1402000, 1635500 1407000))"^^geo:wktLiteral .
+
+### ElectricServArea-33
+	<ufokn-data:ServiceArea/ElectricServArea-33> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1640500 1407000, 1645500 1407000, 1645500 1402000, 1640500 1402000, 1640500 1407000))"^^geo:wktLiteral .
+
+### ElectricServArea-34
+	<ufokn-data:ServiceArea/ElectricServArea-34> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1645500 1407000, 1650500 1407000, 1650500 1402000, 1645500 1402000, 1645500 1407000))"^^geo:wktLiteral .
+
+### ElectricServArea-35
+	<ufokn-data:ServiceArea/ElectricServArea-35> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1650500 1407000, 1655500 1407000, 1655500 1402000, 1650500 1402000, 1650500 1407000))"^^geo:wktLiteral .
+
+### ElectricServArea-36
+	<ufokn-data:ServiceArea/ElectricServArea-36> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1655500 1407000, 1660500 1407000, 1660500 1402000, 1655500 1402000, 1655500 1407000))"^^geo:wktLiteral .
+
+### ElectricServArea-41
+	<ufokn-data:ServiceArea/ElectricServArea-41> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1630500 1402000, 1635500 1402000, 1635500 1397000, 1630500 1397000, 1630500 1402000))"^^geo:wktLiteral .
+
+### ElectricServArea-42
+	<ufokn-data:ServiceArea/ElectricServArea-42> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1635500 1402000, 1640500 1402000, 1640500 1397000, 1635500 1397000, 1635500 1402000))"^^geo:wktLiteral .
+
+### ElectricServArea-43
+	<ufokn-data:ServiceArea/ElectricServArea-43> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1640500 1402000, 1645500 1402000, 1645500 1397000, 1640500 1397000, 1640500 1402000))"^^geo:wktLiteral .
+
+### ElectricServArea-44
+	<ufokn-data:ServiceArea/ElectricServArea-44> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1645500 1402000, 1650500 1402000, 1650500 1397000, 1645500 1397000, 1645500 1402000))"^^geo:wktLiteral .
+
+### ElectricServArea-45
+	<ufokn-data:ServiceArea/ElectricServArea-45> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1650500 1402000, 1655500 1402000, 1655500 1397000, 1650500 1397000, 1650500 1402000))"^^geo:wktLiteral .
+
+### ElectricServArea-46
+	<ufokn-data:ServiceArea/ElectricServArea-46> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1655500 1402000, 1660500 1402000, 1660500 1397000, 1655500 1397000, 1655500 1402000))"^^geo:wktLiteral .
+
+### ElectricServArea-52
+	<ufokn-data:ServiceArea/ElectricServArea-52> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1635500 1397000, 1640500 1397000, 1640500 1392000, 1635500 1392000, 1635500 1397000))"^^geo:wktLiteral .
+
+### ElectricServArea-53
+	<ufokn-data:ServiceArea/ElectricServArea-53> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1640500 1397000, 1645500 1397000, 1645500 1392000, 1640500 1392000, 1640500 1397000))"^^geo:wktLiteral .
+
+### ElectricServArea-54
+	<ufokn-data:ServiceArea/ElectricServArea-54> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1645500 1397000, 1650500 1397000, 1650500 1392000, 1645500 1392000, 1645500 1397000))"^^geo:wktLiteral .
+
+### ElectricServArea-55
+	<ufokn-data:ServiceArea/ElectricServArea-55> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1650500 1397000, 1655500 1397000, 1655500 1392000, 1650500 1392000, 1650500 1397000))"^^geo:wktLiteral .
+
+### ElectricServArea-63
+	<ufokn-data:ServiceArea/ElectricServArea-63> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1640500 1392000, 1645500 1392000, 1645500 1387000, 1640500 1387000, 1640500 1392000))"^^geo:wktLiteral .
+
+### ElectricServArea-64
+	<ufokn-data:ServiceArea/ElectricServArea-64> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1645500 1392000, 1650500 1392000, 1650500 1387000, 1645500 1387000, 1645500 1392000))"^^geo:wktLiteral .
+
+### ElectricServArea-65
+	<ufokn-data:ServiceArea/ElectricServArea-65> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1650500 1392000, 1655500 1392000, 1655500 1387000, 1650500 1387000, 1650500 1392000))"^^geo:wktLiteral .
+
+### ElectricServArea-73
+	<ufokn-data:ServiceArea/ElectricServArea-73> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1640500 1387000, 1645500 1387000, 1645500 1382000, 1640500 1382000, 1640500 1387000))"^^geo:wktLiteral .
+
+### ElectricServArea-74
+	<ufokn-data:ServiceArea/ElectricServArea-74> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1645500 1387000, 1650500 1387000, 1650500 1382000, 1645500 1382000, 1645500 1387000))"^^geo:wktLiteral .
+
+### ElectricServArea-75
+	<ufokn-data:ServiceArea/ElectricServArea-75> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1650500 1387000, 1655500 1387000, 1655500 1382000, 1650500 1382000, 1650500 1387000))"^^geo:wktLiteral .
+
+### ElectricServArea-83
+	<ufokn-data:ServiceArea/ElectricServArea-83> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1640500 1382000, 1645500 1382000, 1645500 1377000, 1640500 1377000, 1640500 1382000))"^^geo:wktLiteral .
+
+### ElectricServArea-84
+	<ufokn-data:ServiceArea/ElectricServArea-84> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1645500 1382000, 1650500 1382000, 1650500 1377000, 1645500 1377000, 1645500 1382000))"^^geo:wktLiteral .
+
+### ElectricServArea-85
+	<ufokn-data:ServiceArea/ElectricServArea-85> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1650500 1382000, 1655500 1382000, 1655500 1377000, 1650500 1377000, 1650500 1382000))"^^geo:wktLiteral .
+
+### ElectricServArea-94
+	<ufokn-data:ServiceArea/ElectricServArea-94> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1645500 1377000, 1650500 1377000, 1650500 1372000, 1645500 1372000, 1645500 1377000))"^^geo:wktLiteral .
+
+### ElectricServArea-A4
+	<ufokn-data:ServiceArea/ElectricServArea-A4> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1645500 1372000, 1650500 1372000, 1650500 1367000, 1645500 1367000, 1645500 1372000))"^^geo:wktLiteral .
+
+### ElectricServArea-B4
+	<ufokn-data:ServiceArea/ElectricServArea-B4> rdf:type owl:NamedIndividual ,
+																	ufokn-c:ElectricServiceArea ;
+														   ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+														   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON (( 1645500 1367000, 1650500 1367000, 1650500 1362000, 1645500 1362000, 1645500 1367000))"^^geo:wktLiteral .

@@ -1,0 +1,22 @@
+@prefix : <http://schema.ufokn.org/data/v2/> .
+@prefix ufokn-data: <http://schema.ufokn.org/data/v2/> .
+@prefix ufokn: <http://schema.ufokn.org/core/v2/> .
+@prefix ufokn-c: <http://schema.ufokn.org/utility-connection/v2/> .
+@prefix ufokn-geo: <http://schema.ufokn.org/geo/v2/> .
+    
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+    
+@base <http://schema.ufokn.org/data#> .
+
+
+### ElectricServArea-11
+	<ufokn-data:ServiceArea/ElectricServArea-11> rdf:type owl:NamedIndividual ,
+														  ufokn-c:ElectricServiceArea ;
+												 ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+												 geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON ((1660500 1407000,1660500 1402000,1660500 1397000,1655500 1397000,1655500 1392000,1655500 1387000,1655500 1382000,1655500 1377000,1650500 1377000,1650500 1372000,1650500 1367000,1650500 1362000,1645500 1362000,1645500 1367000,1645500 1372000,1645500 1377000,1640500 1377000,1640500 1382000,1640500 1387000,1640500 1392000,1635500 1392000,1635500 1397000,1630500 1397000,1630500 1402000,1630500 1407000,1630500 1412000,1630500 1417000,1635500 1417000,1640500 1417000,1645500 1417000,1650500 1417000,1655500 1417000,1655500 1412000,1660500 1412000,1660500 1407000))"^^geo:wktLiteral .
