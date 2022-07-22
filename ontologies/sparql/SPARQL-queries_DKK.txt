@@ -226,7 +226,7 @@ select ?utilityService ?feature where {
 
 ### FaR_in_serviceArea ###
 # Works through all service areas and retrieves all FaR with a Risk Point in each area
-# Works as expected (but need to download to get the full results with a large dataset)
+# Works as expected
 # Uses the predicate form of sfContains
 # Same results as FeaturesInServiceAreas below
 
@@ -247,7 +247,6 @@ select ?feature ?serviceArea where {
 # Retrieves each FaR with a Risk Point and indicates all service areas they belong to
 # Uses the function form of sfContains
 # Works as expected
-#    May need to replace ufokn-geo:hasWktGeometry with geo:asWKT depending on how data is coded
 
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
@@ -257,9 +256,9 @@ PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 
 select ?feature ?serviceArea where {
     ?feature ufokn:hasRiskPoint ?riskPoint.
-    ?riskPoint ufokn-geo:hasWktGeometry ?point.
+    ?riskPoint geo:asWKT ?point.
     ?serviceArea rdf:type ufokn-c:UtilityServiceArea;
-    			 ufokn-geo:hasWktGeometry ?area.
+    			 geo:asWKT ?area.
     FILTER(geof:sfContains(?area, ?point))
 }
 
@@ -379,12 +378,7 @@ select ?feature where {
 
 ### IFaRiC ###
 # Retrieves all ufokn:IndividualFeatureAtRiskInCollection along with address information
-# Works as expected (mostly)
-#    Returns 1921 entries on IFaRiC hasAddress and Address hasStreetAddress & unitNumber (this is the expected number)
-#    Returns 8 more entries on streetNumber
-#    Returns 25 more entries on street
-# Did not retrieve any ufokn:IndividualFeatureAtRiskInCollection after 6/27/22 ufokn-core update
-#    hasMember and isMemberOf require range and domain updates, respectively
+# Works as expected
 
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -435,9 +429,7 @@ select distinct ?collection where {
 
 ### IFaR_SFaR ###
 # Attempts to retrieve all ufokn:IndividualFeatureAtRisk or all ufokn:StandaloneFeatureAtRisk (comment one out)
-# Does not retrieve ufokn:StandaloneFeatureAtRisk unless explicitly coded as such in data
-# Does not retrieve ufokn:IndividualFeatureAtRisk unless explicilty coded as such in data
-#    Does retreve ufokn:IndividualFeatureAtRiskInCollection (because range of hasMember / domain of isMemberOf)
+# Works as expected (if the data file explicitly uses StandaloneFeatureAtRisk and IndividualFeatureAtRisk as appropriate)
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
