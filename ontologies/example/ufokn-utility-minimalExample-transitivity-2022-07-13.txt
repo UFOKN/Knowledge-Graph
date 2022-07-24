@@ -1,0 +1,25 @@
+
+###  http://schema.ufokn.org/utility-connection/v2/Residence1
+ufokn-c:Residence1 rdf:type owl:NamedIndividual .
+
+
+##  http://schema.ufokn.org/utility-connection/v2/Substation1
+ufokn-c:Substation1 rdf:type owl:NamedIndividual ,
+                             ufokn-c:ElectricUtilityAsset ;
+                    ufokn-c:providesUtilityService ufokn-c:Substation1UtilityService .
+
+###  http://schema.ufokn.org/utility-connection/v2/Hospital1
+ufokn-c:Hospital1 rdf:type owl:NamedIndividual ,
+                           ufokn-c:MedicalUtilityAsset ;
+                  ufokn-c:providesUtilityService ufokn-c:Hospital1UtilityService .
+
+###  http://schema.ufokn.org/utility-connection/v2/Substation1UtilityService
+ufokn-c:Substation1UtilityService rdf:type owl:NamedIndividual ,
+                                           ufokn-c:UtilityService ;
+                                  ufokn-c:serves ufokn-c:Hospital1 .
+
+###  http://schema.ufokn.org/utility-connection/v2/Hospital1UtilityService
+ufokn-c:Hospital1UtilityService rdf:type owl:NamedIndividual ,
+                                         ufokn-c:UtilityService ;
+                                ufokn-c:serves ufokn-c:Residence1 .
+
