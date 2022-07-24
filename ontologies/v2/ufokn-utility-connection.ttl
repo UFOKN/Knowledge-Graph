@@ -175,7 +175,9 @@ ufokn-c:servesArea rdf:type owl:ObjectProperty ;
 ufokn-c:servesFeature rdf:type owl:ObjectProperty ;
             rdfs:subPropertyOf ufokn-c:serves ;
             rdfs:domain ufokn-c:UtilityService ;
-            rdfs:range ufokn:FeatureAtRisk .
+            rdfs:range ufokn:FeatureAtRisk ;
+			owl:propertyChainAxiom (ufokn-c:servesArea geo:sfContains).
+
 
 
 ###  http://schema.ufokn.org/utility-connection/v2/servesElectric
