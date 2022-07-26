@@ -48,7 +48,7 @@ INSERT DATA { _:s geoSparql:enabled "true" . }
 
 ### count_FaR_predicate ###
 # Counts the number of FeatureAtRisk in each UtilityServiceArea
-# Uses the relation version of geo:sfContains
+# Uses the relation version of geo:sfIntersects
 # Works as expected
 # Takes ~10 seconds on a dataset with about 83k FeatureAtRisk across 33 UtilityServiceArea
 
@@ -60,14 +60,14 @@ PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
 SELECT ?serviceArea (count(?serviceArea) as ?count) WHERE {
     ?serviceArea rdf:type ufokn-c:UtilityServiceArea .
     ?feature ufokn:hasRiskPoint ?riskPoint.
-    ?serviceArea geo:sfContains ?riskPoint.
+    ?serviceArea geo:sfIntersects ?riskPoint.
 } GROUP BY ?serviceArea
 
 
 
 ### count_FaR_function ###
 # Counts the number of FeatureAtRisk in each UtilityServiceArea
-# Uses the function version of geof:sfContains
+# Uses the function version of geof:sfIntersects
 # Works as expected
 # Takes 35-40 seconds on a dataset with about 83k FeatureAtRisk across 33 UtilityServiceArea
 
@@ -82,8 +82,26 @@ select ?serviceArea (count(?serviceArea) as ?count) where {
                  geo:asWKT ?area.
     ?feature ufokn:hasRiskPoint ?riskPoint.
     ?riskPoint geo:asWKT ?point.
-    FILTER(geof:sfContains(?area, ?point))
+    FILTER(geof:sfIntersects(?area, ?point))
 } group by ?serviceArea
+
+
+
+### ProviderAssetServiceFeature
+# Returns provider assets, the service they provide, and any features served P2P
+# Works as expected
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+select ?provider ?asset ?service ?feature where { 
+	?asset ufokn-c:assetServesTC ?feature .
+    ?feature rdf:type ufokn:FeatureAtRisk .
+    ?asset ufokn-c:providesUtilityService ?service .
+    ?service ufokn-c:providedByProvider ?provider .
+} order by ?provider ?asset
 
 
 
@@ -179,7 +197,7 @@ select ?eua ?feature where {
          ufokn-c:providesUtilityService ?utilServ.
     ?utilServ ufokn-c:servesArea ?serviceArea.
     ?feature ufokn:hasRiskPoint ?riskPoint.
-    ?serviceArea geo:sfContains ?riskPoint
+    ?serviceArea geo:sfIntersects ?riskPoint
 }
 
 
@@ -219,7 +237,7 @@ select ?utilityService ?feature where {
     				ufokn-c:servesArea ?utilityArea.
     ?feature rdf:type ufokn:FeatureAtRisk;
     		 ufokn:hasRiskPoint ?riskPoint.    
-    ?utilityArea geo:sfContains ?riskPoint.
+    ?utilityArea geo:sfIntersects ?riskPoint.
 } 
 
 
@@ -227,7 +245,7 @@ select ?utilityService ?feature where {
 ### FaR_in_serviceArea ###
 # Works through all service areas and retrieves all FaR with a Risk Point in each area
 # Works as expected
-# Uses the predicate form of sfContains
+# Uses the predicate form of sfIntersects
 # Same results as FeaturesInServiceAreas below
 
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
@@ -238,14 +256,14 @@ PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 select ?feature ?serviceArea where {
     ?serviceArea rdf:type ufokn-c:UtilityServiceArea .
     ?feature ufokn:hasRiskPoint ?riskPoint.
-    ?serviceArea geo:sfContains ?riskPoint.
+    ?serviceArea geo:sfIntersects ?riskPoint.
 }
 
 
 
 ### FeaturesInServiceAreas ###
 # Retrieves each FaR with a Risk Point and indicates all service areas they belong to
-# Uses the function form of sfContains
+# Uses the function form of sfIntersects
 # Works as expected
 
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
@@ -259,7 +277,7 @@ select ?feature ?serviceArea where {
     ?riskPoint geo:asWKT ?point.
     ?serviceArea rdf:type ufokn-c:UtilityServiceArea;
     			 geo:asWKT ?area.
-    FILTER(geof:sfContains(?area, ?point))
+    FILTER(geof:sfIntersects(?area, ?point))
 }
 
 
@@ -329,37 +347,45 @@ select ?collection (count(?collection) as ?count) where {
 
 
 ### FaR_w-Address ###
-# Retrieves all ufokn:FeatureAtRisk and attempts to retrieve address information for each
-# Each part works as exected (see notes below)
-# Need to create a single query that pulls both simultaneously
-# Can the second query be simplified using the proposed owl:propertyChainAxiom?
+# Results are the union of two sub-queries
+# One query works for anything with a unit number
+# The other query works for anything without a unit number
+# Works as expected (but there may be a better way using a property chain axiom?)
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 
 select ?feature ?st_add where { 
-	?feature rdf:type ufokn:FeatureAtRisk.
-    
-    ### Retrieves addresses for anything that does not have a unit number
-#    ?feature ufokn:hasAddress ?address.
-#    ?address ufokn:streetNumber ?st_num;
-#    		 ufokn:street ?street;
-#    		 ufokn:city ?city;
-#    		 ufokn:state ?state;
-#    		 ufokn:postcode ?zip.
-#    BIND(concat(str(?st_num), str(" "), str(?street), str(" "), str(", "), str(?city), str(", "), str(?state), str("  "), str(?zip)) as ?st_add).
-    
-    ### Retrieves addresses for anything with a unit number.
-    ?feature ufokn:hasAddress ?address.
-    ?address ufokn:hasStreetAddress ?st_address;
-    		 ufokn:unitNumber ?u_num.
-    ?st_address ufokn:streetNumber ?st_num;
-    			ufokn:street ?street;
-    			ufokn:city ?city;
-    			ufokn:state ?state;
-    			ufokn:postcode ?zip.
-    BIND(concat(str(?st_num), str(" "), str(?street), str(" "), str(?u_num), str(", "), str(?city), str(", "), str(?state), str("  "), str(?zip)) as ?st_add).
-}
+    {
+        select distinct ?feature ?st_add where {
+            ?feature rdf:type ufokn:FeatureAtRisk .
+            ### Retrieves addresses for anything with a unit number.
+            ?feature ufokn:hasAddress ?address.
+            ?address ufokn:hasStreetAddress ?st_address;
+                     ufokn:unitNumber ?u_num.
+            ?st_address ufokn:streetNumber ?st_num;
+                        ufokn:street ?street;
+                        ufokn:city ?city;
+                        ufokn:state ?state;
+                        ufokn:postcode ?zip.
+            BIND(concat(str(?st_num), str(" "), str(?street), str(" "), str(?u_num), str(", "), str(?city), str(", "), str(?state), str("  "), str(?zip)) as ?st_add).
+        }
+    }
+    UNION
+    {
+        select ?feature ?st_add where {
+            ?feature rdf:type ufokn:FeatureAtRisk .
+            ### Retrieves addresses for anything that does not have a unit number
+            ?feature ufokn:hasAddress ?address.
+            ?address ufokn:streetNumber ?st_num;
+                     ufokn:street ?street;
+                     ufokn:city ?city;
+                     ufokn:state ?state;
+                     ufokn:postcode ?zip.
+            BIND(concat(str(?st_num), str(" "), str(?street), str(" "), str(", "), str(?city), str(", "), str(?state), str("  "), str(?zip)) as ?st_add).
+        }
+    }
+} order by ?feature
 
 
 
