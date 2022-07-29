@@ -6,14 +6,38 @@
 
 
 
+### enable-GeoSPARQL ###
+# Enables the GeoSPARQL plugin in GraphDB so indexed predicate operations work
+
+PREFIX geoSparql: <http://www.ontotext.com/plugins/geosparql#>
+INSERT DATA { _:s geoSparql:enabled "true" . }
+
+
+
+### ServiceAreasContainFeatures ###
+# Returns UtilityService and FeatureAtRisk in UtilityServiceArea
+# Tried to merge all of this into a single property using a propertyChainAxiom
+# Unable to make it work as the geo:sfIntersects does not appear to work in axioms, only in queries
+# ufokn:hasRiskPointInverse was a construct created to try and make things work - it may not be needed further
+
+PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+select ?service ?feature where { 
+    ?service ufokn-c:servesArea ?servicearea .
+    ?servicearea geo:sfIntersects ?riskpoint .
+    ?riskpoint ufokn:hasRiskPointInverse ?feature .
+} order by ?service ?feature
+
+
+
 ### assetServesTC-p2p ###
 # Tests the new ufokn-c:assetServesTC transitive closure of ufokn-c:assetServes
-# Works as expected
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 select ?utilAsset1 ?feature where { 
 	?utilAsset1 ufokn-c:assetServesTC ?feature .
@@ -24,12 +48,10 @@ select ?utilAsset1 ?feature where {
 
 ### assetServes-p2p ###
 # Tests the new ufokn-c:assetServes propertyChainAxiom
-# Works as expected
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 select ?utilAsset1 ?feature where { 
 	?utilAsset1 ufokn-c:assetServes ?feature .
@@ -38,19 +60,10 @@ select ?utilAsset1 ?feature where {
 
 
 
-### enable-GeoSPARQL ###
-# Enables the GeoSPARQL plugin in GraphDB so indexed predicate operations work
-
-PREFIX geoSparql: <http://www.ontotext.com/plugins/geosparql#>
-INSERT DATA { _:s geoSparql:enabled "true" . }
-
-
-
 ### count_FaR_predicate ###
 # Counts the number of FeatureAtRisk in each UtilityServiceArea
 # Uses the relation version of geo:sfIntersects
-# Works as expected
-# Takes ~10 seconds on a dataset with about 83k FeatureAtRisk across 33 UtilityServiceArea
+# Takes ~10 seconds on a dataset with about 83k FeatureAtRisk across 33 non-overlapping UtilityServiceArea
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -68,8 +81,7 @@ SELECT ?serviceArea (count(?serviceArea) as ?count) WHERE {
 ### count_FaR_function ###
 # Counts the number of FeatureAtRisk in each UtilityServiceArea
 # Uses the function version of geof:sfIntersects
-# Works as expected
-# Takes 35-40 seconds on a dataset with about 83k FeatureAtRisk across 33 UtilityServiceArea
+# Takes 35-40 seconds on a dataset with about 83k FeatureAtRisk across 33 non-overlapping UtilityServiceArea
 
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
@@ -89,7 +101,6 @@ select ?serviceArea (count(?serviceArea) as ?count) where {
 
 ### ProviderAssetServiceFeature
 # Returns provider assets, the service they provide, and any features served P2P
-# Works as expected
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
@@ -109,16 +120,14 @@ select ?provider ?asset ?service ?feature where {
 # A cascading query using UtilityServiceArea
 #   Assumes first UtilityAsset serves others (not servesArea)
 #   Two levels of areas (missing things that don't have two levels)
-# Appears to work as expected
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
-PREFIX ufokn-geo: <http://schema.ufokn.org/geo/v2/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
-select ?utilAsset1 ?utilAsset2 ?feature2 ?feature3 where { 
+select distinct ?utilAsset1 ?utilAsset2 ?feature2 ?feature3 where { 
 	?utilAsset1 rdf:type ufokn-c:UtilityAsset ;
 #                ufokn:hasFloodLevel "critical"^^xsd:string ;
                 ufokn-c:providesUtilityService ?utilServ1 .  
@@ -129,11 +138,9 @@ select ?utilAsset1 ?utilAsset2 ?feature2 ?feature3 where {
                 ufokn-c:providesUtilityService ?utilServ2 .  
 	?utilServ2 ufokn-c:servesArea ?utilArea2 ;
 			   ufokn-c:ofUtilityType ?utilType2 .
-    ?utilArea2 ufokn-geo:hasWktGeometry ?area2 .
     ?feature2 rdf:type ufokn:FeatureAtRisk ;
               ufokn:hasRiskPoint ?fRiskPoint2 .
-    ?fRiskPoint2 ufokn-geo:hasWktGeometry ?fPoint2 .
-    FILTER(geof:sfWithin(?fPoint2, ?area2))
+    ?utilArea2 geo:sfIntersects ?fRiskPoint2 .
     FILTER(?feature2 != ?utilAsset2)
     FILTER(?feature2 != ?utilAsset1)
     
@@ -141,11 +148,9 @@ select ?utilAsset1 ?utilAsset2 ?feature2 ?feature3 where {
               ufokn-c:providesUtilityService ?utilServ3 .  
 	?utilServ3 ufokn-c:servesArea ?utilArea3 ;
 			   ufokn-c:ofUtilityType ?utilType4 .
-    ?utilArea3 ufokn-geo:hasWktGeometry ?area3 .
     ?feature3 rdf:type ufokn:FeatureAtRisk ;
               ufokn:hasRiskPoint ?fRiskPoint3 .
-    ?fRiskPoint3 ufokn-geo:hasWktGeometry ?fPoint3 .
-    FILTER(geof:sfWithin(?fPoint3, ?area3))
+    ?utilArea3 geo:sfIntersects ?fRiskPoint3 .
     FILTER(?feature3 != ?feature2)
     FILTER(?feature3 != ?utilAsset2)
     FILTER(?feature3 != ?utilAsset1)
@@ -154,36 +159,32 @@ select ?utilAsset1 ?utilAsset2 ?feature2 ?feature3 where {
 
 
 ### Cascade! ###
-# A cascading query: Asset1 provides service to Asset2 which provides service to Asset3 which provides service to features
+# A cascading query: Asset1 provides service to Asset2 which provides service to features
+# Superseded by ability to use assetServesTC
 # Can filter for only assets that are flooded (when supported)
 # Does not use the same design as in the May 2021 Utility Connectin Pattern presentation
-# Works as expected
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select ?utilAsset1 ?utilAsset2 ?utilAsset3 ?feature where { 
+select ?utilAsset1 ?utilAsset2 ?feature where { 
 	?utilAsset1 rdf:type ufokn-c:UtilityAsset ;
 #                ufokn:hasFloodLevel "critical"^^xsd:string ;
                 ufokn-c:providesUtilityService ?utilServ1 .  
 	?utilServ1 ufokn-c:serves ?utilAsset2 ;
 			   ufokn-c:ofUtilityType ?utilType2 .
     ?utilAsset2 ufokn-c:providesUtilityService ?utilServ2 .
-    ?utilServ2 ufokn-c:serves ?utilAsset3 ;
-               ufokn-c:ofUtilityType ?utilType3.
-	?utilAsset3 ufokn-c:providesUtilityService ?utilServ3 .
-    ?utilServ3 ufokn-c:serves ?feature .
+    ?utilServ2 ufokn-c:serves ?feature .
     ?feature rdf:type ufokn:FeatureAtRisk .
 }
 
 
 
 ### FaRInAssetArea ###
-# Retrieves all features at risk served in an electric utility asset's service area
+# Retrieves all FeatureAtRisk served in an electric utility asset's serviceArea
 # Can filter for only assets that are flooded (when supported)
-# Works as expected
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
@@ -203,10 +204,9 @@ select ?eua ?feature where {
 
 
 
-### FaRServedBy ###
-# Retrieves all features at risk served by electric utility assets
+### FaRServedByUtilAsset ###
+# Retrieves all FeatureAtRisk served by electric utility assets in a point-to-point relation
 # Can filter for only assets that are flooded (when supported)
-# Works as expected
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
@@ -223,9 +223,8 @@ select ?eua ?feature where {
 
 
 
-### servesArea ###
+### servesFeaturesInArea ###
 # Retrieves each ufokn-c:UtilityService and returns all ufokn:FeatureAtRisk within the ufokn-c:UtilityServiceArea.
-# Works as expected.
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
@@ -242,11 +241,9 @@ select ?utilityService ?feature where {
 
 
 
-### FaR_in_serviceArea ###
-# Works through all service areas and retrieves all FaR with a Risk Point in each area
-# Works as expected
-# Uses the predicate form of sfIntersects
-# Same results as FeaturesInServiceAreas below
+### FeaturesInServiceAreas ###
+# Retrieves each FaR with a Risk Point and indicates all service areas they belong to
+
 
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
@@ -255,29 +252,8 @@ PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 select ?feature ?serviceArea where {
     ?serviceArea rdf:type ufokn-c:UtilityServiceArea .
-    ?feature ufokn:hasRiskPoint ?riskPoint.
-    ?serviceArea geo:sfIntersects ?riskPoint.
-}
-
-
-
-### FeaturesInServiceAreas ###
-# Retrieves each FaR with a Risk Point and indicates all service areas they belong to
-# Uses the function form of sfIntersects
-# Works as expected
-
-PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
-PREFIX ufokn-geo: <http://schema.ufokn.org/geo/v2/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
-
-select ?feature ?serviceArea where {
-    ?feature ufokn:hasRiskPoint ?riskPoint.
-    ?riskPoint geo:asWKT ?point.
-    ?serviceArea rdf:type ufokn-c:UtilityServiceArea;
-    			 geo:asWKT ?area.
-    FILTER(geof:sfIntersects(?area, ?point))
+    ?feature ufokn:hasRiskPoint ?riskPoint .
+    ?serviceArea geo:sfIntersects ?riskPoint .
 }
 
 
@@ -285,10 +261,8 @@ select ?feature ?serviceArea where {
 ### serves ###
 # Retrieves each ufokn-c:UtilityService, its ufokn-c:UtilityType, each ufokn:FeatureOrRegionAtRisk it serves,
 #     and the ufokn-c:UtilityAsset that provides the service.
-# Works as expected.
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
 
 select ?utilityService ?serviceType ?serves ?providedByAsset where { 
@@ -300,57 +274,65 @@ select ?utilityService ?serviceType ?serves ?providedByAsset where {
 
 
 
-### UtilityService ###
-# Retrieves each ufokn-c:UtilityService, its ufokn-c:UtilityType, and the ufokn-c:UtilityAsset that provides the service
-# Works as expected.
+### UtilityProviders ###
+# Returns all UtilityProvider and the UtilityService they provide
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+
+select ?provider ?service where { 
+	?provider rdf:type ufokn-c:UtilityProvider .
+    ?service ufokn-c:providedByProvider ?provider .
+}
+
+
+
+### UtilityService ###
+# Retrieves each ufokn-c:UtilityService, its ufokn-c:UtilityType, and the ufokn-c:UtilityAsset that provides the service
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
 
 select ?utilityService ?serviceType ?providedByAsset where { 
-    ?utilityService rdf:type ufokn-c:UtilityService.
-    				ufokn-c:ofUtilityType ?serviceType;
-    				ufokn-c:providedByUtilityAsset ?providedByAsset.
+    ?utilityService rdf:type ufokn-c:UtilityService ;
+    				ufokn-c:ofUtilityType ?serviceType ;
+    				ufokn-c:providedByUtilityAsset ?providedByAsset .
 } 
 
 
 
 ### UtilityAsset ###
 # Retrieves all ufokn-c:UtilityAsset entries along with their ufokn-c:UtilityType and ufokn-c:UtilityService
-# Works as expected.
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
 
 select distinct ?utilityAsset ?serviceType ?utilityService where { 
-    ?utilityAsset rdf:type ufokn-c:UtilityAsset.
-    			  ufokn-c:ofUtilityType ?serviceType;
-    			  ufokn-c:providesUtilityService ?utilityService.
+    ?utilityAsset rdf:type ufokn-c:UtilityAsset ;
+    			  ufokn-c:ofUtilityType ?serviceType ;
+    			  ufokn-c:providesUtilityService ?utilityService .
 } 
 
 
 
 ### hasMember_counts ###
 # Retrieves a count of how many ufokn:IndividualFeatureAtRiskInCollection are in each ufokn:CollectionOfFeatures
-# Works as expected
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 
 select ?collection (count(?collection) as ?count) where { 
-	?collection rdf:type ufokn:CollectionOfFeatures.
-    			ufokn:hasMember ?x.
+	?collection rdf:type ufokn:CollectionOfFeatures ;
+    			ufokn:hasMember ?x .
 } group by ?collection
 
 
 
 ### FaR_w-Address ###
 # Results are the union of two sub-queries
-# One query works for anything with a unit number
-# The other query works for anything without a unit number
-# Works as expected (but there may be a better way using a property chain axiom?)
+#    One query works for anything with a unit number
+#    The other query works for anything without a unit number
+# There may be a better way using a property chain axiom?
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
@@ -391,6 +373,7 @@ select ?feature ?st_add where {
 
 ### FaR-minus-IFaRiC ###
 # A helper query for comparing parquet data against ttl data
+# Returns all FeatureAtRisk except IndividualFeatureAtRiskInCollection
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
@@ -404,7 +387,6 @@ select ?feature where {
 
 ### IFaRiC ###
 # Retrieves all ufokn:IndividualFeatureAtRiskInCollection along with address information
-# Works as expected
 
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -426,9 +408,7 @@ select ?feature ?st_add where {
 
 ### CoF-alt ###
 # Retrieves all ufokn:CollectionOfFeatures (alternate)
-# Works as expected
 
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 
 select ?feature where {
@@ -441,7 +421,6 @@ having (count(distinct ?unit) > 1)
 
 ### CoF ###
 # Retrieves all ufokn:CollectionOfFeatures
-# Works as expected
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
@@ -455,7 +434,7 @@ select distinct ?collection where {
 
 ### IFaR_SFaR ###
 # Attempts to retrieve all ufokn:IndividualFeatureAtRisk or all ufokn:StandaloneFeatureAtRisk (comment one out)
-# Works as expected (if the data file explicitly uses StandaloneFeatureAtRisk and IndividualFeatureAtRisk as appropriate)
+# Works as expected if the data file explicitly uses StandaloneFeatureAtRisk and IndividualFeatureAtRisk as appropriate
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
@@ -469,7 +448,6 @@ select ?feature where {
 
 ### FaR ###
 # Retrieves all ufokn:FeatureAtRisk
-# Works as expected
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
@@ -483,7 +461,6 @@ select ?feature where {
 ### K-V_Pairs ###
 # Retrieves all distinct key-value pairs
 
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 
 select distinct ?key ?value where { 
@@ -497,7 +474,6 @@ select distinct ?key ?value where {
 # Retrieves all distinct values and the number of times they occur
 # Easily adapted to do the same for keys
 
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 
 select ?val (count(?val) as ?count) where { 
