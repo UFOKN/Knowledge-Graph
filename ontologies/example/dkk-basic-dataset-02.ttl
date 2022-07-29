@@ -5,6 +5,7 @@
 @prefix ufokn-geo: <http://schema.ufokn.org/geo/v2/> .
     
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
@@ -14,167 +15,175 @@
     
 @base <http://schema.ufokn.org/data#> .
     
-    #################################################################
-    #    Data properties
-    #################################################################
+#################################################################
+#    Data properties
+#################################################################
 
-	###  http://schema.ufokn.org/geo/v2/hasWktGeometry
-	ufokn-geo:hasWktGeometry rdf:type owl:DatatypeProperty .
-	
-	
-	### datatype properties for addresses
-	
-	###  http://schema.ufokn.org/core/v2/unitNumber
-	ufokn:unitNumber rdf:type owl:DatatypeProperty ;
-					rdf:type owl:FunctionalProperty ;
-					rdfs:domain ufokn:UnitAddress ;
-					rdfs:range xsd:string . 
-					
-	###  http://schema.ufokn.org/core/v2/unitCount
-	ufokn:unitCount rdf:type owl:DatatypeProperty ;
-					rdf:type owl:FunctionalProperty ;
-					rdfs:domain ufokn:Address ;
-					rdfs:range xsd:positiveInteger . 
-					
-	###  http://schema.ufokn.org/core/v2/areaSize
-	ufokn:areaSize rdf:type owl:DatatypeProperty ;
-					rdf:type owl:FunctionalProperty ;
-					rdfs:domain ufokn:Address ;
-					rdfs:range xsd:nonNegativeInteger . 
-					
-	###  http://schema.ufokn.org/core/v2/street
-	ufokn:street rdf:type owl:DatatypeProperty ;
-					rdf:type owl:FunctionalProperty ;
-					rdfs:domain ufokn:Address ;
-					rdfs:range xsd:string . 
-					
-	###  http://schema.ufokn.org/core/v2/streetNumber
-	ufokn:streetNumber rdf:type owl:DatatypeProperty ;
-					rdf:type owl:FunctionalProperty ;
-					rdfs:domain ufokn:Address ;
-					rdfs:range xsd:string . 
-	
-	###  http://schema.ufokn.org/core/v2/secondAddressLine
-	ufokn:secondAddressLine rdf:type owl:DatatypeProperty ;
-					rdf:type owl:FunctionalProperty ;
-					rdfs:domain ufokn:Address ;
-					rdfs:range xsd:string . 
-	
-	###  http://schema.ufokn.org/core/v2/region
-	ufokn:region rdf:type owl:DatatypeProperty ;
-					rdf:type owl:FunctionalProperty ;
-					rdfs:domain ufokn:Address ;
-					rdfs:range xsd:string . 
-	
-	###  http://schema.ufokn.org/core/v2/city
-	ufokn:city rdf:type owl:DatatypeProperty ;
-					rdf:type owl:FunctionalProperty ;
-					rdfs:domain ufokn:Address ;
-					rdfs:range xsd:string . 
-	
-	###  http://schema.ufokn.org/core/v2/state
-	ufokn:state rdf:type owl:DatatypeProperty ;
-					rdf:type owl:FunctionalProperty ;
-					rdfs:domain ufokn:Address ;
-					rdfs:range xsd:string . 
-					
-	###  http://schema.ufokn.org/core/v2/country
-	ufokn:country rdf:type owl:DatatypeProperty ;
-					rdf:type owl:FunctionalProperty ;
-					rdfs:domain ufokn:Address ;
-					rdfs:range xsd:string . 
-					
-	###  http://schema.ufokn.org/core/v2/district
-	ufokn:district rdf:type owl:DatatypeProperty ;
-					rdf:type owl:FunctionalProperty ;
-					rdfs:domain ufokn:Address ;
-					rdfs:range xsd:string . 
-	
-	###  http://schema.ufokn.org/core/v2/postcode
-	ufokn:postcode rdf:type owl:DatatypeProperty ;
-					rdf:type owl:FunctionalProperty ;
-					rdfs:domain ufokn:Address ;
-					rdfs:range xsd:string . 
-					
-	### Data Properties for Features-at-risk
-					
-	###  http://schema.ufokn.org/core/v2/key
-	ufokn:key rdf:type owl:DatatypeProperty ;
-					rdfs:domain ufokn:FeatureAtRisk ;
-					rdfs:range xsd:string . 
-	
-	###  http://schema.ufokn.org/core/v2/value
-	ufokn:value rdf:type owl:DatatypeProperty ;
-					rdfs:domain ufokn:FeatureAtRisk ;
-					rdfs:range xsd:string . 
-	
-	###  http://schema.ufokn.org/core/v2/osm_id
-	ufokn:osm_id rdf:type owl:DatatypeProperty ;
-					rdfs:domain ufokn:FeatureAtRisk ;
-					rdfs:range xsd:string . 
-	
-	###  http://schema.ufokn.org/core/v2/ms_id
-	ufokn:ms_id rdf:type owl:DatatypeProperty ;
-					rdfs:domain ufokn:FeatureAtRisk ;
-					rdfs:range xsd:string . 
-	
-	###  http://schema.ufokn.org/core/v2/id
-	ufokn:id rdf:type owl:DatatypeProperty ;
-					   rdfs:range xsd:string .
-	
-	###  http://schema.ufokn.org/core/v2/osm_id
-	ufokn:osm_id rdf:type owl:DatatypeProperty ;
-					   rdfs:subPropertyOf ufokn:id.
-	
-	###  http://schema.ufokn.org/core/v2/ms_id
-	ufokn:ms_id rdf:type owl:DatatypeProperty ;
-					   rdfs:subPropertyOf ufokn:id.
-	
-	###  http://schema.ufokn.org/core/v2/oa_id
-	ufokn:oa_id rdf:type owl:DatatypeProperty ;
-					   rdfs:subPropertyOf ufokn:id.
-					   
-	### other datatype properties 
-					   
-	###  http://schema.ufokn.org/core/v2/criticalDepth
-	ufokn:criticalDepth rdf:type owl:DatatypeProperty ;
-						rdfs:domain ufokn:RiskPoint ;
-						rdfs:range ufokn:depth .
-	
-	
-	###  http://schema.ufokn.org/core/v2/dataSourceUri
-	ufokn:dataSourceUri rdf:type owl:DatatypeProperty ;
-						rdfs:range xsd:anyURI .
-	
-	
-	###  http://schema.ufokn.org/core/v2/heightAboveNearestDrainage
-	ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
-									 rdfs:domain ufokn:RelativeRiskPointLocation ;
-									 rdfs:range ufokn:elevation .
+###  http://schema.ufokn.org/geo/v2/hasWktGeometry
+ufokn-geo:hasWktGeometry rdf:type owl:DatatypeProperty .
+
+
+### datatype properties for addresses
+
+###  http://schema.ufokn.org/core/v2/unitNumber
+ufokn:unitNumber rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:UnitAddress ;
+				rdfs:range xsd:string . 
+				
+###  http://schema.ufokn.org/core/v2/unitCount
+ufokn:unitCount rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:positiveInteger . 
+				
+###  http://schema.ufokn.org/core/v2/areaSize
+ufokn:areaSize rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:nonNegativeInteger . 
+				
+###  http://schema.ufokn.org/core/v2/street
+ufokn:street rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:string . 
+				
+###  http://schema.ufokn.org/core/v2/streetNumber
+ufokn:streetNumber rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:string . 
+
+###  http://schema.ufokn.org/core/v2/secondAddressLine
+ufokn:secondAddressLine rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:string . 
+
+###  http://schema.ufokn.org/core/v2/region
+ufokn:region rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:string . 
+
+###  http://schema.ufokn.org/core/v2/city
+ufokn:city rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:string . 
+
+###  http://schema.ufokn.org/core/v2/state
+ufokn:state rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:string . 
+				
+###  http://schema.ufokn.org/core/v2/country
+ufokn:country rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:string . 
+				
+###  http://schema.ufokn.org/core/v2/district
+ufokn:district rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:string . 
+
+###  http://schema.ufokn.org/core/v2/postcode
+ufokn:postcode rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:string . 
+				
+### Data Properties for Features-at-risk
+				
+###  http://schema.ufokn.org/core/v2/key
+ufokn:key rdf:type owl:DatatypeProperty ;
+				rdfs:domain ufokn:FeatureAtRisk ;
+				rdfs:range xsd:string . 
+
+###  http://schema.ufokn.org/core/v2/value
+ufokn:value rdf:type owl:DatatypeProperty ;
+				rdfs:domain ufokn:FeatureAtRisk ;
+				rdfs:range xsd:string . 
+
+###  http://schema.ufokn.org/core/v2/osm_id
+ufokn:osm_id rdf:type owl:DatatypeProperty ;
+				rdfs:domain ufokn:FeatureAtRisk ;
+				rdfs:range xsd:string . 
+
+###  http://schema.ufokn.org/core/v2/ms_id
+ufokn:ms_id rdf:type owl:DatatypeProperty ;
+				rdfs:domain ufokn:FeatureAtRisk ;
+				rdfs:range xsd:string . 
+
+###  http://schema.ufokn.org/core/v2/id
+ufokn:id rdf:type owl:DatatypeProperty ;
+				   rdfs:range xsd:string .
+
+###  http://schema.ufokn.org/core/v2/osm_id
+ufokn:osm_id rdf:type owl:DatatypeProperty ;
+				   rdfs:subPropertyOf ufokn:id.
+
+###  http://schema.ufokn.org/core/v2/ms_id
+ufokn:ms_id rdf:type owl:DatatypeProperty ;
+				   rdfs:subPropertyOf ufokn:id.
+
+###  http://schema.ufokn.org/core/v2/oa_id
+ufokn:oa_id rdf:type owl:DatatypeProperty ;
+				   rdfs:subPropertyOf ufokn:id.
+				   
+### other datatype properties 
+				   
+###  http://schema.ufokn.org/core/v2/criticalDepth
+ufokn:criticalDepth rdf:type owl:DatatypeProperty ;
+					rdfs:domain ufokn:RiskPoint ;
+					rdfs:range ufokn:depth .
+
+
+###  http://schema.ufokn.org/core/v2/dataSourceUri
+ufokn:dataSourceUri rdf:type owl:DatatypeProperty ;
+					rdfs:range xsd:anyURI .
+
+
+###  http://schema.ufokn.org/core/v2/heightAboveNearestDrainage
+ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
+								 rdfs:domain ufokn:RelativeRiskPointLocation ;
+								 rdfs:range ufokn:elevation .
+
+
+###############################
+#    Features, Collections    #
+###############################
 
 
 ### A FeatureAtRisk coded as Residence-1
     <ufokn-data:FeatureAtRisk/Residence-1> rdf:type owl:NamedIndividual ,
-											    	ufokn:FeatureAtRisk ;
+											    	ufokn:FeatureAtRisk ,
+													geo:Feature ;
 										   ufokn:hasAddress <ufokn-data:Address/Residence-1> ;
 										   ufokn:hasRiskPoint <ufokn-data:RiskPoint/Residence-1> ;
+										   geo:hasGeometry <ufokn-data:RiskPoint/Residence-1> ;
 										   ufokn:id "Residence-1" ;
 										   ufokn:key "building" ;
 										   ufokn:value "detached" .
 ### Address for FeatureAtRisk coded as Residence-1
     <ufokn-data:Address/Residence-1> rdf:type owl:NamedIndividual ,
                                               ufokn:StreetAddress ;
-                                     ufokn:street "South 3rd Avenue" ;
-                                     ufokn:streetNumber "196";
-                                     ufokn:city "Kure Beach" ; 
+                                     ufokn:street "East Providence Court" ;
+                                     ufokn:streetNumber "3999";
+                                     ufokn:city "Wilmington" ; 
                                      ufokn:region "" ; 
                                      ufokn:state "NC";
-                                     ufokn:postcode "28449";
+                                     ufokn:postcode "28412";
 									 ufokn:unitCount "1"^^xsd:positiveInteger .
 ### RiskPoint for FeatureAtRisk coded as Residence-1
     <ufokn-data:RiskPoint/Residence-1> rdf:type owl:NamedIndividual ,
-                                                ufokn:RiskPoint ;
-                                       geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1648978 1372077)"^^geo:wktLiteral .
+                                                ufokn:RiskPoint ,
+												geo:sfPoint ;
+                                       geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1645360 1391316)"^^geo:wktLiteral .
 
 
 ### An IndividualFeatureAtRisk coded as Residence-2
@@ -279,12 +288,17 @@
                                         geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1647590 1398781)"^^geo:wktLiteral .
 
 
+####################################################################
+#    ElectricService, ElectricUtilityAsset, ElectricServiceArea    #
+####################################################################
+
+
 ### An ElectricService coded as ElectricService-1
     <ufokn-data:UtilityService/ElectricService-1> rdf:type owl:NamedIndividual ,
 														   ufokn-c:UtilityService ;
 												  ufokn-c:servesArea <ufokn-data:ServiceArea/ElectricArea-1> ;
-												  ufokn-c:ofUtilityType ufokn-c:ElectricService .
-
+												  ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+												  ufokn-c:providedByProvider <ufokn-data:UtilityProvider/DukeEnergyProgress> .
 
 ### An ElectricUtilityAsset coded as Substation-1 (ElectricService-1)
     <ufokn-data:UtilityAsset/Substation-1> rdf:type owl:NamedIndividual ,
@@ -310,15 +324,21 @@
                                                  ufokn:RiskPoint ;
                                         geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1645563 1386874)"^^geo:wktLiteral .
 
+### ServiceArea for ElectricService-1 coded as ElectricArea-1
+	<ufokn-data:ServiceArea/ElectricArea-1> rdf:type owl:NamedIndividual ,
+													 ufokn-c:ElectricServiceArea ;
+											ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+											geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1642614 1388241, 1650119 1390017, 1649414 1382284, 1645810 1381282, 1644750 1386275, 1642614 1388241))"^^geo:wktLiteral .
+
 
 ### An ElectricService coded as ElectricService-2
     <ufokn-data:UtilityService/ElectricService-2> rdf:type owl:NamedIndividual ,
 														   ufokn-c:UtilityService ;
-												 #ufokn-c:servesArea <ufokn-data:ServiceArea/ElectricArea-2> ;
+												  ufokn-c:servesArea <ufokn-data:ServiceArea/ElectricArea-2> ;
 												  ufokn-c:serves <ufokn-data:FeatureAtRisk/Residence-3> ,
 																 <ufokn-data:UtilityAsset/Hospital-1> ;
-												  ufokn-c:ofUtilityType ufokn-c:ElectricService .
-														 
+												  ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+												  ufokn-c:providedByProvider <ufokn-data:UtilityProvider/DukeEnergyProgress> .
 														 
 ### An ElectricUtilityAsset coded as Substation-2 (ElectricService-2)
     <ufokn-data:UtilityAsset/Substation-2> rdf:type owl:NamedIndividual ,
@@ -344,18 +364,24 @@
                                                      ufokn:RiskPoint ;
                                             geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1641423 1397510)"^^geo:wktLiteral .
 
+### ServiceArea for ElectricService-2 coded as ElectricArea-2
+	<ufokn-data:ServiceArea/ElectricArea-2> rdf:type owl:NamedIndividual ,
+													 ufokn-c:ElectricServiceArea ;
+											ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+											geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1639323 1402022, 1641761 1402796, 1644644 1398959, 1646277 1394835, 1640468 1392831, 1639323 1402022))"^^geo:wktLiteral .
+
 
 ### An ElectricService coded as ElectricService-3
     <ufokn-data:UtilityService/ElectricService-3> rdf:type owl:NamedIndividual ,
 														   ufokn-c:UtilityService ;
 												  ufokn-c:servesArea <ufokn-data:ServiceArea/ElectricArea-3> ;
-												 #ufokn-c:serves <ufokn-data:FeatureAtRisk/WaterTower-2> ,
-												 #			     <ufokn-data:FeatureAtRisk/Apartments-1> ,
-												 #			     <ufokn-data:FeatureAtRisk/Apartments-1/01> ,
-												 #			     <ufokn-data:FeatureAtRisk/Apartments-1/02> ;
-												  ufokn-c:ofUtilityType ufokn-c:ElectricService .
-														 
-														 
+												  ufokn-c:serves <ufokn-data:UtilityAsset/WaterTower-2> ,
+												 			     <ufokn-data:CollectionOfFeatures/Apartments-1> ,
+												 			     <ufokn-data:FeatureAtRisk/Apartments-1/01> ,
+												 			     <ufokn-data:FeatureAtRisk/Apartments-1/02> ;
+												  ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+												  ufokn-c:providedByProvider <ufokn-data:UtilityProvider/DukeEnergyProgress> .
+
 ### An ElectricUtilityAsset coded as Substation-3 (ElectricService-3)
     <ufokn-data:UtilityAsset/Substation-3> rdf:type owl:NamedIndividual ,
                                                     ufokn-c:ElectricUtilityAsset ;
@@ -379,15 +405,21 @@
     <ufokn-data:RiskPoint/Substation-3> rdf:type owl:NamedIndividual ,
                                                  ufokn:RiskPoint ;
                                         geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1646619 1400923)"^^geo:wktLiteral .
-												  
-												  
+
+### ServiceArea for ElectricService-3 coded as ElectricArea-3
+	<ufokn-data:ServiceArea/ElectricArea-3> rdf:type owl:NamedIndividual ,
+													 ufokn-c:ElectricServiceArea ;
+											ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+											geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1641856 1402912, 1645079 1405488, 1649075 1405287, 1651142 1402849, 1651227 1398598, 1646415 1394824, 1644761 1399107, 1641856 1402912))"^^geo:wktLiteral .
+
+
 ### An ElectricService coded as ElectricService-4
     <ufokn-data:UtilityService/ElectricService-4> rdf:type owl:NamedIndividual ,
 														   ufokn-c:UtilityService ;
 												  ufokn-c:serves <ufokn-data:UtilityAsset/Substation-2> ,
 																 <ufokn-data:UtilityAsset/Substation-3> ;
-											      ufokn-c:ofUtilityType ufokn-c:ElectricService .
-
+											      ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+												  ufokn-c:providedByProvider <ufokn-data:UtilityProvider/DukeEnergyProgress> .
 
 ### An ElectricUtilityAsset coded as Substation-4 (ElectricService-4)
     <ufokn-data:UtilityAsset/Substation-4> rdf:type owl:NamedIndividual ,
@@ -412,14 +444,20 @@
     <ufokn-data:RiskPoint/Substation-4> rdf:type owl:NamedIndividual ,
                                                  ufokn:RiskPoint ;
                                         geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1644581 1409062)"^^geo:wktLiteral .
-													
-													
+
+
+#################################################################
+#    MedicalService, MedicalUtilityAsset, MedicalServiceArea    #
+#################################################################
+
+
 ### A Medical Service coded as MedicalService-1
     <ufokn-data:UtilityService/MedicalService-1> rdf:type owl:NamedIndividual ,
 														  ufokn-c:UtilityService ;
 												 ufokn-c:servesArea <ufokn-data:ServiceArea/MedicalArea-1> ;
-											     ufokn-c:ofUtilityType ufokn-c:MedicalService .
-
+												 geo:hasGeometry <ufokn-data:ServiceArea/MedicalArea-1> ;
+											     ufokn-c:ofUtilityType ufokn-c:MedicalService ;
+												 ufokn-c:providedByProvider <ufokn-data:UtilityProvider/NewHanoverRegionalMedicalCenter> .
 
 ### A MedicalUtilityAsset coded as Hospital-1 (MedicalService-1)
     <ufokn-data:UtilityAsset/Hospital-1> rdf:type owl:NamedIndividual ,
@@ -443,14 +481,26 @@
     <ufokn-data:RiskPoint/Hospital-1> rdf:type owl:NamedIndividual ,
                                                ufokn:RiskPoint ;
                                       geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1643370 1394747)"^^geo:wktLiteral .
-										
-													
+
+### ServiceArea for MedicalService-1 coded as MedicalArea-1
+	<ufokn-data:ServiceArea/MedicalArea-1> rdf:type owl:NamedIndividual ,
+													ufokn-c:MedicalServiceArea ,
+													sf:Polygon ;
+										   ufokn-c:ofUtilityType ufokn-c:MedicalService ;
+										   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1628532 1395111, 1635782 1407704, 1647994 1409082, 1656729 1401513, 1650962 1381478, 1643436 1379676, 1634765 1382411, 1628532 1395111))"^^geo:wktLiteral .
+
+
+###########################################################
+#    WaterService, WaterUtilityAsset, WaterServiceArea    #
+###########################################################
+
+
 ### A Water Service coded as WaterService-1
     <ufokn-data:UtilityService/WaterService-1> rdf:type owl:NamedIndividual ,
 														ufokn-c:UtilityService ;
 											   ufokn-c:servesArea <ufokn-data:ServiceArea/WaterArea-1> ;
-											   ufokn-c:ofUtilityType ufokn-c:WaterService .
-
+											   ufokn-c:ofUtilityType ufokn-c:WaterService ;
+											   ufokn-c:providedByProvider <ufokn-data:UtilityProvider/CapeFearPublicUtilityAuthority> .
 
 ### A WaterUtilityAsset coded as WaterTower-1 (WaterService-1)
     <ufokn-data:UtilityAsset/WaterTower-1> rdf:type owl:NamedIndividual ,
@@ -475,15 +525,21 @@
     <ufokn-data:RiskPoint/WaterTower-1> rdf:type owl:NamedIndividual ,
                                                  ufokn:RiskPoint ;
                                         geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1646847 1383420)"^^geo:wktLiteral .
-													
-													
+
+### ServiceArea for WaterService-1 coded as WaterArea-1
+	<ufokn-data:ServiceArea/WaterArea-1> rdf:type owl:NamedIndividual ,
+												  ufokn-c:WaterServiceArea ;
+										 ufokn-c:ofUtilityType ufokn-c:WaterService ;
+										 geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1645074 1384394, 1648847 1385363, 1649330 1382666, 1645720 1381812, 1645074 1384394))"^^geo:wktLiteral .
+
+
 ### A Water Service coded as WaterService-2
     <ufokn-data:UtilityService/WaterService-2> rdf:type owl:NamedIndividual ,
 														ufokn-c:UtilityService ;
 											  #ufokn-c:servesArea <ufokn-data:ServiceArea/WaterArea-2> ;
-											   ufokn-c:serves <ufokn-data:FeatureAtRisk/Apartments-1> ;
-											   ufokn-c:ofUtilityType ufokn-c:WaterService .
-
+											   ufokn-c:serves <ufokn-data:CollectionOfFeatures/Apartments-1> ;
+											   ufokn-c:ofUtilityType ufokn-c:WaterService ;
+											   ufokn-c:providedByProvider <ufokn-data:UtilityProvider/CapeFearPublicUtilityAuthority> .
 
 ### A WaterUtilityAsset coded as WaterTower-2 (WaterService-2)
     <ufokn-data:UtilityAsset/WaterTower-2> rdf:type owl:NamedIndividual ,
@@ -508,45 +564,263 @@
     <ufokn-data:RiskPoint/WaterTower-2> rdf:type owl:NamedIndividual ,
                                                  ufokn:RiskPoint ;
                                         geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1647424 1398150)"^^geo:wktLiteral .
-													
-													
-### ServiceArea for MedicalService-1 coded as MedicalService-1
-	<ufokn-data:ServiceArea/MedicalArea-1> rdf:type owl:NamedIndividual ,
-													ufokn-c:MedicalServiceArea ;
-										   ufokn-c:ofUtilityType ufokn-c:MedicalService ;
-										   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1628532 1395111, 1635782 1407704, 1647994 1409082, 1656729 1401513, 1650962 1381478, 1643436 1379676, 1634765 1382411, 1628532 1395111))"^^geo:wktLiteral .
-																 
-																 
-### ServiceArea for ElectricService-1 coded as ElectricArea-1
-	<ufokn-data:ServiceArea/ElectricArea-1> rdf:type owl:NamedIndividual ,
-													 ufokn-c:ElectricServiceArea ;
-											ufokn-c:ofUtilityType ufokn-c:ElectricService ;
-											geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1642614 1388241, 1650119 1390017, 1649414 1382284, 1645810 1381282, 1644750 1386275, 1642614 1388241))"^^geo:wktLiteral .
-																 
-																 
-### ServiceArea for ElectricService-2 coded as ElectricArea-2
-	<ufokn-data:ServiceArea/ElectricArea-2> rdf:type owl:NamedIndividual ,
-													 ufokn-c:ElectricServiceArea ;
-											ufokn-c:ofUtilityType ufokn-c:ElectricService ;
-											geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1639323 1402022, 1641761 1402796, 1644644 1398959, 1646277 1394835, 1640468 1392831, 1639323 1402022))"^^geo:wktLiteral .
-																 
-																 
-### ServiceArea for ElectricService-3 coded as ElectricArea-3
-	<ufokn-data:ServiceArea/ElectricArea-3> rdf:type owl:NamedIndividual ,
-													 ufokn-c:ElectricServiceArea ;
-											ufokn-c:ofUtilityType ufokn-c:ElectricService ;
-											geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1641856 1402912, 1645079 1405488, 1649075 1405287, 1651142 1402849, 1651227 1398598, 1646415 1394824, 1644761 1399107, 1641856 1402912))"^^geo:wktLiteral .
-																 
-																 
-### ServiceArea for WaterService-1 coded as WaterArea-1
-	<ufokn-data:ServiceArea/WaterArea-1> rdf:type owl:NamedIndividual ,
-												  ufokn-c:WaterServiceArea ;
-										 ufokn-c:ofUtilityType ufokn-c:WaterService ;
-										 geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1645074 1384394, 1648847 1385363, 1649330 1382666, 1645720 1381812, 1645074 1384394))"^^geo:wktLiteral .
-																 
-																 
+
 ### ServiceArea for WaterService-2 coded as WaterArea-2
 	<ufokn-data:ServiceArea/WaterArea-2> rdf:type owl:NamedIndividual ,
 												  ufokn-c:WaterServiceArea ;
 										 ufokn-c:ofUtilityType ufokn-c:WaterService ;
 										 geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1647374 1400029, 1651031 1398715, 1650761 1396775, 1646446 1395969, 1646393 1396732, 1647374 1400029))"^^geo:wktLiteral .
+
+
+###################################################################################
+#    CommunicationService, CommunicationUtilityAsset, CommunicationServiceArea    #
+###################################################################################
+
+
+### A Communication Service coded as CommunicationService-1
+    <ufokn-data:UtilityService/CommunicationService-1> rdf:type owl:NamedIndividual ,
+																ufokn-c:UtilityService ;
+													   ufokn-c:servesArea <ufokn-data:ServiceArea/CommunicationArea-1> ;
+													   ufokn-c:ofUtilityType ufokn-c:CommunnicationService ;
+													   ufokn-c:providedByProvider <ufokn-data:UtilityProvider/T-MobileUSA> .
+
+### A CommunicationUtilityAsset coded as CellTower-1 (CommunicationService-1)
+    <ufokn-data:UtilityAsset/CellTower-1> rdf:type owl:NamedIndividual ,
+                                                   ufokn-c:CommunicationUtilityAsset ;
+										  ufokn:hasAddress <ufokn-data:Address/CellTower-1> ;
+										  ufokn:hasRiskPoint <ufokn-data:RiskPoint/CellTower-1> ;
+										  ufokn:id "CellTower-1" ;
+										  ufokn:key "man_made" ;
+										  ufokn:value "communications_tower" ;
+										  ufokn-c:providesUtilityService <ufokn-data:UtilityService/CommunicationService-1> ;
+										  ufokn-c:ofUtilityType ufokn-c:CommunicationService .
+### Address for CommunicationUtilityAsset coded as CellTower-1
+    <ufokn-data:Address/CellTower-1> rdf:type owl:NamedIndividual ,
+                                              ufokn:StreetAddress ;
+									 ufokn:street "" ;
+									 ufokn:streetNumber "";
+									 ufokn:city "" ; 
+									 ufokn:region "" ; 
+									 ufokn:state "";
+									 ufokn:postcode "".
+### RiskPoint for CommunicationUtilityAsset coded as CellTower-1
+    <ufokn-data:RiskPoint/CellTower-1> rdf:type owl:NamedIndividual ,
+                                                ufokn:RiskPoint ;
+                                       geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1646717 1398460)"^^geo:wktLiteral .
+
+### ServiceArea for CommunicationService-1 coded as CommunicationArea-1
+	<ufokn-data:ServiceArea/CommunicationArea-1> rdf:type owl:NamedIndividual ,
+														  ufokn-c:CommunicationServiceArea ;
+												 ufokn-c:ofUtilityType ufokn-c:CommunicationService ;
+												 geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1645467 1398460, 1645833 1399344, 1646717 1399710, 1647601 1399344, 1647967 1398460, 1647601 1397576, 1646717 1397210, 1645833 1397576, 1645467 1398460))"^^geo:wktLiteral .
+
+
+### A Communication Service coded as CommunicationService-2
+    <ufokn-data:UtilityService/CommunicationService-2> rdf:type owl:NamedIndividual ,
+																ufokn-c:UtilityService ;
+													   ufokn-c:servesArea <ufokn-data:ServiceArea/CommunicationArea-2> ;
+													   ufokn-c:ofUtilityType ufokn-c:CommunnicationService ;
+													   ufokn-c:providedByProvider <ufokn-data:UtilityProvider/T-MobileUSA> .
+
+### A CommunicationUtilityAsset coded as CellTower-2 (CommunicationService-2)
+    <ufokn-data:UtilityAsset/CellTower-2> rdf:type owl:NamedIndividual ,
+                                                   ufokn-c:CommunicationUtilityAsset ;
+										  ufokn:hasAddress <ufokn-data:Address/CellTower-2> ;
+										  ufokn:hasRiskPoint <ufokn-data:RiskPoint/CellTower-2> ;
+										  ufokn:id "CellTower-2" ;
+										  ufokn:key "man_made" ;
+										  ufokn:value "communications_tower" ;
+										  ufokn-c:providesUtilityService <ufokn-data:UtilityService/CommunicationService-2> ;
+										  ufokn-c:ofUtilityType ufokn-c:CommunicationService .
+### Address for CommunicationUtilityAsset coded as CellTower-2
+    <ufokn-data:Address/CellTower-2> rdf:type owl:NamedIndividual ,
+                                              ufokn:StreetAddress ;
+									 ufokn:street "" ;
+									 ufokn:streetNumber "";
+									 ufokn:city "" ; 
+									 ufokn:region "" ; 
+									 ufokn:state "";
+									 ufokn:postcode "".
+### RiskPoint for CommunicationUtilityAsset coded as CellTower-2
+    <ufokn-data:RiskPoint/CellTower-2> rdf:type owl:NamedIndividual ,
+                                                ufokn:RiskPoint ;
+                                       geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1643535 1394308)"^^geo:wktLiteral .
+
+### ServiceArea for CommunicationService-2 coded as CommunicationArea-2
+	<ufokn-data:ServiceArea/CommunicationArea-2> rdf:type owl:NamedIndividual ,
+														  ufokn-c:CommunicationServiceArea ;
+												 ufokn-c:ofUtilityType ufokn-c:CommunicationService ;
+												 geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1642535 1394308, 1642828 1395015, 1643535 1395308, 1644242 1395015, 1644535 1394308, 1644242 1393601, 1643535 1393308, 1642828 1393601, 1642535 1394308))"^^geo:wktLiteral .
+
+
+### A Communication Service coded as CommunicationService-3
+    <ufokn-data:UtilityService/CommunicationService-3> rdf:type owl:NamedIndividual ,
+																ufokn-c:UtilityService ;
+													   ufokn-c:servesArea <ufokn-data:ServiceArea/CommunicationArea-3> ;
+													   ufokn-c:ofUtilityType ufokn-c:CommunnicationService ;
+													   ufokn-c:providedByProvider <ufokn-data:UtilityProvider/T-MobileUSA> .
+
+### A CommunicationUtilityAsset coded as CellTower-3 (CommunicationService-3)
+    <ufokn-data:UtilityAsset/CellTower-3> rdf:type owl:NamedIndividual ,
+                                                   ufokn-c:CommunicationUtilityAsset ;
+										  ufokn:hasAddress <ufokn-data:Address/CellTower-3> ;
+										  ufokn:hasRiskPoint <ufokn-data:RiskPoint/CellTower-3> ;
+										  ufokn:id "CellTower-3" ;
+										  ufokn:key "man_made" ;
+										  ufokn:value "communications_tower" ;
+										  ufokn-c:providesUtilityService <ufokn-data:UtilityService/CommunicationService-3> ;
+										  ufokn-c:ofUtilityType ufokn-c:CommunicationService .
+### Address for CommunicationUtilityAsset coded as CellTower-3
+    <ufokn-data:Address/CellTower-3> rdf:type owl:NamedIndividual ,
+                                              ufokn:StreetAddress ;
+									 ufokn:street "" ;
+									 ufokn:streetNumber "";
+									 ufokn:city "" ; 
+									 ufokn:region "" ; 
+									 ufokn:state "";
+									 ufokn:postcode "".
+### RiskPoint for CommunicationUtilityAsset coded as CellTower-3
+    <ufokn-data:RiskPoint/CellTower-3> rdf:type owl:NamedIndividual ,
+                                                ufokn:RiskPoint ;
+                                       geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1647088 1385238)"^^geo:wktLiteral .
+
+### ServiceArea for CommunicationService-3 coded as CommunicationArea-3
+	<ufokn-data:ServiceArea/CommunicationArea-3> rdf:type owl:NamedIndividual ,
+														  ufokn-c:CommunicationServiceArea ;
+												 ufokn-c:ofUtilityType ufokn-c:CommunicationService ;
+												 geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1644588 1385238, 1645320 1387006, 1647088 1387738, 1648856 1387006, 1649588 1385238, 1648856 1383470, 1647088 1382738, 1645320 1383470, 1644588 1385238))"^^geo:wktLiteral .
+
+
+### A Communication Service coded as CommunicationService-4
+    <ufokn-data:UtilityService/CommunicationService-4> rdf:type owl:NamedIndividual ,
+																ufokn-c:UtilityService ;
+													   ufokn-c:servesArea <ufokn-data:ServiceArea/CommunicationArea-4> ;
+													   ufokn-c:ofUtilityType ufokn-c:CommunnicationService ;
+													   ufokn-c:providedByProvider <ufokn-data:UtilityProvider/Verizon> .
+
+### A CommunicationUtilityAsset coded as CellTower-4 (CommunicationService-4)
+    <ufokn-data:UtilityAsset/CellTower-4> rdf:type owl:NamedIndividual ,
+                                                   ufokn-c:CommunicationUtilityAsset ;
+										  ufokn:hasAddress <ufokn-data:Address/CellTower-4> ;
+										  ufokn:hasRiskPoint <ufokn-data:RiskPoint/CellTower-4> ;
+										  ufokn:id "CellTower-4" ;
+										  ufokn:key "man_made" ;
+										  ufokn:value "communications_tower" ;
+										  ufokn-c:providesUtilityService <ufokn-data:UtilityService/CommunicationService-4> ;
+										  ufokn-c:ofUtilityType ufokn-c:CommunicationService .
+### Address for CommunicationUtilityAsset coded as CellTower-4
+    <ufokn-data:Address/CellTower-4> rdf:type owl:NamedIndividual ,
+                                              ufokn:StreetAddress ;
+									 ufokn:street "" ;
+									 ufokn:streetNumber "";
+									 ufokn:city "" ; 
+									 ufokn:region "" ; 
+									 ufokn:state "";
+									 ufokn:postcode "".
+### RiskPoint for CommunicationUtilityAsset coded as CellTower-4
+    <ufokn-data:RiskPoint/CellTower-4> rdf:type owl:NamedIndividual ,
+                                                ufokn:RiskPoint ;
+                                       geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1647000 1398684)"^^geo:wktLiteral .
+
+### ServiceArea for CommunicationService-4 coded as CommunicationArea-4
+	<ufokn-data:ServiceArea/CommunicationArea-4> rdf:type owl:NamedIndividual ,
+														  ufokn-c:CommunicationServiceArea ;
+												 ufokn-c:ofUtilityType ufokn-c:CommunicationService ;
+												 geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1645750 1398684, 1646116 1399568, 1647000 1399934, 1647884 1399568, 1648250 1398684, 1647884 1397800, 1647000 1397434, 1646116 1397800, 1645750 1398684))"^^geo:wktLiteral .
+
+
+### A Communication Service coded as CommunicationService-5
+    <ufokn-data:UtilityService/CommunicationService-5> rdf:type owl:NamedIndividual ,
+																ufokn-c:UtilityService ;
+													   ufokn-c:servesArea <ufokn-data:ServiceArea/CommunicationArea-5> ;
+													   ufokn-c:ofUtilityType ufokn-c:CommunnicationService ;
+													   ufokn-c:providedByProvider <ufokn-data:UtilityProvider/Verizon> .
+
+### A CommunicationUtilityAsset coded as CellTower-5 (CommunicationService-5)
+    <ufokn-data:UtilityAsset/CellTower-5> rdf:type owl:NamedIndividual ,
+                                                   ufokn-c:CommunicationUtilityAsset ;
+										  ufokn:hasAddress <ufokn-data:Address/CellTower-5> ;
+										  ufokn:hasRiskPoint <ufokn-data:RiskPoint/CellTower-5> ;
+										  ufokn:id "CellTower-5" ;
+										  ufokn:key "man_made" ;
+										  ufokn:value "communications_tower" ;
+										  ufokn-c:providesUtilityService <ufokn-data:UtilityService/CommunicationService-5> ;
+										  ufokn-c:ofUtilityType ufokn-c:CommunicationService .
+### Address for CommunicationUtilityAsset coded as CellTower-5
+    <ufokn-data:Address/CellTower-5> rdf:type owl:NamedIndividual ,
+                                              ufokn:StreetAddress ;
+									 ufokn:street "" ;
+									 ufokn:streetNumber "";
+									 ufokn:city "" ; 
+									 ufokn:region "" ; 
+									 ufokn:state "";
+									 ufokn:postcode "".
+### RiskPoint for CommunicationUtilityAsset coded as CellTower-5
+    <ufokn-data:RiskPoint/CellTower-5> rdf:type owl:NamedIndividual ,
+                                                ufokn:RiskPoint ;
+                                       geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1643005 1394953)"^^geo:wktLiteral .
+
+### ServiceArea for CommunicationService-5 coded as CommunicationArea-5
+	<ufokn-data:ServiceArea/CommunicationArea-5> rdf:type owl:NamedIndividual ,
+														  ufokn-c:CommunicationServiceArea ;
+												 ufokn-c:ofUtilityType ufokn-c:CommunicationService ;
+												 geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1642005 1394953, 1642298 1395660, 1643005 1395953, 1643712 1395660, 1644005 1394953, 1643712 1394246, 1643005 1393953, 1642298 1394246, 1642005 1394953))"^^geo:wktLiteral .
+
+
+### A Communication Service coded as CommunicationService-6
+    <ufokn-data:UtilityService/CommunicationService-6> rdf:type owl:NamedIndividual ,
+																ufokn-c:UtilityService ;
+													   ufokn-c:servesArea <ufokn-data:ServiceArea/CommunicationArea-6> ;
+													   ufokn-c:ofUtilityType ufokn-c:CommunnicationService ;
+													   ufokn-c:providedByProvider <ufokn-data:UtilityProvider/Verizon> .
+
+### A CommunicationUtilityAsset coded as CellTower-6 (CommunicationService-6)
+    <ufokn-data:UtilityAsset/CellTower-6> rdf:type owl:NamedIndividual ,
+                                                   ufokn-c:CommunicationUtilityAsset ;
+										  ufokn:hasAddress <ufokn-data:Address/CellTower-6> ;
+										  ufokn:hasRiskPoint <ufokn-data:RiskPoint/CellTower-6> ;
+										  ufokn:id "CellTower-6" ;
+										  ufokn:key "man_made" ;
+										  ufokn:value "communications_tower" ;
+										  ufokn-c:providesUtilityService <ufokn-data:UtilityService/CommunicationService-6> ;
+										  ufokn-c:ofUtilityType ufokn-c:CommunicationService .
+### Address for CommunicationUtilityAsset coded as CellTower-6
+    <ufokn-data:Address/CellTower-6> rdf:type owl:NamedIndividual ,
+                                              ufokn:StreetAddress ;
+									 ufokn:street "" ;
+									 ufokn:streetNumber "";
+									 ufokn:city "" ; 
+									 ufokn:region "" ; 
+									 ufokn:state "";
+									 ufokn:postcode "".
+### RiskPoint for CommunicationUtilityAsset coded as CellTower-6
+    <ufokn-data:RiskPoint/CellTower-6> rdf:type owl:NamedIndividual ,
+                                                ufokn:RiskPoint ;
+                                       geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1647581 1382611)"^^geo:wktLiteral .
+
+### ServiceArea for CommunicationService-6 coded as CommunicationArea-6
+	<ufokn-data:ServiceArea/CommunicationArea-6> rdf:type owl:NamedIndividual ,
+														  ufokn-c:CommunicationServiceArea ;
+												 ufokn-c:ofUtilityType ufokn-c:CommunicationService ;
+												 geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1645081 1382611, 1645813 1384379, 1647581 1385111, 1649349 1384379, 1650081 1382611, 1649349 1380843, 1647581 1380111, 1645813 1380843, 1645081 1382611))"^^geo:wktLiteral .
+
+
+##########################
+#    UtilityProvider     #
+##########################
+
+
+<ufokn-data:UtilityProvider/DukeEnergyProgress> rdf:type owl:NamedIndividual ,
+														 ufokn-c:UtilityProvider .
+
+<ufokn-data:UtilityProvider/NewHanoverRegionalMedicalCenter> rdf:type owl:NamedIndividual ,
+																	  ufokn-c:UtilityProvider .
+
+<ufokn-data:UtilityProvider/CapeFearPublicUtilityAuthority> rdf:type owl:NamedIndividual ,
+																	 ufokn-c:UtilityProvider .
+
+<ufokn-data:UtilityProvider/T-MobileUSA> rdf:type owl:NamedIndividual ,
+												  ufokn-c:UtilityProvider .
+
+<ufokn-data:UtilityProvider/Verizon> rdf:type owl:NamedIndividual ,
+											  ufokn-c:UtilityProvider .
