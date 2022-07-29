@@ -196,9 +196,7 @@ ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
 ### An ElectricService coded as ElectricService-2
     <ufokn-data:UtilityService/ElectricService-2> rdf:type owl:NamedIndividual ,
 														   ufokn-c:UtilityService ;
-												 #ufokn-c:servesArea <ufokn-data:ServiceArea/ElectricArea-2> ;
-												  ufokn-c:serves <ufokn-data:FeatureAtRisk/Residence-3> ,
-																 <ufokn-data:UtilityAsset/Hospital-1> ;
+												  ufokn-c:servesArea <ufokn-data:ServiceArea/ElectricArea-2> ;
 												  ufokn-c:ofUtilityType ufokn-c:ElectricService ;
 												  ufokn-c:providedByProvider <ufokn-data:UtilityProvider/DukeEnergyProgress> .
 														 
@@ -237,10 +235,6 @@ ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
     <ufokn-data:UtilityService/ElectricService-3> rdf:type owl:NamedIndividual ,
 														   ufokn-c:UtilityService ;
 												  ufokn-c:servesArea <ufokn-data:ServiceArea/ElectricArea-3> ;
-												 #ufokn-c:serves <ufokn-data:FeatureAtRisk/WaterTower-2> ,
-												 #			     <ufokn-data:FeatureAtRisk/Apartments-1> ,
-												 #			     <ufokn-data:FeatureAtRisk/Apartments-1/01> ,
-												 #			     <ufokn-data:FeatureAtRisk/Apartments-1/02> ;
 												  ufokn-c:ofUtilityType ufokn-c:ElectricService ;
 												  ufokn-c:providedByProvider <ufokn-data:UtilityProvider/DukeEnergyProgress> .
 
@@ -278,7 +272,8 @@ ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
 ### An ElectricService coded as ElectricService-4
     <ufokn-data:UtilityService/ElectricService-4> rdf:type owl:NamedIndividual ,
 														   ufokn-c:UtilityService ;
-												  ufokn-c:serves <ufokn-data:UtilityAsset/Substation-2> ,
+												  ufokn-c:serves <ufokn-data:UtilityAsset/Substation-1> ;
+																 <ufokn-data:UtilityAsset/Substation-2> ,
 																 <ufokn-data:UtilityAsset/Substation-3> ;
 											      ufokn-c:ofUtilityType ufokn-c:ElectricService ;
 												  ufokn-c:providedByProvider <ufokn-data:UtilityProvider/DukeEnergyProgress> .
@@ -396,8 +391,7 @@ ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
 ### A Water Service coded as WaterService-2
     <ufokn-data:UtilityService/WaterService-2> rdf:type owl:NamedIndividual ,
 														ufokn-c:UtilityService ;
-											  #ufokn-c:servesArea <ufokn-data:ServiceArea/WaterArea-2> ;
-											   ufokn-c:serves <ufokn-data:FeatureAtRisk/Apartments-1> ;
+											   ufokn-c:servesArea <ufokn-data:ServiceArea/WaterArea-2> ;
 											   ufokn-c:ofUtilityType ufokn-c:WaterService ;
 											   ufokn-c:providedByProvider <ufokn-data:UtilityProvider/CapeFearPublicUtilityAuthority> .
 
