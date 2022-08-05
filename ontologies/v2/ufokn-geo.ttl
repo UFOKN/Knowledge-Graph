@@ -106,6 +106,14 @@ geo:sfContains rdf:type owl:ObjectProperty ;
                rdfs:label "sfContains"@en .
 
 
+###  http://www.opengis.net/ont/geosparql#sfIntersects
+geo:sfIntersects rdf:type owl:ObjectProperty ;
+               rdfs:domain geo:SpatialObject ;
+               rdfs:range geo:SpatialObject ;
+               rdfs:comment "The intersects relation from Simple Features."@en ;
+               rdfs:isDefinedBy geo: ;
+               rdfs:label "sfIntersects"@en .
+
 ###  http://www.opengis.net/ont/geosparql#sfWithin
 geo:sfWithin rdf:type owl:ObjectProperty ;
              rdfs:domain geo:SpatialObject ;
@@ -121,15 +129,25 @@ geo:sfWithin rdf:type owl:ObjectProperty ;
 
 
 ###  http://schema.ufokn.org/geo/v2/hasWktGeometry
+### shortcut from a UFOKN feature to its wkt literal via its geometry: hasGeometry and asWKT
 ufokn-geo:hasWktGeometry rdf:type owl:DatatypeProperty ;
                 rdfs:domain geo:Feature ;
-                rdfs:range geo:wktLiteral .
-#                rdfs:comment "A spatial representation for a given feature as a wkt literal."@en .
+                rdfs:range geo:wktLiteral ;
+                rdfs:comment "A spatial representation for a given feature as a wkt literal."@en ;
+				owl:propertyChainAxiom (geo:hasGeometry geo:asWKT).
 
+
+###  http://www.opengis.net/ont/geosparql#asWKT
+geo:asWKT rdf:type rdfs:Datatype ;
+               rdfs:label "asWKT"@en ;
+			   rdfs:domain geo:Geometry ;
+			   rdfs:range geo:wktLiteral ;
+               rdfs:comment "The WKT serialization of a geometry."@en .
 
 #################################################################
 #    Datatype
 #################################################################
+
 
 
 ###  http://www.opengis.net/ont/geosparql#wktLiteral
