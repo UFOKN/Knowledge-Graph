@@ -210,7 +210,7 @@ if __name__ == '__main__':
     @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
     @prefix dcterms: <http://purl.org/dc/terms/> .
     
-    @base <http://schema.ufokn.org/data#> .
+    @base <http://schema.ufokn.org/data/v2/> .
 
     
     '''
