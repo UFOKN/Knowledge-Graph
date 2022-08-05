@@ -1,0 +1,54 @@
+Naming conventions for GraphDB repositories
+Import files as named graphs and use the URI as both the Base IRI and the Target graph name
+
+UFOKN-Basic
+	Files:
+		ufokn-core.ttl
+		ufokn-geo.ttl
+		ufokn-utility-connection.ttl
+		dkk-basic-dataset-01.ttl
+	Graphs (use URI as both Base IRI and Target graph name):
+		http://schema.ufokn.org/core/v2/
+		http://schema.ufokn.org/geo/v2/
+		http://schema.ufokn.org/utility-connection/v2/
+		http://schema.ufokn.org/example/dkk-basic-dataset-01
+
+UFOKN-Basic-2
+	Files:
+		ufokn-core.ttl
+		ufokn-geo.ttl
+		ufokn-utility-connection.ttl
+		dkk-basic-dataset-02.ttl
+	Graphs (use URI as both Base IRI and Target graph name):
+		http://schema.ufokn.org/core/v2/
+		http://schema.ufokn.org/geo/v2/
+		http://schema.ufokn.org/utility-connection/v2/
+		http://schema.ufokn.org/example/dkk-basic-dataset-02
+
+UFOKN-2500
+	Files:
+		ufokn-core.ttl
+		ufokn-geo.ttl
+		ufokn-utility-connection.ttl
+		37129-buildings-2500.ttl
+		37129-utility-mockup.ttl
+	Graphs (use URI as both Base IRI and Target graph name):
+		http://schema.ufokn.org/core/v2/
+		http://schema.ufokn.org/geo/v2/
+		http://schema.ufokn.org/utility-connection/v2/
+		http://schema.ufokn.org/example/37129-buildings-2500
+		http://schema.ufokn.org/example/37129-utility-mockup
+
+UFOKN-all
+	Files:
+		ufokn-core.ttl
+		ufokn-geo.ttl
+		ufokn-utility-connection.ttl
+		37129-buildings-all.ttl
+		37129-utility-mockup.ttl
+	Graphs (use URI as both Base IRI and Target graph name):
+		http://schema.ufokn.org/core/v2/
+		http://schema.ufokn.org/geo/v2/
+		http://schema.ufokn.org/utility-connection/v2/
+		http://schema.ufokn.org/example/37129-buildings-all
+		http://schema.ufokn.org/example/37129-utility-mockup
