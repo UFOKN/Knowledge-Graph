@@ -447,11 +447,6 @@ ufokn-c:UtilityServiceArea rdf:type owl:Class ;
                                         ] .
 
 				
-###  http://schema.ufokn.org/core/v2/UtilityServiceArea
-ufokn-c:UtilityServiceArea rdf:type owl:Class ;
-                       rdfs:subClassOf 	ufokn:RegionOfInterest ,
-										ufokn:FeatureOrRegionAtRisk .
-
 ###  http://schema.ufokn.org/utility-connection/v2/UtilityType
 ufokn-c:UtilityType rdf:type owl:Class .
 
