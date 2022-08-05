@@ -77,6 +77,22 @@ SELECT ?serviceArea (count(?serviceArea) as ?count) WHERE {
 } GROUP BY ?serviceArea
 
 
+### count_FaR_byType_predicate ###
+# based on count_FaR_predicate, but doesn't count the total number of features
+# but the number of each kind of asset served 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+
+SELECT ?serviceArea ?type  (count(?serviceArea) as ?count)  WHERE {
+    ?serviceArea rdf:type ufokn-c:UtilityServiceArea .
+    ?feature ufokn:hasRiskPoint ?riskPoint.
+    ?feature ufokn-c:ofUtilityType ?type .
+    ?serviceArea geo:sfIntersects ?riskPoint.
+} GROUP BY ?serviceArea ?type
+
+
 
 ### count_FaR_function ###
 # Counts the number of FeatureAtRisk in each UtilityServiceArea
