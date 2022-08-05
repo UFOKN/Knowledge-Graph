@@ -123,6 +123,16 @@ geo:sfWithin rdf:type owl:ObjectProperty ;
              rdfs:label "sfWithin"@en .
 
 
+
+###  http://schema.ufokn.org/geo/v2/ufoknIntersects
+ufokn-geo:ufoknIntersects rdf:type owl:ObjectProperty ;
+			   rdfs:subPropertyOf geo:sfIntersects;
+               rdfs:domain ufokn:FeatureOrRegionAtRisk ;
+               rdfs:range ufokn:FeatureOrRegionAtRisk ;
+               rdfs:comment "The intersects relation from Simple Features restriced to ufokn features and regions at risk."@en ;
+               rdfs:isDefinedBy ufokn-geo: ;
+               rdfs:label "ufoknIntersects"@en .
+
 #################################################################
 #    Datatype Properties
 #################################################################
