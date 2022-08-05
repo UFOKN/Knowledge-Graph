@@ -351,7 +351,9 @@ ufokn:FeatureAtRisk rdf:type owl:Class ;
 
 ###  http://schema.ufokn.org/core/v2/FeatureOrRegionAtRisk
 ufokn:FeatureOrRegionAtRisk rdf:type owl:Class ;
-                    rdfs:subClassOf geo:Feature .
+                    rdfs:subClassOf geo:Feature ;
+					owl:disjointUnionOf (ufokn:RegionOfInterest ufokn:FeatureAtRisk) .
+
 
 ###  http://schema.ufokn.org/core/v2/CollectionOfFeatures
 ufokn:CollectionOfFeatures rdf:type owl:Class ;
