@@ -1,0 +1,15 @@
+feature	key	value
+power plant	power	plant
+substation	power	substation
+factory	man_made	works
+water treatment	man_made	water_works
+water treatment	man_made	wasterwater_plant
+well	man_made	water_well
+water pump
+port
+arena
+airport	aeroway	aerodrome
+community center	amenity	community_centre
+school	amenity	school
+	amenity	conference_centre
+	amenity	events_venue
