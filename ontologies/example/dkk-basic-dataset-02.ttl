@@ -5,7 +5,6 @@
 @prefix ufokn-geo: <http://schema.ufokn.org/geo/v2/> .
     
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
-@prefix sf: <http://www.opengis.net/ont/sf#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
@@ -13,7 +12,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
     
-@base <http://schema.ufokn.org/data#> .
+@base <http://schema.ufokn.org/data/v2/> .
     
 #################################################################
 #    Data properties
@@ -154,6 +153,42 @@ ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
 								 rdfs:range ufokn:elevation .
 
 
+##########################
+#    Dataset Overview    #
+##########################
+#
+# Airport-1				FeatureAtRisk			served by ElectricService-3, MedicalService-1, and WaterService-3
+# Apartments-1			CollectionOfFeatures	served by CommunicationService-1, CommunicationService-4, ElectricService-3, MedicalService-1, and WaterService-2
+#    Apartments-1/01	IndividualFeatureAtRiskInCollection
+#    Apartments-1/02	FeatureAtRisk
+# Factory-1				FeatureAtRisk			served by ElectricService-3, ElectricService-4, MedicalService-1, and WaterService-3
+# Residence-1			FeatureAtRisk			served by MedicalService-1 and WaterService-3
+# Residence-2			IndividualFeatureAtRisk	served by CommunicationService-3, CommunicationService-6, ElectricService-1, MedicalService-1, and WaterService-1
+# Residence-3			StandaloneFeatureAtRisk	served by ElectricService-2, MedicalService-1, and WaterService-3
+# School-1				FeatureAtRisk			served by ElectricService-3, MedicalService-1, and WaterService-3
+# School-2				FeatureAtRisk			served by MedicalService-1 and WaterService-3
+# School-3				FeatureAtRisk			served by ElectricService-3, MedicalService-1, and WaterService-3
+# School-4				FeatureAtRisk			served by ElectricService-2, MedicalService-1, and WaterService-3
+# School-5				FeatureAtRisk			served by MedicalService-1 and WaterService-3
+#
+# CellTower-1		CommunicationService-1		served by CommunicationService-1, CommunicationService-4, ElectricService-3, MedicalService-1, and WaterService-3
+# CellTower-2		CommunicationService-2		served by CommunicationService-2, CommunicationService-5, ElectricService-2, MedicalService-1, and WaterService-3
+# CellTower-3		CommunicationService-3		served by CommunicationService-3, ElectricService-1, and MedicalService-1
+# CellTower-4		CommunicationService-4		served by CommunicationService-1, CommunicationService-4, ElectricService-3, MedicalService-1, and WaterService-2
+# CellTower-5		CommunicationService-5		served by CommunicationService-2, CommunicationService-5, ElectricService-2, MedicalService-1, and WaterService-3
+# CellTower-6		CommunicationService-6		served by CommunicationService-6, ElectricService-1, MedicalService-1, and WaterService-1
+# Hospital-1		MedicalService-1			served by CommunicationService-2, CommunicationService-5, ElectricService-2, MedicalService-1, and WaterService-3
+# PowerPlant-1		ElectricService-5			served by MedicalService-1
+# PowerPlant-2		ElectricService-6
+# Substation-1		ElectricService-1			served by ElectricService-6, CommunicationService-3, ElectricService-1, and MedicalService-1
+# Substation-2		ElectricService-2			served by ElectricService-2, ElectricService-5, MedicalService-1, and WaterService-3
+# Substation-3		ElectricService-3			served by ElectricService-3, ElectricService-5, MedicalService-1, and WaterService-3
+# Substation-4		ElectricService-4			served by ElectricService-3, MedicalService-1, and WaterService-3
+# WaterTower-1		WaterService-1				served by CommunicationService-3, CommunicationService-6, ElectricService-1, MedicalService-1, and WaterService-1
+# WaterTower-2		WaterService-1				served by CommunicationService-1, CommunicationService-4, ElectricService-3, MedicalService-1, and WaterService-2
+# WaterTreatment-1	WaterService-1				served by ElectricService-2, MedicalService-1, and WaterService-3
+
+
 ###############################
 #    Features, Collections    #
 ###############################
@@ -161,11 +196,9 @@ ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
 
 ### A FeatureAtRisk coded as Residence-1
     <ufokn-data:FeatureAtRisk/Residence-1> rdf:type owl:NamedIndividual ,
-											    	ufokn:FeatureAtRisk ,
-													geo:Feature ;
+											    	ufokn:FeatureAtRisk ;
 										   ufokn:hasAddress <ufokn-data:Address/Residence-1> ;
 										   ufokn:hasRiskPoint <ufokn-data:RiskPoint/Residence-1> ;
-										   geo:hasGeometry <ufokn-data:RiskPoint/Residence-1> ;
 										   ufokn:id "Residence-1" ;
 										   ufokn:key "building" ;
 										   ufokn:value "detached" .
@@ -181,8 +214,7 @@ ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
 									 ufokn:unitCount "1"^^xsd:positiveInteger .
 ### RiskPoint for FeatureAtRisk coded as Residence-1
     <ufokn-data:RiskPoint/Residence-1> rdf:type owl:NamedIndividual ,
-                                                ufokn:RiskPoint ,
-												geo:sfPoint ;
+                                                ufokn:RiskPoint ;
                                        geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1645360 1391316)"^^geo:wktLiteral .
 
 
@@ -286,6 +318,169 @@ ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
     <ufokn-data:RiskPoint/Apartments-1> rdf:type owl:NamedIndividual ,
                                                  ufokn:RiskPoint ;
                                         geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1647590 1398781)"^^geo:wktLiteral .
+
+### A FeatureAtRisk coded as Factory-1
+    <ufokn-data:FeatureAtRisk/Factory-1> rdf:type owl:NamedIndividual ,
+											      ufokn:FeatureAtRisk ;
+										 ufokn:hasAddress <ufokn-data:Address/Factory-1> ;
+										 ufokn:hasRiskPoint <ufokn-data:RiskPoint/Factory-1> ;
+										 ufokn:id "Factory-1" ;
+										 ufokn:key "man_made" ;
+										 ufokn:value "works" .
+### Address for FeatureAtRisk coded as Factory-1
+    <ufokn-data:Address/Factory-1> rdf:type owl:NamedIndividual ,
+                                            ufokn:StreetAddress ;
+                                   ufokn:street "N. College Road" ;
+                                   ufokn:streetNumber "310";
+                                   ufokn:city "Wilmington" ; 
+                                   ufokn:region "" ; 
+                                   ufokn:state "NC";
+                                   ufokn:postcode "28405".
+### RiskPoint for FeatureAtRisk coded as Factory-1
+    <ufokn-data:RiskPoint/Factory-1> rdf:type owl:NamedIndividual ,
+                                              ufokn:RiskPoint ;
+                                     geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1647025 1400662)"^^geo:wktLiteral .
+
+### A FeatureAtRisk coded as Airport-1
+    <ufokn-data:FeatureAtRisk/Airport-1> rdf:type owl:NamedIndividual ,
+											      ufokn:FeatureAtRisk ;
+										 ufokn:hasAddress <ufokn-data:Address/Airport-1> ;
+										 ufokn:hasRiskPoint <ufokn-data:RiskPoint/Airport-1> ;
+										 ufokn:id "Airport-1" ;
+										 ufokn:key "aeroway" ;
+										 ufokn:value "aerodrome" .
+### Address for FeatureAtRisk coded as Airport-1
+    <ufokn-data:Address/Airport-1> rdf:type owl:NamedIndividual ,
+                                            ufokn:StreetAddress ;
+                                   ufokn:street "Airport Boulevard" ;
+                                   ufokn:streetNumber "1740";
+                                   ufokn:city "Wilmington" ; 
+                                   ufokn:region "" ; 
+                                   ufokn:state "NC";
+                                   ufokn:postcode "28405".
+### RiskPoint for FeatureAtRisk coded as Airport-1
+    <ufokn-data:RiskPoint/Airport-1> rdf:type owl:NamedIndividual ,
+                                              ufokn:RiskPoint ;
+                                     geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1643055 1401650)"^^geo:wktLiteral .
+									 
+### A FeatureAtRisk coded as School-1
+###    This site can be used as an emergency shelter location (https://emergency.nhcgov.com/shelters/)
+    <ufokn-data:FeatureAtRisk/School-1> rdf:type owl:NamedIndividual ,
+											     ufokn:FeatureAtRisk ;
+										ufokn:hasAddress <ufokn-data:Address/School-1> ;
+										ufokn:hasRiskPoint <ufokn-data:RiskPoint/School-1> ;
+										ufokn:id "School-1" ;
+										ufokn:key "amenity" ;
+										ufokn:value "school" .
+### Address for FeatureAtRisk coded as School-1
+    <ufokn-data:Address/School-1> rdf:type owl:NamedIndividual ,
+                                           ufokn:StreetAddress ;
+                                  ufokn:street "Market Street" ;
+                                  ufokn:streetNumber "6510";
+                                  ufokn:city "Wilmington" ; 
+                                  ufokn:region "" ; 
+                                  ufokn:state "NC";
+                                  ufokn:postcode "28405".
+### RiskPoint for FeatureAtRisk coded as School-1
+    <ufokn-data:RiskPoint/School-1> rdf:type owl:NamedIndividual ,
+                                             ufokn:RiskPoint ;
+                                    geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1649700 1401669)"^^geo:wktLiteral .
+
+
+### A FeatureAtRisk coded as School-2
+###    This site can be used as an emergency shelter location (https://emergency.nhcgov.com/shelters/)
+    <ufokn-data:FeatureAtRisk/School-2> rdf:type owl:NamedIndividual ,
+											     ufokn:FeatureAtRisk ;
+										ufokn:hasAddress <ufokn-data:Address/School-2> ;
+										ufokn:hasRiskPoint <ufokn-data:RiskPoint/School-2> ;
+										ufokn:id "School-2" ;
+										ufokn:key "amenity" ;
+										ufokn:value "school" .
+### Address for FeatureAtRisk coded as School-2
+    <ufokn-data:Address/School-2> rdf:type owl:NamedIndividual ,
+                                           ufokn:StreetAddress ;
+                                  ufokn:street "Carolina Beach Road" ;
+                                  ufokn:streetNumber "4321";
+                                  ufokn:city "Wilmington" ; 
+                                  ufokn:region "" ; 
+                                  ufokn:state "NC";
+                                  ufokn:postcode "28412".
+### RiskPoint for FeatureAtRisk coded as School-2
+    <ufokn-data:RiskPoint/School-2> rdf:type owl:NamedIndividual ,
+                                             ufokn:RiskPoint ;
+                                    geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1644586 1390515)"^^geo:wktLiteral .
+
+
+### A FeatureAtRisk coded as School-3
+###    This site can be used as an emergency shelter location (https://emergency.nhcgov.com/shelters/)
+    <ufokn-data:FeatureAtRisk/School-3> rdf:type owl:NamedIndividual ,
+											     ufokn:FeatureAtRisk ;
+										ufokn:hasAddress <ufokn-data:Address/School-3> ;
+										ufokn:hasRiskPoint <ufokn-data:RiskPoint/School-3> ;
+										ufokn:id "School-3" ;
+										ufokn:key "amenity" ;
+										ufokn:value "school" .
+### Address for FeatureAtRisk coded as School-3
+    <ufokn-data:Address/School-3> rdf:type owl:NamedIndividual ,
+                                           ufokn:StreetAddress ;
+                                  ufokn:street "Gordon Road" ;
+                                  ufokn:streetNumber "6701";
+                                  ufokn:city "Wilmington" ; 
+                                  ufokn:region "" ; 
+                                  ufokn:state "NC";
+                                  ufokn:postcode "28405".
+### RiskPoint for FeatureAtRisk coded as School-3
+    <ufokn-data:RiskPoint/School-3> rdf:type owl:NamedIndividual ,
+                                             ufokn:RiskPoint ;
+                                    geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1649924 1402856)"^^geo:wktLiteral .
+
+
+### A FeatureAtRisk coded as School-4
+###    This site can be used as an emergency shelter location (https://emergency.nhcgov.com/shelters/)
+    <ufokn-data:FeatureAtRisk/School-4> rdf:type owl:NamedIndividual ,
+											     ufokn:FeatureAtRisk ;
+										ufokn:hasAddress <ufokn-data:Address/School-4> ;
+										ufokn:hasRiskPoint <ufokn-data:RiskPoint/School-4> ;
+										ufokn:id "School-4" ;
+										ufokn:key "amenity" ;
+										ufokn:value "school" .
+### Address for FeatureAtRisk coded as School-4
+    <ufokn-data:Address/School-4> rdf:type owl:NamedIndividual ,
+                                           ufokn:StreetAddress ;
+                                  ufokn:street "McRae Street" ;
+                                  ufokn:streetNumber "1100";
+                                  ufokn:city "Wilmington" ; 
+                                  ufokn:region "" ; 
+                                  ufokn:state "NC";
+                                  ufokn:postcode "28401".
+### RiskPoint for FeatureAtRisk coded as School-4
+    <ufokn-data:RiskPoint/School-4> rdf:type owl:NamedIndividual ,
+                                             ufokn:RiskPoint ;
+                                    geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1640974 1399184)"^^geo:wktLiteral .
+
+
+### A FeatureAtRisk coded as School-5
+###    This site can be used as an emergency shelter location (https://emergency.nhcgov.com/shelters/)
+    <ufokn-data:FeatureAtRisk/School-5> rdf:type owl:NamedIndividual ,
+											     ufokn:FeatureAtRisk ;
+										ufokn:hasAddress <ufokn-data:Address/School-5> ;
+										ufokn:hasRiskPoint <ufokn-data:RiskPoint/School-5> ;
+										ufokn:id "School-5" ;
+										ufokn:key "amenity" ;
+										ufokn:value "school" .
+### Address for FeatureAtRisk coded as School-5
+    <ufokn-data:Address/School-5> rdf:type owl:NamedIndividual ,
+                                           ufokn:StreetAddress ;
+                                  ufokn:street "North College Road" ;
+                                  ufokn:streetNumber "2900";
+                                  ufokn:city "Wilmington" ; 
+                                  ufokn:region "" ; 
+                                  ufokn:state "NC";
+                                  ufokn:postcode "28405".
+### RiskPoint for FeatureAtRisk coded as School-5
+    <ufokn-data:RiskPoint/School-5> rdf:type owl:NamedIndividual ,
+                                             ufokn:RiskPoint ;
+                                    geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1645634 1406025)"^^geo:wktLiteral .
 
 
 ####################################################################
@@ -416,8 +611,7 @@ ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
 ### An ElectricService coded as ElectricService-4
     <ufokn-data:UtilityService/ElectricService-4> rdf:type owl:NamedIndividual ,
 														   ufokn-c:UtilityService ;
-												  ufokn-c:serves <ufokn-data:UtilityAsset/Substation-2> ,
-																 <ufokn-data:UtilityAsset/Substation-3> ;
+												  ufokn-c:serves <ufokn-data:FeatureAtRisk/Factory-1> ;
 											      ufokn-c:ofUtilityType ufokn-c:ElectricService ;
 												  ufokn-c:providedByProvider <ufokn-data:UtilityProvider/DukeEnergyProgress> .
 
@@ -434,16 +628,84 @@ ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
 ### Address for ElectricUtilityAsset coded as Substation-4
     <ufokn-data:Address/Substation-4> rdf:type owl:NamedIndividual ,
                                                ufokn:StreetAddress ;
-									  ufokn:street "Blue Clay Road" ;
+									  ufokn:street "Fisherville Road" ;
 									  ufokn:streetNumber "";
-									  ufokn:city "" ; 
+									  ufokn:city "Wilmington" ; 
 									  ufokn:region "" ; 
 									  ufokn:state "NC";
-									  ufokn:postcode "28429".
+									  ufokn:postcode "28405".
 ### RiskPoint for ElectricUtilityAsset coded as Substation-4
     <ufokn-data:RiskPoint/Substation-4> rdf:type owl:NamedIndividual ,
                                                  ufokn:RiskPoint ;
-                                        geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1644581 1409062)"^^geo:wktLiteral .
+                                        geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1647283 1400723)"^^geo:wktLiteral .
+
+
+### An ElectricService coded as ElectricService-5
+    <ufokn-data:UtilityService/ElectricService-5> rdf:type owl:NamedIndividual ,
+														   ufokn-c:UtilityService ;
+												  ufokn-c:serves <ufokn-data:UtilityAsset/Substation-2> ,
+																 <ufokn-data:UtilityAsset/Substation-3> ;
+											      ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+												  ufokn-c:providedByProvider <ufokn-data:UtilityProvider/DukeEnergyProgress> .
+
+### An ElectricUtilityAsset coded as PowerPlant-1 (ElectricService-5)
+    <ufokn-data:UtilityAsset/PowerPlant-1> rdf:type owl:NamedIndividual ,
+                                                    ufokn-c:ElectricUtilityAsset ;
+										   ufokn:hasAddress <ufokn-data:Address/PowerPlant-1> ;
+										   ufokn:hasRiskPoint <ufokn-data:RiskPoint/PowerPlant-1> ;
+										   ufokn:id "PowerPlant-1" ;
+										   ufokn:key "power" ;
+										   ufokn:value "plant" ;
+										   ufokn-c:providesUtilityService <ufokn-data:UtilityService/ElectricService-5> ;
+										   ufokn-c:ofUtilityType ufokn-c:ElectricService .
+### Address for ElectricUtilityAsset coded as PowerPlant-1
+    <ufokn-data:Address/PowerPlant-1> rdf:type owl:NamedIndividual ,
+                                               ufokn:StreetAddress ;
+									  ufokn:street "Sutton Steam Plant Road" ;
+									  ufokn:streetNumber "801";
+									  ufokn:city "Wilmington" ; 
+									  ufokn:region "" ; 
+									  ufokn:state "NC";
+									  ufokn:postcode "28401".
+### RiskPoint for ElectricUtilityAsset coded as PowerPlant-1
+    <ufokn-data:RiskPoint/PowerPlant-1> rdf:type owl:NamedIndividual ,
+                                                 ufokn:RiskPoint ;
+                                        geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1636020 1401907)"^^geo:wktLiteral .
+
+
+### An ElectricService coded as ElectricService-6
+    <ufokn-data:UtilityService/ElectricService-6> rdf:type owl:NamedIndividual ,
+														   ufokn-c:UtilityService ;
+												  ufokn-c:serves <ufokn-data:UtilityAsset/Substation-1> ;
+											      ufokn-c:ofUtilityType ufokn-c:ElectricService ;
+												  ufokn-c:providedByProvider <ufokn-data:UtilityProvider/DukeEnergyProgress> .
+
+### An ElectricUtilityAsset coded as PowerPlant-2 (ElectricService-6)
+    <ufokn-data:UtilityAsset/PowerPlant-2> rdf:type owl:NamedIndividual ,
+                                                    ufokn-c:ElectricUtilityAsset ;
+										   ufokn:hasAddress <ufokn-data:Address/PowerPlant-2> ;
+										   ufokn:hasRiskPoint <ufokn-data:RiskPoint/PowerPlant-2> ;
+										   ufokn:id "PowerPlant-2" ;
+										   ufokn:key "power" ;
+										   ufokn:value "plant" ;
+										   ufokn-c:providesUtilityService <ufokn-data:UtilityService/ElectricService-6> ;
+										   ufokn-c:ofUtilityType ufokn-c:ElectricService .
+### Address for ElectricUtilityAsset coded as PowerPlant-2
+    <ufokn-data:Address/PowerPlant-2> rdf:type owl:NamedIndividual ,
+                                               ufokn:StreetAddress ;
+									  ufokn:street "" ;
+									  ufokn:streetNumber "";
+									  ufokn:city "Southport" ; 
+									  ufokn:region "" ; 
+									  ufokn:state "NC";
+									  ufokn:postcode "28461".
+### RiskPoint for ElectricUtilityAsset coded as PowerPlant-2
+    <ufokn-data:RiskPoint/PowerPlant-2> rdf:type owl:NamedIndividual ,
+                                                 ufokn:RiskPoint ;
+                                        geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1640582 1365993)"^^geo:wktLiteral .
+
+
+
 
 
 #################################################################
@@ -484,8 +746,7 @@ ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
 
 ### ServiceArea for MedicalService-1 coded as MedicalArea-1
 	<ufokn-data:ServiceArea/MedicalArea-1> rdf:type owl:NamedIndividual ,
-													ufokn-c:MedicalServiceArea ,
-													sf:Polygon ;
+													ufokn-c:MedicalServiceArea ;
 										   ufokn-c:ofUtilityType ufokn-c:MedicalService ;
 										   geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1628532 1395111, 1635782 1407704, 1647994 1409082, 1656729 1401513, 1650962 1381478, 1643436 1379676, 1634765 1382411, 1628532 1395111))"^^geo:wktLiteral .
 
@@ -536,8 +797,7 @@ ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
 ### A Water Service coded as WaterService-2
     <ufokn-data:UtilityService/WaterService-2> rdf:type owl:NamedIndividual ,
 														ufokn-c:UtilityService ;
-											  #ufokn-c:servesArea <ufokn-data:ServiceArea/WaterArea-2> ;
-											   ufokn-c:serves <ufokn-data:CollectionOfFeatures/Apartments-1> ;
+											   ufokn-c:servesArea <ufokn-data:ServiceArea/WaterArea-2> ;
 											   ufokn-c:ofUtilityType ufokn-c:WaterService ;
 											   ufokn-c:providedByProvider <ufokn-data:UtilityProvider/CapeFearPublicUtilityAuthority> .
 
@@ -570,6 +830,47 @@ ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
 												  ufokn-c:WaterServiceArea ;
 										 ufokn-c:ofUtilityType ufokn-c:WaterService ;
 										 geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1647374 1400029, 1651031 1398715, 1650761 1396775, 1646446 1395969, 1646393 1396732, 1647374 1400029))"^^geo:wktLiteral .
+
+
+### A Water Service coded as WaterService-3
+###    WaterService-3 serves WaterTower-2 which serves WaterArea-2.
+###    Therefore, WaterArea-3, served by WaterService-3, surrounds but does not include WaterArea-2. 
+    <ufokn-data:UtilityService/WaterService-3> rdf:type owl:NamedIndividual ,
+														ufokn-c:UtilityService ;
+											   ufokn-c:serves <ufokn-data:ServiceArea/WaterTower-2> ;
+											   ufokn-c:servesArea <ufokn-data:ServiceArea/WaterArea-3> ;
+											   ufokn-c:ofUtilityType ufokn-c:WaterService ;
+											   ufokn-c:providedByProvider <ufokn-data:UtilityProvider/CapeFearPublicUtilityAuthority> .
+
+### A WaterUtilityAsset coded as WaterTreatment-1 (WaterService-3)
+    <ufokn-data:UtilityAsset/WaterTreatment-1> rdf:type owl:NamedIndividual ,
+                                                        ufokn-c:WaterUtilityAsset ;
+											   ufokn:hasAddress <ufokn-data:Address/WaterTreatment-1> ;
+										       ufokn:hasRiskPoint <ufokn-data:RiskPoint/WaterTreatment-1> ;
+										       ufokn:id "WaterTreatment-1" ;
+										       ufokn:key "man_made" ;
+										       ufokn:value "water_works" ;
+										       ufokn-c:providesUtilityService <ufokn-data:UtilityService/WaterService-3> ;
+										       ufokn-c:ofUtilityType ufokn-c:WaterService .
+### Address for WaterUtilityAsset coded as WaterTreatment-1
+    <ufokn-data:Address/WaterTreatment-1> rdf:type owl:NamedIndividual ,
+                                                   ufokn:StreetAddress ;
+									      ufokn:street "North 6th Street" ;
+									      ufokn:streetNumber "";
+									      ufokn:city "Wilmington" ; 
+									      ufokn:region "" ; 
+									      ufokn:state "NC";
+									      ufokn:postcode "28401".
+### RiskPoint for WaterUtilityAsset coded as WaterTreatment-1
+    <ufokn-data:RiskPoint/WaterTreatment-1> rdf:type owl:NamedIndividual ,
+                                                     ufokn:RiskPoint ;
+                                            geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POINT (1640123 1400007)"^^geo:wktLiteral .
+
+### ServiceArea for WaterService-3 coded as WaterArea-3
+	<ufokn-data:ServiceArea/WaterArea-3> rdf:type owl:NamedIndividual ,
+												  ufokn-c:WaterServiceArea ;
+										 ufokn-c:ofUtilityType ufokn-c:WaterService ;
+										 geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/5070> POLYGON((1637261 1408305, 1642973 1413644, 1657823 1408638, 1656732 1401489, 1654077 1390000, 1640842 1390000, 1637261 1408305), (1647374 1400029, 1651031 1398715, 1650761 1396775, 1646446 1395969, 1646393 1396732, 1647374 1400029))"^^geo:wktLiteral .
 
 
 ###################################################################################
