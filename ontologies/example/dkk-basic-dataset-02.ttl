@@ -717,7 +717,6 @@ ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
     <ufokn-data:UtilityService/MedicalService-1> rdf:type owl:NamedIndividual ,
 														  ufokn-c:UtilityService ;
 												 ufokn-c:servesArea <ufokn-data:ServiceArea/MedicalArea-1> ;
-												 geo:hasGeometry <ufokn-data:ServiceArea/MedicalArea-1> ;
 											     ufokn-c:ofUtilityType ufokn-c:MedicalService ;
 												 ufokn-c:providedByProvider <ufokn-data:UtilityProvider/NewHanoverRegionalMedicalCenter> .
 
