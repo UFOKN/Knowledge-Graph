@@ -8,5 +8,4 @@ SELECT   (Count(?s) as ?count)
 
 WHERE {
     ?s a kwg-ont:KWGCellLevel13
-
 }
