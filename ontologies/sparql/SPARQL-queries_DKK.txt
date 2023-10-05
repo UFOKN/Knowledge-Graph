@@ -10,7 +10,780 @@
 # Enables the GeoSPARQL plugin in GraphDB so indexed predicate operations work
 
 PREFIX geoSparql: <http://www.ontotext.com/plugins/geosparql#>
-INSERT DATA { _:s geoSparql:enabled "true" . }
+
+INSERT DATA { [] geoSparql:enabled "true" . }
+
+
+
+### Preprocess flooded RiskPoints ###
+# Find all UtilityAssets with riskpoints that have flood level data
+#    Check if minNonZero (flood depth) > criticalDepth
+#    If so, write new triple setting the flood level data as a CriticalFloodObservation
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_fl: <http://schema.ufokn.org/flood/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+
+INSERT {
+	GRAPH <http://schema.ufokn.org/example/ufokn_cincinnati_CritFloodObs> {
+		?floodObs rdf:type ufokn_fl:CriticalFloodObservation .
+	}
+}
+WHERE {
+    ?utilityAsset rdf:type ufokn_c:UtilityAsset .
+    ?utilityAsset ufokn:hasRiskPoint ?riskpoint .
+    ?riskpoint ufokn_fl:hasFloodLevelObservation ?floodObs .
+    ?floodObs ufokn_fl:minNonZero ?floodDepth .
+    ?riskpoint ufokn:criticalDepth ?critDepth .
+    FILTER(?floodDepth > ?critDepth)
+}
+
+
+
+### Find flooded utility assets and flood-affected utility assets, then cascade to features
+# Find all flooded utility assets
+# Add all flood-affected utility assets
+# Find all features directly affected by any flood or flood-affected utility asset
+# For each feature:
+#    Identify a root cause (only one, not all)
+#    Identify a local cause (may be the same or different, may not be the only one)
+#    Add identifying and locational information
+#    Add flood data if the feature is flooded
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_fl: <http://schema.ufokn.org/flood/v2/>
+
+SELECT ?far ?uid ?key ?value ?utilityAsset ?uawkt ?rootasset ?rootwkt ?streetnum ?street ?city ?state ?zip ?wkt ?minnonzero ?maxdepth ?firstfloodtime ?maxfloodtime WHERE
+{ 
+    { SELECT ?utilityAsset WHERE 
+        {
+            ?utilityAsset rdf:type ufokn_c:UtilityAsset .
+            ?utilityAsset ufokn:hasRiskPoint ?riskpoint .
+            ?riskpoint ufokn_fl:hasFloodLevelObservation ?floodObs .
+            ?floodObs rdf:type ufokn_fl:CriticalFloodObservation .
+        }
+    }
+    UNION
+    { SELECT ?utilityAsset WHERE 
+        {
+            ?floodedAsset rdf:type ufokn_c:UtilityAsset .
+            ?floodedAsset ufokn:hasRiskPoint ?riskpoint .
+            ?riskpoint ufokn_fl:hasFloodLevelObservation ?floodObs .
+            ?floodObs rdf:type ufokn_fl:CriticalFloodObservation .
+
+            ?utilityAsset rdf:type ufokn_c:UtilityAsset .
+            ?floodedAsset ufokn_c:assetCriticallyServesTC ?utilityAsset .
+        }
+    }
+    
+    ?utilityAsset ufokn_c:assetOfTypeRequiredBy ?far .
+    ?utilityAsset ufokn_c:assetCriticallyServes ?far .
+    ?utilityAsset ufokn:hasRiskPoint ?uariskpoint .
+    ?uariskpoint geo:asWKT ?uawkt .
+    
+    ?rootasset rdf:type ufokn_c:UtilityAsset .
+    ?rootasset ufokn_c:assetCriticallyServesTC ?utilityAsset .
+   	
+    ?rootasset ufokn:hasRiskPoint ?rootriskpoint .
+    ?rootriskpoint geo:asWKT ?rootwkt .
+    ?rootriskpoint ufokn_fl:hasFloodLevelObservation ?floodObs .
+    
+    ?far ufokn:id ?uid .
+    ?far ufokn:key ?key .
+    ?far ufokn:value ?value .
+    ?far ufokn:hasAddress ?address .
+    ?address ufokn:streetNumber ?streetnum .
+    ?address ufokn:street ?street .
+    ?address ufokn:city ?city .
+    ?address ufokn:state ?state .
+    ?address ufokn:postcode ?zip .
+    ?far ufokn:hasRiskPoint ?rp .
+    ?rp geo:asWKT ?wkt .
+    OPTIONAL
+    {
+        ?rp ufokn_fl:hasFloodLevelObservation ?floodlevel .
+        ?floodlevel ufokn_fl:firstFloodTime ?firstfloodtime .
+        ?floodlevel ufokn_fl:minNonZero ?minnonzero .
+        ?floodlevel ufokn_fl:maxFloodTime ?maxfloodtime .
+        ?floodlevel ufokn_fl:maxDepth ?maxdepth .
+    }
+} GROUP BY ?far ?uid ?key ?value ?utilityAsset ?uawkt ?rootasset ?rootwkt ?streetnum ?street ?city ?state ?zip ?wkt ?minnonzero ?maxdepth ?firstfloodtime ?maxfloodtime
+ 
+
+
+
+
+### Find affected assets, features, and data (OLD version) ###
+# Find all utility assets affected by the flood
+# Find all features affected by those utility assets (finds too many?)
+# Attach data to everything, including
+#    type of service that is out at a feature
+#    corresponding asset that is out
+#    root cause asset causing outage
+# This query does not use isCriticallyOutRoot or isCriticallyOut
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_fl: <http://schema.ufokn.org/flood/v2/>
+
+SELECT ?far ?uid ?key ?value ?type ?utilityAsset ?uawkt ?rootasset ?rootwkt ?streetnum ?street ?city ?state ?zip ?wkt ?minnonzero ?maxdepth ?firstfloodtime ?maxfloodtime WHERE
+{ 
+    { SELECT ?utilityAsset WHERE 
+        {
+            ?utilityAsset rdf:type ufokn_c:UtilityAsset .
+            ?utilityAsset ufokn:hasRiskPoint ?riskpoint .
+            ?riskpoint ufokn_fl:hasFloodLevelObservation ?floodObs .
+            ?floodObs ufokn_fl:minNonZero ?floodDepth .
+            ?riskpoint ufokn:criticalDepth ?critDepth .
+            FILTER(?floodDepth > ?critDepth)
+        }
+    }
+    UNION
+    { SELECT ?utilityAsset WHERE 
+        {
+            ?floodedAsset rdf:type ufokn_c:UtilityAsset .
+            ?floodedAsset ufokn:hasRiskPoint ?riskpoint .
+            ?riskpoint ufokn_fl:hasFloodLevelObservation ?floodObs .
+            ?floodObs ufokn_fl:minNonZero ?floodDepth .
+            ?riskpoint ufokn:criticalDepth ?critDepth .
+            FILTER(?floodDepth > ?critDepth)
+            
+            ?floodedAsset ufokn_c:assetServesTC ?utilityAsset .
+            ?utilityAsset rdf:type ufokn_c:UtilityAsset .
+        }
+    }
+    
+    ?utilityAsset ufokn_c:providesUtilityService ?service .
+    ?service ufokn_c:ofUtilityType ?type .
+    ?utilityAsset ufokn_c:assetServes ?far .
+    ?far ufokn_c:requiresUtilityType ?type .
+#    ?far rdf:type ufokn_c:MedicalUtilityAsset.
+    ?utilityAsset ufokn:hasRiskPoint ?uariskpoint .
+    ?uariskpoint geo:asWKT ?uawkt .
+    
+    ?rootasset ufokn_c:assetServesTC ?utilityAsset .
+    ?rootasset ufokn_c:providesUtilityService ?rootservice .
+    ?rootservice ufokn_c:ofUtilityType ?roottype .
+    ?utilityAsset ufokn_c:requiresUtilityType ?roottype .
+   	?rootasset rdf:type ufokn_c:UtilityAsset .
+    ?rootasset ufokn:hasRiskPoint ?rootriskpoint .
+    ?rootriskpoint geo:asWKT ?rootwkt .
+    ?rootriskpoint ufokn_fl:hasFloodLevelObservation ?floodObs .
+    ?floodObs ufokn_fl:minNonZero ?floodDepth .
+    ?rootriskpoint ufokn:criticalDepth ?critDepth .
+    FILTER(?floodDepth > ?critDepth)
+    
+    ?far ufokn:id ?uid .
+    ?far ufokn:key ?key .
+    ?far ufokn:value ?value .
+    ?far ufokn:hasAddress ?address .
+    ?address ufokn:streetNumber ?streetnum .
+    ?address ufokn:street ?street .
+    ?address ufokn:city ?city .
+    ?address ufokn:state ?state .
+    ?address ufokn:postcode ?zip .
+    ?far ufokn:hasRiskPoint ?rp .
+    ?rp geo:asWKT ?wkt .
+    OPTIONAL
+    {
+        ?rp ufokn_fl:hasFloodLevelObservation ?floodlevel .
+        ?floodlevel ufokn_fl:firstFloodTime ?firstfloodtime .
+        ?floodlevel ufokn_fl:minNonZero ?minnonzero .
+        ?floodlevel ufokn_fl:maxFloodTime ?maxfloodtime .
+        ?floodlevel ufokn_fl:maxDepth ?maxdepth .
+    }
+} GROUP BY ?far ?uid ?key ?value ?type ?utilityAsset ?uawkt ?rootasset ?rootwkt ?streetnum ?street ?city ?state ?zip ?wkt ?minnonzero ?maxdepth ?firstfloodtime ?maxfloodtime
+
+
+
+### Preprocess Critically Out (not-flooded) Assets ###
+# Find all utility assets served by flooded utility assets
+#    Set isCriticallyOut to true
+#    Write appropriate ?utilityAsset ufokn_c:isCriticallyOut "true"^^xsd:boolean triples to a graph
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_fl: <http://schema.ufokn.org/flood/v2/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+INSERT {
+	GRAPH <http://schema.ufokn.org/example/ufokn_cincinnati_CRITOUT> {
+		?utilityAsset ufokn_c:isCriticallyOut "true"^^xsd:boolean .
+	}
+}
+WHERE {
+	?floodedAsset rdf:type ufokn_c:UtilityAsset .
+    ?floodedAsset ufokn_c:isCriticallyOutRoot "true"^^xsd:boolean .
+    ?floodedAsset ufokn_c:assetServesTC ?utilityAsset .
+    ?utilityAsset rdf:type ufokn_c:UtilityAsset .
+}
+
+
+
+### Preprocess Critically Flooded Root Assets ###
+# Find all flooded utility assets
+#    Set isCriticallyOutRoot to true if minNonZero exceeds critical depth
+#    Write appropriate ?utilityAsset ufokn_c:isCriticallyOutRoot "true"^^xsd:boolean triples to a new graph
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_fl: <http://schema.ufokn.org/flood/v2/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+INSERT {
+	GRAPH <http://schema.ufokn.org/example/ufokn_cincinnati_CRITOUT> {
+		?utilityAsset ufokn_c:isCriticallyOutRoot "true"^^xsd:boolean .
+	}
+}
+WHERE {
+	?utilityAsset rdf:type ufokn_c:UtilityAsset .
+    ?utilityAsset ufokn:hasRiskPoint ?riskpoint .
+    ?riskpoint ufokn_fl:hasFloodLevelObservation ?floodObs .
+    ?floodObs ufokn_fl:minNonZero ?floodDepth .
+    ?riskpoint ufokn:criticalDepth ?critDepth .
+    FILTER(?floodDepth > ?critDepth)
+}
+
+
+
+### requiresUtilityType ###
+# Returns UtilityAsset serving FeatureAtRisk where UtilityAsset ofUtilityType and FeatureAtRisk requiresUtilityType
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+
+SELECT * WHERE
+{ 
+    ?asset rdf:type ufokn_c:UtilityAsset .
+    ?asset ufokn_c:assetServes ?far .
+    ?asset ufokn_c:ofUtilityType ?utiltype .
+    ?far ufokn_c:requiresUtilityType ?utiltype .
+}
+
+
+
+### Find affected assets and data ###
+# Find all utility assets with flood data and find all utility assets served by the flooded assets
+# Attach data to each utility asset
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_fl: <http://schema.ufokn.org/flood/v2/>
+
+SELECT ?asset ?type ?uid ?key ?value ?minnonzero ?maxdepth ?firstfloodtime ?maxfloodtime ?streetnum ?street ?city ?state ?zip ?wkt WHERE
+{ 
+    { SELECT ?asset WHERE 
+        { 	?asset rdf:type ufokn_c:UtilityAsset .
+          	?asset ufokn:hasRiskPoint ?rpfa .
+          	?rpfa ufokn_fl:hasFloodEvent ?floodevent .
+        } GROUP BY ?asset
+    }
+    UNION
+    { SELECT ?asset WHERE 
+        {	?floodedasset rdf:type ufokn_c:UtilityAsset .
+          	?floodedasset ufokn:hasRiskPoint ?rpfa .
+          	?rpfa ufokn_fl:hasFloodEvent ?floodevent .
+          	?floodedasset ufokn_c:assetServesTC ?asset .
+          	?asset rdf:type ufokn_c:UtilityAsset .
+        } GROUP BY ?asset
+    }
+    ?asset ufokn_c:providesUtilityService ?service .
+    ?service ufokn_c:ofUtilityType ?type .
+    ?asset ufokn:id ?uid .
+    ?asset ufokn:key ?key .
+    ?asset ufokn:value ?value .
+    ?asset ufokn:hasAddress ?address .
+    ?address ufokn:streetNumber ?streetnum .
+    ?address ufokn:street ?street .
+    ?address ufokn:city ?city .
+    ?address ufokn:state ?state .
+    ?address ufokn:postcode ?zip .
+    ?asset ufokn:hasRiskPoint ?rp .
+    ?rp geo:asWKT ?wkt .
+    OPTIONAL
+    {   ?rp ufokn_fl:hasFloodEvent ?floodevent .
+        ?floodevent ufokn_fl:firstFloodTime ?firstfloodtime .
+        ?floodevent ufokn_fl:minNonZero ?minnonzero .
+        ?floodevent ufokn_fl:maxFloodTime ?maxfloodtime .
+        ?floodevent ufokn_fl:maxDepth ?maxdepth .
+    }
+} GROUP BY ?asset ?type ?uid ?key ?value ?minnonzero ?maxdepth ?firstfloodtime ?maxfloodtime ?wkt ?streetnum ?street ?city ?state ?zip
+
+
+
+### Find affected assets ###
+# Find all utility assets with flood data and find all utility assets served by the flooded assets
+# No data is attached - this is the core of the query above
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_fl: <http://schema.ufokn.org/flood/v2/>
+
+SELECT ?asset WHERE
+{ 
+    { SELECT ?asset WHERE 
+        {	?asset rdf:type ufokn_c:UtilityAsset .
+            ?asset ufokn:hasRiskPoint ?rpfa .
+            ?rpfa ufokn_fl:hasFloodEvent ?floodevent .
+        } GROUP BY ?asset
+    }
+    UNION
+    {	SELECT ?asset WHERE 
+        {	?floodedasset rdf:type ufokn_c:UtilityAsset .
+            ?floodedasset ufokn:hasRiskPoint ?rpfa .
+            ?rpfa ufokn_fl:hasFloodEvent ?floodevent .
+            ?floodedasset ufokn_c:assetServesTC ?asset .
+            ?asset rdf:type ufokn_c:UtilityAsset .
+        } GROUP BY ?asset
+    }
+} GROUP BY ?asset
+
+
+
+### Preprocess UtilityServiceAreas ###
+# Find all features in UtilityServiceAreas
+#    Including any UtilityAssets
+#    Write appropriate ?service ufokn_c:serves ?feature triples to a new graph
+
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+INSERT {
+	GRAPH <http://schema.ufokn.org/example/ufokn_cincinnati_SERVES> {
+		?service ufokn_c:serves ?feature .
+	}
+}
+WHERE {
+    ?servicearea rdf:type ufokn_c:UtilityServiceArea .
+	?service ufokn_c:servesArea ?servicearea .
+    ?servicearea geo:sfIntersects ?riskpoint .
+    ?feature ufokn:hasRiskPoint ?riskpoint .
+}
+
+
+
+### Preprocess ElectricServiceAreas ###
+# Find all features in ElectricServiceAreas
+#    Including any UtilityAssets
+#    Write appropriate ?service ufokn_c:serves ?feature triples to a new graph
+
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+INSERT {
+	GRAPH <http://schema.ufokn.org/example/Cincinnati-SERVES> {
+		?service ufokn_c:serves ?feature .
+	}
+}
+WHERE {
+    ?servicearea rdf:type ufokn_c:ElectricServiceArea .
+	?service ufokn_c:servesArea ?servicearea .
+    ?servicearea geo:sfIntersects ?riskpoint .
+    ?feature ufokn:hasRiskPoint ?riskpoint .
+}
+
+
+
+### Preprocess MedicalServiceAreas ###
+# Find all features in MedicalServiceAreas
+#    Excluding any UtilityAssets
+#    Write appropriate ?service ufokn_c:serves ?feature triples to a new graph
+
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+INSERT {
+	GRAPH <http://schema.ufokn.org/example/Cincinnati-SERVES> {
+		?service ufokn_c:serves ?feature .
+	}
+}
+WHERE {
+    ?servicearea rdf:type ufokn_c:MedicalServiceArea .
+	?service ufokn_c:servesArea ?servicearea .
+    ?servicearea geo:sfIntersects ?riskpoint .
+    ?feature ufokn:hasRiskPoint ?riskpoint .
+    FILTER NOT EXISTS {
+        ?feature rdf:type ufokn_c:UtilityAsset .
+    }
+}
+
+
+
+### Preprocess CommunicationServiceAreas ###
+# Find all features in CommunicationServiceAreas
+#    Excluding any UtilityAssets
+#    Write appropriate ?service ufokn_c:serves ?feature triples to a new graph
+
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+INSERT {
+	GRAPH <http://schema.ufokn.org/example/Cincinnati-SERVES> {
+		?service ufokn_c:serves ?feature .
+	}
+}
+WHERE {
+    ?servicearea rdf:type ufokn_c:CommunicationServiceArea .
+	?service ufokn_c:servesArea ?servicearea .
+    ?servicearea geo:sfIntersects ?riskpoint .
+    ?feature ufokn:hasRiskPoint ?riskpoint .
+    FILTER NOT EXISTS {
+        ?feature rdf:type ufokn_c:UtilityAsset .
+    }
+}
+
+
+
+### Preprocess WaterServiceAreas ###
+# Find all features in WaterServiceAreas
+#    Excluding any CommunicationUtilityAssets or ElectricUtilityAssets
+#    Write appropriate ?service ufokn_c:serves ?feature triples to a new graph
+
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+INSERT {
+	GRAPH <http://schema.ufokn.org/example/Cincinnati-SERVES> {
+		?service ufokn_c:serves ?feature .
+	}
+}
+WHERE {
+    ?servicearea rdf:type ufokn_c:WaterServiceArea .
+	?service ufokn_c:servesArea ?servicearea .
+    ?servicearea geo:sfIntersects ?riskpoint .
+    ?feature ufokn:hasRiskPoint ?riskpoint .
+    MINUS {
+        ?feature rdf:type ufokn_c:CommunicationUtilityAsset .
+    }
+    MINUS {
+		?feature rdf:type ufokn_c:ElectricUtilityAsset .
+    }
+}
+
+
+
+### Look for duplicate UFOKN-IDs ###
+# Returns each UFOKN-ID and its COUNT if there are more than 1
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+
+SELECT ?uid (COUNT(?uid) as ?count) WHERE {
+    ?far rdf:type ufokn:FeatureAtRisk .
+    ?far ufokn:id ?uid .
+}
+GROUP BY ?uid
+HAVING(?count > 1)
+
+
+
+### COUNT FaRs served by utility assets ###
+# Counts the number of FaRs (including utility assets) served by each utility asset
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+
+SELECT ?utilAsset1 (COUNT(?feature) as ?COUNT)  WHERE { 
+	?utilAsset1 ufokn_c:assetServesTC ?feature .
+    ?feature rdf:type ufokn:FeatureAtRisk .
+} GROUP BY ?utilAsset1 ORDER BY ?utilAsset1
+
+
+
+### Find FaRs served by specific asset ###
+# Returns all FaRs served by a specific UtilityAsset
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_data: <http://schema.ufokn.org/example/UtilityAsset>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+SELECT ?far ?rp ?wkt WHERE { 
+	<ufokn_data:UtilityAsset/MedicalAsset-dngywt01fgvf> ufokn_c:assetServesTC ?far .
+    ?far ufokn:hasRiskPoint ?rp .
+    ?rp geo:asWKT ?wkt .
+} GROUP BY ?far ?rp ?wkt
+
+
+
+### Find everything affected by a flood ###
+# Returns all FaRs affected in anyway (transitively) by flooded assets
+#    Currently, the results are the same for assetServes and for assetServesTC
+#    The query only allows assets with flood data and ignores all others, overriding the cascades
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_data: <http://schema.ufokn.org/example/UtilityAsset>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ufokn_fl: <http://schema.ufokn.org/flood/v2/>
+
+SELECT ?far ?key ?value ?wkt WHERE { 
+    ?asset rdf:type ufokn_c:UtilityAsset .
+    ?asset ufokn:hasRiskPoint ?rpa .
+    ?rpa ufokn_fl:hasFloodEvent ?floodevent .
+    
+	?asset ufokn_c:assetServesTC ?far .
+    
+    ?far ufokn:key ?key .
+    ?far ufokn:value ?value .
+    ?far ufokn:hasRiskPoint ?rpf .
+    ?rpf geo:asWKT ?wkt .
+} GROUP BY ?far ?key ?value ?wkt
+
+
+
+### Utility Assets/Services with Flood Data ###
+# Find all utility services with utility asset risk points that have flood data
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_fl: <http://schema.ufokn.org/flood/v2/>
+
+SELECT ?utilasset ?service WHERE {
+	?utilasset rdf:type ufokn_c:UtilityAsset .
+    ?utilasset ufokn:hasRiskPoint ?rpua .
+    ?utilasset ufokn_c:providesUtilityService ?service .
+    ?rpua ufokn_fl:hasFloodEvent ?floodevent .
+} GROUP BY ?utilasset ?service
+
+
+
+### FaR in Flooded UtilityAsset ServiceArea ###
+# See comments within the query
+#    It is easily restricted to a specific type of UtilityService
+#    Specific types of features can be specified using key and/or value triples
+# Note: there are no cascades to affected services outside the flood zone
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_fl: <http://schema.ufokn.org/flood/v2/>
+
+SELECT ?far ?service WHERE {
+    # Find utility assets that are in the flood zone
+	?utilasset rdf:type ufokn_c:UtilityAsset .
+    ?utilasset ufokn:hasRiskPoint ?rpua .
+    ?rpua ufokn_fl:hasFloodEvent ?floodevent .
+    
+    # Find the service areas for all utility assets in the flood zone
+    ?utilasset ufokn_c:providesUtilityService ?service .
+#    ?utilasset ufokn_c:ofUtilityType ufokn_c:MedicalService .
+    ?service ufokn_c:servesArea ?area .
+    
+    # Find features at risk within the affected service areas
+    ?far rdf:type ufokn:FeatureAtRisk .
+#	 ?far ufokn:value 'hospital' .
+    ?far ufokn:hasRiskPoint ?rpfar .
+    ?area geo:sfIntersects ?rpfar .
+} GROUP BY ?far ?service
+
+
+
+### FaR maxFloodTime ###
+# Retrieves all riskpoints with flood data:
+#    firstFloodTiime, minNonZero, maxFloodTime, maxDepth
+
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_fl: <http://schema.ufokn.org/flood/v2/>
+
+SELECT ?riskpoint ?firsttime ?minnonzero ?maxtime ?maxdepth WHERE {
+    ?floodevent ufokn_fl:firstFloodTime ?firsttime .
+	?floodevent ufokn_fl:minNonZero ?minnonzero .
+    ?floodevent ufokn_fl:maxFloodTime ?maxtime .
+    ?floodevent ufokn_fl:maxDepth ?maxdepth .
+    ?riskpoint ufokn_fl:hasFloodEvent ?floodevent .
+	?far ufokn:hasRiskPoint ?riskpoint .
+} ORDER BY ?firsttime ?minnonzero ?maxtime ?maxdepth
+
+
+
+### Count assets served transitively by other assets ###
+# Counts all UtilityAssets served (transitively) by other UtilityAssets
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+
+SELECT ?utilAsset1 (COUNT(?utilAsset2) as ?count) WHERE { 
+	?utilAsset1 ufokn_c:assetServesTC ?utilAsset2 .
+    ?utilAsset2 rdf:type ufokn_c:UtilityAsset .
+    FILTER(?utilAsset1 != ?utilAsset2) .
+} GROUP BY ?utilAsset1 ORDER BY DESC(?count)
+
+
+
+### assetServesTC-p2p ###
+# Tests the new ufokn_c:assetServesTC transitive closure of ufokn_c:assetServes
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+
+SELECT ?utilAsset ?feature WHERE { 
+	?utilAsset ufokn_c:assetServesTC ?feature .
+    ?feature rdf:type ufokn:FeatureAtRisk .
+    FILTER(?utilAsset != ?feature)
+} # GROUP BY ?utilAsset ?feature
+
+
+
+### assetServes-p2p ###
+# Tests the new ufokn_c:assetServes propertyChainAxiom
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+
+SELECT ?utilAsset1 ?feature WHERE { 
+	?utilAsset1 ufokn_c:assetServes ?feature .
+    ?feature rdf:type ufokn:FeatureAtRisk .
+}
+
+
+
+### 5 Step Cascade ###
+# A cascading query: UA --> UA --> UA --> UA --> UA --> FaR
+# Superseded by ability to use assetServesTC
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+
+SELECT ?utilAsset1 ?utilAsset2 ?utilAsset3 ?utilAsset4 ?utilAsset5 ?feature WHERE { 
+	?utilAsset1 ufokn_c:providesUtilityService ?utilServ1 .  
+	?utilServ1 ufokn_c:serves ?utilAsset2 .
+    ?utilAsset2 ufokn_c:providesUtilityService ?utilServ2 .
+    ?utilServ2 ufokn_c:serves ?utilAsset3 .
+    ?utilAsset3 ufokn_c:providesUtilityService ?utilServ3 .
+    ?utilServ3 ufokn_c:serves ?utilAsset4 .
+    ?utilAsset4 ufokn_c:providesUtilityService ?utilServ4 .
+    ?utilServ4 ufokn_c:serves ?utilAsset5 .
+    ?utilAsset5 ufokn_c:providesUtilityService ?utilServ5 .
+    ?utilServ5 ufokn_c:serves ?feature .
+    ?feature rdf:type ufokn:FeatureAtRisk .
+    FILTER(?utilAsset1 != ?utilAsset2)
+    FILTER(?utilAsset2 != ?utilAsset3)
+    FILTER(?utilAsset3 != ?utilAsset4)
+    FILTER(?utilAsset4 != ?utilAsset5)
+    FILTER(?utilAsset5 != ?feature)
+} GROUP BY ?utilAsset1 ?utilAsset2 ?utilAsset3 ?utilAsset4 ?utilAsset5 ?feature
+
+
+
+
+### 4 Step Cascade ###
+# A cascading query: UA --> UA --> UA --> UA --> FaR
+# Superseded by ability to use assetServesTC
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+
+SELECT ?utilAsset1 ?utilAsset2 ?utilAsset3 ?utilAsset4 ?feature WHERE { 
+	?utilAsset1 ufokn_c:providesUtilityService ?utilServ1 .  
+	?utilServ1 ufokn_c:serves ?utilAsset2 .
+    ?utilAsset2 ufokn_c:providesUtilityService ?utilServ2 .
+    ?utilServ2 ufokn_c:serves ?utilAsset3 .
+    ?utilAsset3 ufokn_c:providesUtilityService ?utilServ3 .
+    ?utilServ3 ufokn_c:serves ?utilAsset4 .
+    ?utilAsset4 ufokn_c:providesUtilityService ?utilServ4 .
+    ?utilServ4 ufokn_c:serves ?feature .
+    ?feature rdf:type ufokn:FeatureAtRisk .
+    FILTER(?utilAsset1 != ?utilAsset2)
+    FILTER(?utilAsset2 != ?utilAsset3)
+    FILTER(?utilAsset3 != ?utilAsset4)
+    FILTER(?utilAsset4 != ?feature)
+} GROUP BY ?utilAsset1 ?utilAsset2 ?utilAsset3 ?utilAsset4 ?feature
+
+
+
+### 3 Step Cascade ###
+# A cascading query: UA --> UA --> UA --> FaR
+# Superseded by ability to use assetServesTC
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+
+SELECT ?utilAsset1 ?utilAsset2 ?utilAsset3 ?feature WHERE { 
+	?utilAsset1 ufokn_c:providesUtilityService ?utilServ1 .  
+	?utilServ1 ufokn_c:serves ?utilAsset2 .
+    ?utilAsset2 ufokn_c:providesUtilityService ?utilServ2 .
+    ?utilServ2 ufokn_c:serves ?utilAsset3 .
+    ?utilAsset3 ufokn_c:providesUtilityService ?utilServ3 .
+    ?utilServ3 ufokn_c:serves ?feature .
+    ?feature rdf:type ufokn:FeatureAtRisk .
+    FILTER(?utilAsset1 != ?utilAsset2)
+    FILTER(?utilAsset2 != ?utilAsset3)
+    FILTER(?utilAsset3 != ?feature)
+} GROUP BY ?utilAsset1 ?utilAsset2 ?utilAsset3 ?feature
+
+
+
+
+### 2 Step Cascade ###
+# A cascading query: UA --> UA --> FaR
+# Superseded by ability to use assetServesTC
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+
+SELECT ?utilAsset1 ?utilAsset2 ?feature WHERE { 
+	?utilAsset1 rdf:type ufokn_c:UtilityAsset ;
+                ufokn_c:providesUtilityService ?utilServ1 .  
+	?utilServ1 ufokn_c:serves ?utilAsset2 .
+    ?utilAsset2 ufokn_c:providesUtilityService ?utilServ2 .
+    ?utilServ2 ufokn_c:serves ?feature .
+    ?feature rdf:type ufokn:FeatureAtRisk .
+    FILTER(?utilAsset1 != ?utilAsset2)
+    FILTER(?utilAsset2 != ?feature)
+} GROUP BY ?utilAsset1 ?utilAsset2 ?feature
+
+
+
+### 1 Step Cascade ###
+# Just looks from UA --> FaR with nothing in between
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+
+SELECT ?utilAsset1 ?feature WHERE { 
+	?utilAsset1 rdf:type ufokn_c:UtilityAsset ;
+                ufokn_c:providesUtilityService ?utilServ1 .  
+	?utilServ1 ufokn_c:serves ?feature .
+    ?feature rdf:type ufokn:FeatureAtRisk .
+    FILTER(?utilAsset1 != ?feature)
+}
 
 
 
@@ -20,98 +793,29 @@ INSERT DATA { _:s geoSparql:enabled "true" . }
 # Unable to make it work as the geo:sfIntersects does not appear to work in axioms, only in queries
 # ufokn:hasRiskPointInverse was a construct created to try and make things work - it may not be needed further
 
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
-select ?service ?feature where { 
-    ?service ufokn-c:servesArea ?servicearea .
+SELECT ?service ?feature WHERE { 
+    ?service ufokn_c:servesArea ?servicearea .
     ?servicearea geo:sfIntersects ?riskpoint .
     ?riskpoint ufokn:hasRiskPointInverse ?feature .
-} order by ?service ?feature
+} ORDER BY ?service ?feature
 
 
 
-### assetServesTC-p2p ###
-# Tests the new ufokn-c:assetServesTC transitive closure of ufokn-c:assetServes
-
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
-
-select ?utilAsset1 ?feature where { 
-	?utilAsset1 ufokn-c:assetServesTC ?feature .
-    ?feature rdf:type ufokn:FeatureAtRisk .
-}
-
-
-
-### assetServes-p2p ###
-# Tests the new ufokn-c:assetServes propertyChainAxiom
+### COUNT Utility Services ###
+# Counts the number of each type of utility service in the graph
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
 
-select ?utilAsset1 ?feature where { 
-	?utilAsset1 ufokn-c:assetServes ?feature .
-    ?feature rdf:type ufokn:FeatureAtRisk .
-}
+SELECT ?type (COUNT(?serviceArea) as ?count) WHERE {
+    ?serviceArea rdf:type ufokn_c:UtilityServiceArea .
+    ?serviceArea ufokn_c:ofUtilityType ?type .
+} GROUP BY ?type
 
-
-
-### count_FaR_predicate ###
-# Counts the number of FeatureAtRisk in each UtilityServiceArea
-# Uses the relation version of geo:sfIntersects
-# Takes ~10 seconds on a dataset with about 83k FeatureAtRisk across 33 non-overlapping UtilityServiceArea
-
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
-
-SELECT ?serviceArea (count(?serviceArea) as ?count) WHERE {
-    ?serviceArea rdf:type ufokn-c:UtilityServiceArea .
-    ?feature ufokn:hasRiskPoint ?riskPoint.
-    ?serviceArea geo:sfIntersects ?riskPoint.
-} GROUP BY ?serviceArea
-
-
-### count_FaR_byType_predicate ###
-# based on count_FaR_predicate, but doesn't count the total number of features
-# but the number of each kind of asset served 
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
-
-SELECT ?serviceArea ?type  (count(?serviceArea) as ?count)  WHERE {
-    ?serviceArea rdf:type ufokn-c:UtilityServiceArea .
-    ?feature ufokn:hasRiskPoint ?riskPoint.
-    ?feature ufokn-c:ofUtilityType ?type .
-    ?serviceArea geo:sfIntersects ?riskPoint.
-} GROUP BY ?serviceArea ?type
-
-
-
-### count_FaR_function ###
-# Counts the number of FeatureAtRisk in each UtilityServiceArea
-# Uses the function version of geof:sfIntersects
-# Takes 35-40 seconds on a dataset with about 83k FeatureAtRisk across 33 non-overlapping UtilityServiceArea
-
-PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
-PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-
-select ?serviceArea (count(?serviceArea) as ?count) where {
-    ?serviceArea rdf:type ufokn-c:UtilityServiceArea ;
-                 geo:asWKT ?area.
-    ?feature ufokn:hasRiskPoint ?riskPoint.
-    ?riskPoint geo:asWKT ?point.
-    FILTER(geof:sfIntersects(?area, ?point))
-} group by ?serviceArea
 
 
 
@@ -120,15 +824,15 @@ select ?serviceArea (count(?serviceArea) as ?count) where {
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select ?provider ?asset ?service ?feature where { 
-	?asset ufokn-c:assetServesTC ?feature .
+SELECT ?provider ?asset ?service ?feature WHERE { 
+	?asset ufokn_c:assetServesTC ?feature .
     ?feature rdf:type ufokn:FeatureAtRisk .
-    ?asset ufokn-c:providesUtilityService ?service .
-    ?service ufokn-c:providedByProvider ?provider .
-} order by ?provider ?asset
+    ?asset ufokn_c:providesUtilityService ?service .
+    ?service ufokn_c:providedByProvider ?provider .
+} ORDER BY ?provider ?asset
 
 
 
@@ -138,63 +842,72 @@ select ?provider ?asset ?service ?feature where {
 #   Two levels of areas (missing things that don't have two levels)
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
-select distinct ?utilAsset1 ?utilAsset2 ?feature2 ?feature3 where { 
-	?utilAsset1 rdf:type ufokn-c:UtilityAsset ;
-#                ufokn:hasFloodLevel "critical"^^xsd:string ;
-                ufokn-c:providesUtilityService ?utilServ1 .  
-	?utilServ1 ufokn-c:serves ?utilAsset2 ;
-			   ufokn-c:ofUtilityType ?utilType1 .
-    
-    ?utilAsset2 rdf:type ufokn-c:UtilityAsset ;
-                ufokn-c:providesUtilityService ?utilServ2 .  
-	?utilServ2 ufokn-c:servesArea ?utilArea2 ;
-			   ufokn-c:ofUtilityType ?utilType2 .
-    ?feature2 rdf:type ufokn:FeatureAtRisk ;
-              ufokn:hasRiskPoint ?fRiskPoint2 .
-    ?utilArea2 geo:sfIntersects ?fRiskPoint2 .
-    FILTER(?feature2 != ?utilAsset2)
-    FILTER(?feature2 != ?utilAsset1)
-    
-    ?feature2 rdf:type ufokn-c:UtilityAsset ;
-              ufokn-c:providesUtilityService ?utilServ3 .  
-	?utilServ3 ufokn-c:servesArea ?utilArea3 ;
-			   ufokn-c:ofUtilityType ?utilType4 .
-    ?feature3 rdf:type ufokn:FeatureAtRisk ;
-              ufokn:hasRiskPoint ?fRiskPoint3 .
-    ?utilArea3 geo:sfIntersects ?fRiskPoint3 .
-    FILTER(?feature3 != ?feature2)
-    FILTER(?feature3 != ?utilAsset2)
-    FILTER(?feature3 != ?utilAsset1)
+SELECT ?utilAsset1 ?utilAsset2 ?utilAsset3 ?feature4 WHERE { 
+    ?utilAsset1 rdf:type ufokn_c:UtilityAsset ;
+                ufokn_c:providesUtilityService ?utilServ1 .  
+    ?utilServ1 ufokn_c:serves ?utilAsset2.
+
+    ?utilAsset2 rdf:type ufokn_c:UtilityAsset ;
+                ufokn_c:providesUtilityService ?utilServ2 .  
+    ?utilServ2 ufokn_c:servesArea ?utilArea2 .
+    ?utilAsset3 rdf:type ufokn_c:UtilityAsset ;
+              ufokn:hasRiskPoint ?RiskPoint3 .
+    ?utilArea2 geo:sfIntersects ?RiskPoint3 .
+    FILTER(?utilAsset3 != ?utilAsset2)
+    FILTER(?utilAsset3 != ?utilAsset1)
+
+    ?utilAsset3 ufokn_c:providesUtilityService ?utilServ3 .  
+    ?utilServ3 ufokn_c:servesArea ?utilArea3 .
+    ?feature4 rdf:type ufokn:FeatureAtRisk ;
+              ufokn:hasRiskPoint ?RiskPoint4 .
+    ?utilArea3 geo:sfIntersects ?RiskPoint4 .
+    FILTER(?feature4 != ?utilAsset3)
+    FILTER(?feature4 != ?utilAsset2)
+    FILTER(?feature4 != ?utilAsset1)
 }
 
 
 
-### Cascade! ###
-# A cascading query: Asset1 provides service to Asset2 which provides service to features
-# Superseded by ability to use assetServesTC
-# Can filter for only assets that are flooded (when supported)
-# Does not use the same design as in the May 2021 Utility Connectin Pattern presentation
+### COUNT_FaR_predicate ###
+# Counts the number of FeatureAtRisk in each UtilityServiceArea
+# Uses the relation version of geo:sfIntersects
+# Takes ~10 seconds on a dataset with about 83k FeatureAtRisk across 33 non-overlapping UtilityServiceArea
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
 
-select ?utilAsset1 ?utilAsset2 ?feature where { 
-	?utilAsset1 rdf:type ufokn-c:UtilityAsset ;
-#                ufokn:hasFloodLevel "critical"^^xsd:string ;
-                ufokn-c:providesUtilityService ?utilServ1 .  
-	?utilServ1 ufokn-c:serves ?utilAsset2 ;
-			   ufokn-c:ofUtilityType ?utilType2 .
-    ?utilAsset2 ufokn-c:providesUtilityService ?utilServ2 .
-    ?utilServ2 ufokn-c:serves ?feature .
-    ?feature rdf:type ufokn:FeatureAtRisk .
-}
+SELECT ?serviceArea (COUNT(?serviceArea) as ?COUNT) WHERE {
+    ?serviceArea rdf:type ufokn_c:UtilityServiceArea .
+    ?feature ufokn:hasRiskPoint ?riskPoint.
+    ?serviceArea geo:sfIntersects ?riskPoint.
+} GROUP BY ?serviceArea
+
+
+
+### COUNT_FaR_function ###
+# Counts the number of FeatureAtRisk in each UtilityServiceArea
+# Uses the function version of geof:sfIntersects
+# Takes 35-40 seconds on a dataset with about 83k FeatureAtRisk across 33 non-overlapping UtilityServiceArea
+
+PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+SELECT ?serviceArea (COUNT(?serviceArea) as ?COUNT) WHERE {
+    ?serviceArea rdf:type ufokn_c:UtilityServiceArea ;
+                 geo:asWKT ?area.
+    ?feature ufokn:hasRiskPoint ?riskPoint.
+    ?riskPoint geo:asWKT ?point.
+    FILTER(geof:sfIntersects(?area, ?point))
+} GROUP BY ?serviceArea
 
 
 
@@ -204,15 +917,15 @@ select ?utilAsset1 ?utilAsset2 ?feature where {
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
-select ?eua ?feature where { 
-	?eua rdf:type ufokn-c:ElectricUtilityAsset;
+SELECT ?eua ?feature WHERE { 
+	?eua rdf:type ufokn_c:ElectricUtilityAsset;
 #	      ufokn:hasFloodLevel "critical"^^xsd:string;
-         ufokn-c:providesUtilityService ?utilServ.
-    ?utilServ ufokn-c:servesArea ?serviceArea.
+         ufokn_c:providesUtilityService ?utilServ.
+    ?utilServ ufokn_c:servesArea ?serviceArea.
     ?feature ufokn:hasRiskPoint ?riskPoint.
     ?serviceArea geo:sfIntersects ?riskPoint
 }
@@ -226,30 +939,30 @@ select ?eua ?feature where {
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select ?eua ?feature where { 
-	?eua rdf:type ufokn-c:ElectricUtilityAsset;
+SELECT ?eua ?feature WHERE { 
+	?eua rdf:type ufokn_c:ElectricUtilityAsset;
 #		  ufokn:hasFloodLevel "critical"^^xsd:string;
-    	 ufokn-c:providesUtilityService ?utilServ.
-	?utilServ ufokn-c:serves ?feature.
+    	 ufokn_c:providesUtilityService ?utilServ.
+	?utilServ ufokn_c:serves ?feature.
     ?feature rdf:type ufokn:FeatureAtRisk.
 }
 
 
 
 ### servesFeaturesInArea ###
-# Retrieves each ufokn-c:UtilityService and returns all ufokn:FeatureAtRisk within the ufokn-c:UtilityServiceArea.
+# Retrieves each ufokn_c:UtilityService and returns all ufokn:FeatureAtRisk within the ufokn_c:UtilityServiceArea.
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
-select ?utilityService ?feature where { 
-    ?utilityService rdf:type ufokn-c:UtilityService;
-    				ufokn-c:servesArea ?utilityArea.
+SELECT ?utilityService ?feature WHERE { 
+    ?utilityService rdf:type ufokn_c:UtilityService;
+    				ufokn_c:servesArea ?utilityArea.
     ?feature rdf:type ufokn:FeatureAtRisk;
     		 ufokn:hasRiskPoint ?riskPoint.    
     ?utilityArea geo:sfIntersects ?riskPoint.
@@ -260,32 +973,31 @@ select ?utilityService ?feature where {
 ### FeaturesInServiceAreas ###
 # Retrieves each FaR with a Risk Point and indicates all service areas they belong to
 
-
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
-select ?feature ?serviceArea where {
-    ?serviceArea rdf:type ufokn-c:UtilityServiceArea .
+SELECT ?feature ?serviceArea WHERE {
+    ?serviceArea rdf:type ufokn_c:UtilityServiceArea .
     ?feature ufokn:hasRiskPoint ?riskPoint .
     ?serviceArea geo:sfIntersects ?riskPoint .
-}
+} ORDER BY ?feature ?serviceArea
 
 
 
 ### serves ###
-# Retrieves each ufokn-c:UtilityService, its ufokn-c:UtilityType, each ufokn:FeatureOrRegionAtRisk it serves,
-#     and the ufokn-c:UtilityAsset that provides the service.
+# Retrieves each ufokn_c:UtilityService, its ufokn_c:UtilityType, each ufokn:FeatureOrRegionAtRisk it serves,
+#     and the ufokn_c:UtilityAsset that provides the service.
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
 
-select ?utilityService ?serviceType ?serves ?providedByAsset where { 
-    ?utilityService rdf:type ufokn-c:UtilityService;
-    				ufokn-c:ofUtilityType ?serviceType;
-    				ufokn-c:providedByUtilityAsset ?providedByAsset;
-    				ufokn-c:serves ?serves.
+SELECT ?utilityService ?serviceType ?serves ?providedByAsset WHERE { 
+    ?utilityService rdf:type ufokn_c:UtilityService;
+    				ufokn_c:ofUtilityType ?serviceType;
+    				ufokn_c:providedByUtilityAsset ?providedByAsset;
+    				ufokn_c:serves ?serves.
 } 
 
 
@@ -294,53 +1006,53 @@ select ?utilityService ?serviceType ?serves ?providedByAsset where {
 # Returns all UtilityProvider and the UtilityService they provide
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
 
-select ?provider ?service where { 
-	?provider rdf:type ufokn-c:UtilityProvider .
-    ?service ufokn-c:providedByProvider ?provider .
+SELECT ?provider ?service WHERE { 
+	?provider rdf:type ufokn_c:UtilityProvider .
+    ?service ufokn_c:providedByProvider ?provider .
 }
 
 
 
 ### UtilityService ###
-# Retrieves each ufokn-c:UtilityService, its ufokn-c:UtilityType, and the ufokn-c:UtilityAsset that provides the service
+# Retrieves each ufokn_c:UtilityService, its ufokn_c:UtilityType, and the ufokn_c:UtilityAsset that provides the service
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
 
-select ?utilityService ?serviceType ?providedByAsset where { 
-    ?utilityService rdf:type ufokn-c:UtilityService ;
-    				ufokn-c:ofUtilityType ?serviceType ;
-    				ufokn-c:providedByUtilityAsset ?providedByAsset .
+SELECT ?utilityService ?serviceType ?providedByAsset WHERE { 
+    ?utilityService rdf:type ufokn_c:UtilityService ;
+    				ufokn_c:ofUtilityType ?serviceType ;
+    				ufokn_c:providedByUtilityAsset ?providedByAsset .
 } 
 
 
 
 ### UtilityAsset ###
-# Retrieves all ufokn-c:UtilityAsset entries along with their ufokn-c:UtilityType and ufokn-c:UtilityService
+# Retrieves all ufokn_c:UtilityAsset entries along with their ufokn_c:UtilityType and ufokn_c:UtilityService
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX ufokn-c: <http://schema.ufokn.org/utility-connection/v2/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2/>
 
-select distinct ?utilityAsset ?serviceType ?utilityService where { 
-    ?utilityAsset rdf:type ufokn-c:UtilityAsset ;
-    			  ufokn-c:ofUtilityType ?serviceType ;
-    			  ufokn-c:providesUtilityService ?utilityService .
+SELECT DISTINCT ?utilityAsset ?serviceType ?utilityService WHERE { 
+    ?utilityAsset rdf:type ufokn_c:UtilityAsset ;
+    			  ufokn_c:ofUtilityType ?serviceType ;
+    			  ufokn_c:providesUtilityService ?utilityService .
 } 
 
 
 
-### hasMember_counts ###
-# Retrieves a count of how many ufokn:IndividualFeatureAtRiskInCollection are in each ufokn:CollectionOfFeatures
+### hasMember_COUNTs ###
+# Retrieves a COUNT of how many ufokn:IndividualFeatureAtRiskInCollection are in each ufokn:CollectionOfFeatures
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 
-select ?collection (count(?collection) as ?count) where { 
+SELECT ?collection (COUNT(?collection) as ?COUNT) WHERE { 
 	?collection rdf:type ufokn:CollectionOfFeatures ;
     			ufokn:hasMember ?x .
-} group by ?collection
+} GROUP BY ?collection
 
 
 
@@ -353,9 +1065,9 @@ select ?collection (count(?collection) as ?count) where {
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 
-select ?feature ?st_add where { 
+SELECT ?feature ?st_add WHERE { 
     {
-        select distinct ?feature ?st_add where {
+        SELECT DISTINCT ?feature ?st_add WHERE {
             ?feature rdf:type ufokn:FeatureAtRisk .
             ### Retrieves addresses for anything with a unit number.
             ?feature ufokn:hasAddress ?address.
@@ -366,12 +1078,12 @@ select ?feature ?st_add where {
                         ufokn:city ?city;
                         ufokn:state ?state;
                         ufokn:postcode ?zip.
-            BIND(concat(str(?st_num), str(" "), str(?street), str(" "), str(?u_num), str(", "), str(?city), str(", "), str(?state), str("  "), str(?zip)) as ?st_add).
+            BIND(CONCAT(STR(?st_num), STR(" "), STR(?street), STR(" "), STR(?u_num), STR(", "), STR(?city), STR(", "), STR(?state), STR("  "), STR(?zip)) as ?st_add).
         }
     }
     UNION
     {
-        select ?feature ?st_add where {
+        SELECT ?feature ?st_add WHERE {
             ?feature rdf:type ufokn:FeatureAtRisk .
             ### Retrieves addresses for anything that does not have a unit number
             ?feature ufokn:hasAddress ?address.
@@ -380,10 +1092,10 @@ select ?feature ?st_add where {
                      ufokn:city ?city;
                      ufokn:state ?state;
                      ufokn:postcode ?zip.
-            BIND(concat(str(?st_num), str(" "), str(?street), str(" "), str(", "), str(?city), str(", "), str(?state), str("  "), str(?zip)) as ?st_add).
+            BIND(CONCAT(STR(?st_num), STR(" "), STR(?street), STR(" "), STR(", "), STR(?city), STR(", "), STR(?state), STR("  "), STR(?zip)) as ?st_add).
         }
     }
-} order by ?feature
+} ORDER BY ?feature
 
 
 
@@ -394,7 +1106,7 @@ select ?feature ?st_add where {
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 
-select ?feature where { 
+SELECT ?feature WHERE { 
 	?feature rdf:type ufokn:FeatureAtRisk.
     MINUS { ?feature ufokn:isMemberOf ?x }.
 }
@@ -407,7 +1119,7 @@ select ?feature where {
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
-select ?feature ?st_add where {
+SELECT ?feature ?st_add WHERE {
 	?feature rdf:type ufokn:IndividualFeatureAtRiskInCollection.
     ?feature ufokn:hasAddress ?address.
     ?address ufokn:hasStreetAddress ?st_address;
@@ -417,7 +1129,7 @@ select ?feature ?st_add where {
     			ufokn:city ?city;
     			ufokn:state ?state;
     			ufokn:postcode ?zip.
-    BIND(concat(str(?st_num), str(" "), str(?street), str(" "), str(?u_num), str(", "), str(?city), str(", "), str(?state), str("  "), str(?zip)) as ?st_add).
+    BIND(CONCAT(str(?st_num), str(" "), str(?street), str(" "), str(?u_num), str(", "), str(?city), str(", "), str(?state), str("  "), str(?zip)) as ?st_add).
 }
 
 
@@ -427,11 +1139,10 @@ select ?feature ?st_add where {
 
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 
-select ?feature where {
+SELECT ?feature WHERE {
   ?feature ufokn:hasMember ?unit.
-}
-group by ?feature
-having (count(distinct ?unit) > 1)
+} GROUP BY ?feature
+HAVING (COUNT(DISTINCT ?unit) > 1)
 
 
 
@@ -441,7 +1152,7 @@ having (count(distinct ?unit) > 1)
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 
-select distinct ?collection where { 
+SELECT DISTINCT ?collection WHERE { 
 	?collection rdf:type ufokn:CollectionOfFeatures;
     			ufokn:hasMember ?ifaric.
 } 
@@ -455,7 +1166,7 @@ select distinct ?collection where {
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 
-select ?feature where { 
+SELECT ?feature WHERE { 
     ?feature rdf:type ufokn:IndividualFeatureAtRisk.
 #    ?feature rdf:type ufokn:StandaloneFeatureAtRisk.
 } 
@@ -468,7 +1179,7 @@ select ?feature where {
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 
-select ?feature where { 
+SELECT ?feature WHERE { 
 	?feature rdf:type ufokn:FeatureAtRisk.
 }
 
@@ -479,10 +1190,10 @@ select ?feature where {
 
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 
-select distinct ?key ?value where { 
+SELECT DISTINCT ?key ?value WHERE { 
 	?x ufokn:key ?key;
        ufokn:value ?value.
-} order by ?key ?value
+} ORDER BY ?key ?value
 
 
 
@@ -492,6 +1203,6 @@ select distinct ?key ?value where {
 
 PREFIX ufokn: <http://schema.ufokn.org/core/v2/>
 
-select ?val (count(?val) as ?count) where { 
+SELECT ?val (COUNT(?val) as ?COUNT) WHERE { 
 	?X ufokn:value ?val.
-} group by ?val
+} GROUP BY ?val
