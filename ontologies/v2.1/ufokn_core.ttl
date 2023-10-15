@@ -1,0 +1,584 @@
+@prefix : <http://schema.ufokn.org/core/v2.1/> .
+@prefix ufokn: <http://schema.ufokn.org/core/v2.1/> .
+@prefix ufokn_geo: <http://schema.ufokn.org/geo/v2.1/> .
+
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+@base <http://schema.ufokn.org/core/v2.1/> .
+
+<http://schema.ufokn.org/core/v2.1/> rdf:type owl:Ontology ;
+                                    owl:versionIRI <http://schema.ufokn.org/core/v2.1/> ;
+                                    owl:imports ufokn_geo: ;
+                                    dcterms:created "2021-12-15"@en-us ;
+                                    dcterms:creator <http://orcid.org/0000-0002-5331-5052> ,
+                                    <http://orcid.org/0000-0003-4486-9448> ;
+                                    dcterms:description "Part of the UFOKN ontology for describing infrastructure at risk due to flooding events."@en-us ;
+                                    dcterms:issued "2021-12-15"^^xsd:date ;
+                                    dcterms:modified "2023-10-15"^^xsd:date ;
+                                    dcterms:publisher <http://ufokn.org> ;
+                                    dcterms:source "https://github.com/UFOKN/Knowledge-Graph/ontologies/v2.1/core.ttl"^^<xsd:anyURI> ;
+                                    dcterms:title "Core of the UFOKN Ontology"@en-us ;
+                                    rdfs:label "Risk points and events of the UFOKN Ontology"@en-us ;
+                                    owl:versionInfo "2.1"@en-us .
+
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/created
+dcterms:created rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/issued
+dcterms:issued rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/modified
+dcterms:modified rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/publisher
+dcterms:publisher rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/source
+dcterms:source rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+dcterms:title rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://schema.ufokn.org/core/v2.1/depth
+ufokn:depth rdf:type rdfs:Datatype .
+
+
+###  http://schema.ufokn.org/core/v2.1/elevation
+ufokn:elevation rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://schema.ufokn.org/core/v2.1/fromDataSource
+ufokn:fromDataSource rdf:type owl:ObjectProperty ;
+                           rdfs:domain owl:Thing ;
+                           rdfs:range ufokn:DataSource ;
+                           rdfs:comment "A representation of a data source that contains things like model outputs, spatial features, risk points, or similar."@en ;
+                           rdfs:label "fromDataSource"@en .
+
+
+###  http://schema.ufokn.org/core/v2.1/comid
+ufokn:comid rdf:type owl:ObjectProperty .
+
+### from ufokn_geo; already declared there
+###  http://www.opengis.net/ont/geosparql#hasGeometry
+geo:hasGeometry rdf:type owl:ObjectProperty .
+
+###  http://schema.ufokn.org/core/v2.1/hasRiskPoint
+ufokn:hasRiskPoint rdf:type owl:ObjectProperty ;
+                                   rdfs:domain ufokn:FeatureAtRisk ;
+                                   rdfs:range ufokn:RiskPoint ;
+								   owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+								   owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+								   owl:inverseOf ufokn:riskPointOf .
+#                                   rdfs:comment "Relationship that assigns a FeatureAtRisk a RiskPoint as its point abstraction (that has spatial coordinates)."@en ;
+#                                   rdfs:label "hasRiskPoint"@en .
+
+###  http://schema.ufokn.org/core/v2.1/riskPointOf
+ufokn:riskPointOf rdf:type owl:ObjectProperty ;
+                                   rdfs:range ufokn:FeatureAtRisk ;
+                                   rdfs:domain ufokn:RiskPoint ;
+								   owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+								   owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+								   owl:inverseOf ufokn:hasRiskPoint .
+#                                   rdfs:comment "Invers of the relationship that assigns a FeatureAtRisk a RiskPoint as its point abstraction (that has spatial coordinates)."@en ;
+#                                   rdfs:label "riskPointOf"@en .
+
+
+###  http://schema.ufokn.org/core/v2.1/hasRelativeRiskPointLocation
+ufokn:hasRelativeRiskPointLocation rdf:type owl:ObjectProperty ;
+                                   owl:inverseOf ufokn:locationForRiskPoint ;
+                                   rdfs:domain ufokn:RiskPoint ;
+                                   rdfs:range ufokn:RelativeRiskPointLocation ;
+                                   rdfs:comment "Relationship between a RiskPoint and its Localisation relative to the Spatial Model used by a Specific Modeling or Observation System. The relative location allows associating different elevations with a RiskPoint based on different spatial interpolation methods."@en ;
+                                   rdfs:label "hasRelativeRiskPointLocation"@en .
+
+
+
+
+###  http://schema.ufokn.org/core/v2.1/locationForRiskPoint
+ufokn:locationForRiskPoint rdf:type owl:ObjectProperty ;
+                           rdfs:domain ufokn:RelativeRiskPointLocation ;
+						   rdfs:range ufokn:RiskPoint .
+
+
+###  http://www.w3.org/ns/sosa/hasFeatureOfInterest
+sosa:hasFeatureOfInterest rdf:type owl:ObjectProperty .
+
+
+###  http://schema.ufokn.org/ufokn-features/v2.1/hasAddress
+ufokn:hasAddress rdf:type owl:ObjectProperty ;
+			rdfs:domain _:FeatureAtRiskOrUnitAddress ; 
+			rdfs:range ufokn:Address ;
+			rdfs:comment "Used to attach an address to a FeatureAtRisk or to a UnitAddress. UnitAddresses can use this to point to a common shared StreetAddress via the hasStreetAddress property, which is a subproperty of hasAddress. IndividualFeatureAtRisk that are members of a collection (i.e. units) use the subproperty hasUnitAddress to specify a combination of a unit number and street address."@en ;
+			rdfs:isDefinedBy ufokn: ;
+			rdfs:label "hasAddress"@en .
+
+
+###  http://schema.ufokn.org/ufokn-features/v2.1/hasUnitAddress
+# only individual FeaturesAtRisk but not Collections can have unit addresses 
+ufokn:hasUnitAddress rdf:type owl:ObjectProperty ;
+			rdfs:subPropertyOf ufokn:hasAddress ;
+			rdfs:domain ufokn:IndividualFeatureAtRiskInCollection ; 
+			rdfs:range ufokn:UnitAddress ;
+			rdfs:comment "The unit address of an IndividualFeatureAtRisk. UnitAddresses require a unit number and all reusing a shared StreetAddress via the hasUnitAddress property."@en ;
+			rdfs:isDefinedBy ufokn: ;
+			rdfs:label "hasUnitAddress"@en .
+
+
+###  http://schema.ufokn.org/ufokn-features/v2.1/hasStreetAddress
+# any FeatureAtRisk as well as a UnitAddress can have a streetAddress
+ufokn:hasStreetAddress rdf:type owl:ObjectProperty ;
+			rdfs:subPropertyOf ufokn:hasAddress ;
+			rdfs:domain _:FeatureAtRiskOrUnitAddress ; 
+			rdfs:range ufokn:StreetAddress ;
+# adding a property chain to more easily retrieve the address that is buried inside 
+# the UnitAddress of a Collection's individual FeaturesAtRisk 
+#			owl:propertyChainAxiom (ufokn:hasMember ufokn:hasUnitAddress ufokn:hasStreetAddress ) ;
+			rdfs:comment "The street address of a FeatureAtRisk or of a UnitAddress. UnitAddresses that are in the same building (i.e. have the same StreetAddress) can use this to point to a single shared StreetAddress and avoid repetition of the information in the street address."@en ;
+			rdfs:isDefinedBy ufokn: ;
+			rdfs:label "hasStreetAddress"@en .
+
+###  http://schema.ufokn.org/ufokn-features/v2.1/hasMember
+ufokn:hasMember rdf:type owl:ObjectProperty ;
+			rdf:type owl:InverseFunctionalProperty ;
+			rdfs:domain ufokn:CollectionOfFeatures ;
+			rdfs:range ufokn:IndividualFeatureAtRiskInCollection .
+
+
+###  http://schema.ufokn.org/ufokn-features/v2.1/isMemberOf
+ufokn:isMemberOf rdf:type owl:ObjectProperty ;
+			rdf:type owl:FunctionalProperty ;
+			rdfs:domain ufokn:IndividualFeatureAtRiskInCollection ;
+			rdfs:range ufokn:CollectionOfFeatures ;
+			owl:inverseOf ufokn:hasMember .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+
+###  http://schema.ufokn.org/geo/v2.1/hasWktGeometry
+ufokn_geo:hasWktGeometry rdf:type owl:DatatypeProperty .
+
+
+
+### datatype properties for addresses
+
+###  http://schema.ufokn.org/core/v2.1/unitNumber
+ufokn:unitNumber rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:UnitAddress ;
+				rdfs:range xsd:string . 
+				
+###  http://schema.ufokn.org/core/v2.1/unitCount
+ufokn:unitCount rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:nonNegativeInteger . 
+				
+###  http://schema.ufokn.org/core/v2.1/areaSize
+ufokn:areaSize rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:nonNegativeInteger . 
+				
+###  http://schema.ufokn.org/core/v2.1/street
+ufokn:street rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:string . 
+				
+###  http://schema.ufokn.org/core/v2.1/streetNumber
+ufokn:streetNumber rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:string . 
+
+###  http://schema.ufokn.org/core/v2.1/secondAddressLine
+ufokn:secondAddressLine rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:string . 
+
+###  http://schema.ufokn.org/core/v2.1/region
+ufokn:region rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:string . 
+
+###  http://schema.ufokn.org/core/v2.1/city
+ufokn:city rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:string . 
+
+###  http://schema.ufokn.org/core/v2.1/state
+ufokn:state rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:string . 
+				
+###  http://schema.ufokn.org/core/v2.1/country
+ufokn:country rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:string . 
+				
+###  http://schema.ufokn.org/core/v2.1/district
+ufokn:district rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:string . 
+
+###  http://schema.ufokn.org/core/v2.1/postcode
+ufokn:postcode rdf:type owl:DatatypeProperty ;
+				rdf:type owl:FunctionalProperty ;
+				rdfs:domain ufokn:Address ;
+				rdfs:range xsd:string . 
+				
+### Data Properties for FeaturesAtRisk
+				
+###  http://schema.ufokn.org/core/v2.1/key
+ufokn:key rdf:type owl:DatatypeProperty ;
+				rdfs:domain ufokn:FeatureAtRisk ;
+				rdfs:range xsd:string . 
+
+###  http://schema.ufokn.org/core/v2.1/value
+ufokn:value rdf:type owl:DatatypeProperty ;
+				rdfs:domain ufokn:FeatureAtRisk ;
+				rdfs:range xsd:string . 
+
+
+###  http://schema.ufokn.org/core/v2.1/id
+ufokn:id rdf:type owl:DatatypeProperty ;
+                   rdfs:range xsd:string .
+
+###  http://schema.ufokn.org/core/v2.1/osm_id
+ufokn:osm_id rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf ufokn:id ;
+				rdfs:domain ufokn:FeatureAtRisk ;
+				rdfs:range xsd:string . 
+
+###  http://schema.ufokn.org/core/v2.1/ms_id
+ufokn:ms_id rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf ufokn:id ;
+				rdfs:domain ufokn:FeatureAtRisk ;
+				rdfs:range xsd:string . 
+
+###  http://schema.ufokn.org/core/v2.1/oa_id
+ufokn:oa_id rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf ufokn:id ;
+				rdfs:domain ufokn:FeatureAtRisk ;
+				rdfs:range xsd:string . 
+				   
+### other datatype properties 
+				   
+###  http://schema.ufokn.org/core/v2.1/criticalDepth
+ufokn:criticalDepth rdf:type owl:DatatypeProperty ;
+                    rdfs:domain ufokn:RiskPoint ;
+                    rdfs:range ufokn:depth .
+
+
+###  http://schema.ufokn.org/core/v2.1/dataSourceUri
+ufokn:dataSourceUri rdf:type owl:DatatypeProperty ;
+                    rdfs:range xsd:anyURI .
+
+
+###  http://schema.ufokn.org/core/v2.1/heightAboveNearestDrainage
+ufokn:heightAboveNearestDrainage rdf:type owl:DatatypeProperty ;
+                                 rdfs:domain ufokn:RelativeRiskPointLocation ;
+                                 rdfs:range ufokn:elevation .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+
+###  http://schema.ufokn.org/core/v2.1/DataSource
+ufokn:DataSource rdf:type owl:Class ;
+                 rdfs:subClassOf owl:Thing ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty ufokn:dataSourceUri ;
+                                   owl:someValuesFrom xsd:anyURI
+                                 ] ;
+                 owl:disjointWith geo:Feature ,
+                                  geo:Geometry .
+
+
+###  http://schema.ufokn.org/core/v2.1/FeatureAtRisk
+ufokn:FeatureAtRisk rdf:type owl:Class ;
+                    rdfs:subClassOf geo:Feature,
+									ufokn:FeatureOrRegionAtRisk;
+                    owl:disjointWith ufokn:RegionOfInterest ,
+                                     ufokn:RiskPoint .
+
+
+###  http://schema.ufokn.org/core/v2.1/FeatureOrRegionAtRisk
+ufokn:FeatureOrRegionAtRisk rdf:type owl:Class ;
+                    rdfs:subClassOf geo:Feature ;
+					owl:disjointUnionOf (ufokn:RegionOfInterest ufokn:FeatureAtRisk) .
+
+
+###  http://schema.ufokn.org/core/v2.1/CollectionOfFeatures
+ufokn:CollectionOfFeatures rdf:type owl:Class ;
+				rdfs:subClassOf ufokn:FeatureAtRisk ,
+							   [rdf:type owl:Restriction ;
+								owl:onProperty ufokn:hasMember ;
+                                owl:someValuesFrom ufokn:FeatureAtRisk
+							   ] ,
+							   [rdf:type owl:Restriction ;
+								owl:onProperty ufokn:hasMember ;
+                                owl:minCardinality "1"^^xsd:nonNegativeInteger
+							   ] ,
+							   [rdf:type owl:Restriction ;
+								owl:onProperty ufokn:hasMember ;
+                                owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+								owl:onClass ufokn:FeatureAtRisk
+							   ] ;
+				owl:equivalentClass _:DefCollectionOfFeatures ;
+				owl:disjointWith ufokn:IndividualFeatureAtRisk .
+
+
+### IndividualFeatureAtRisk: Features that have no members
+### but is agnotistic about whether it is part of a collection
+###  http://schema.ufokn.org/core/v2.1/IndividualFeatureAtRisk
+### All FeaturesAtRisk that are a member of some CollectionOfFeatures
+ufokn:IndividualFeatureAtRisk rdf:type owl:Class ;
+				rdfs:subClassOf ufokn:FeatureAtRisk ,
+								[rdf:type owl:Restriction ;
+								 owl:onProperty ufokn:hasMember ;
+								 owl:cardinality "0"^^xsd:nonNegativeInteger
+								] ;
+			owl:equivalentClass _:DefIndividualFeatureAtRisk ;
+			owl:disjointWith ufokn:CollectionOfFeatures .				
+
+
+###  http://schema.ufokn.org/core/v2.1/IndividualFeatureAtRiskInCollection
+### All FeaturesAtRisk that are a member of some CollectionOfFeatures
+ufokn:IndividualFeatureAtRiskInCollection rdf:type owl:Class ;
+				rdfs:subClassOf ufokn:IndividualFeatureAtRisk, 
+							   [rdf:type owl:Restriction ;
+								owl:onProperty ufokn:isMemberOf ;
+                                owl:someValuesFrom ufokn:CollectionOfFeatures
+							   ] ,
+							   [rdf:type owl:Restriction ;
+								owl:onProperty ufokn:isMemberOf ;
+                                owl:allValuesFrom ufokn:CollectionOfFeatures
+							   ] ,
+							   [rdf:type owl:Restriction ;
+								owl:onProperty ufokn:isMemberOf ;
+                                owl:maxCardinality "1"^^xsd:nonNegativeInteger
+								] ,
+							   [rdf:type owl:Restriction ;
+								owl:onProperty ufokn:isMemberOf ;
+                                owl:minCardinality "1"^^xsd:nonNegativeInteger
+								] ,
+							   [rdf:type owl:Restriction ;
+								owl:onProperty ufokn:hasAddress ;
+								owl:allValuesFrom ufokn:UnitAddress
+							   ] ;
+				owl:equivalentClass _:DefIndividualFeatureAtRiskInCollection ;			
+				owl:disjointWith ufokn:StandaloneFeatureAtRisk .		
+							   
+
+### Renamed: StandaloneFeatureAtRisk							   
+###  http://schema.ufokn.org/core/v2.1/StandaloneFeatureAtRisk
+### All StandaloneFeaturesAtRisk are IndividualFeatureAtRisk that are also not a member of some CollectionOfFeatures
+ufokn:StandaloneFeatureAtRisk rdf:type owl:Class ;
+				rdfs:subClassOf ufokn:IndividualFeatureAtRisk ,
+								[rdf:type owl:Restriction ;
+								 owl:onProperty ufokn:isMemberOf ;
+								 owl:cardinality "0"^^xsd:nonNegativeInteger
+								] ;
+				owl:equivalentClass _:DefStandaloneFeatureAtRisk ;
+				owl:disjointWith ufokn:IndividualFeatureAtRiskInCollection .
+				
+_:DefCollectionOfFeatures rdf:type owl:Class ;
+				owl:intersectionOf (ufokn:FeatureAtRisk _:FeatureAtRiskWithMembers).
+			
+_:DefIndividualFeatureAtRisk rdf:type owl:Class ;
+				owl:intersectionOf (ufokn:FeatureAtRisk _:FeatureAtRiskWithoutMembers).
+
+_:DefIndividualFeatureAtRiskInCollection rdf:type owl:Class ;
+				owl:intersectionOf (ufokn:IndividualFeatureAtRisk _:FeatureAtRiskMemberOfACollection).
+				
+_:DefStandaloneFeatureAtRisk rdf:type owl:Class ;
+				owl:intersectionOf (ufokn:IndividualFeatureAtRisk _:FeatureAtRiskNotMemberOfACollection).
+
+### FeatureAtRiskNotMemberOfACollection are not member of any CollectionOfFeatures. 
+_:FeatureAtRiskNotMemberOfACollection rdf:type owl:Restriction ;
+									owl:onProperty ufokn:isMemberOf ;
+									owl:cardinality "0"^^xsd:nonNegativeInteger . 
+
+### FeatureAtRiskMemberOfACollection are members of some CollectionOfFeatures. 
+_:FeatureAtRiskMemberOfACollection rdf:type owl:Restriction ;
+									owl:onProperty ufokn:isMemberOf ;
+									owl:cardinality "1"^^xsd:nonNegativeInteger .
+
+### FeatureAtRiskWithMembers have some member.
+_:FeatureAtRiskWithMembers rdf:type owl:Restriction ;
+									owl:onProperty ufokn:hasMember ;
+									owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+									owl:onClass ufokn:FeatureAtRisk.									
+
+### FeatureAtRiskWithoutMembers are not member of any CollectionOfFeatures. 
+_:FeatureAtRiskWithoutMembers rdf:type owl:Restriction ;
+									owl:onProperty ufokn:hasMember ;
+									owl:cardinality "0"^^xsd:nonNegativeInteger . 
+
+_:FeatureAtRiskOrUnitAddress  rdf:type owl:Class ;
+				owl:unionOf (ufokn:FeatureAtRisk ufokn:UnitAddress) .
+
+
+###  http://schema.ufokn.org/core/v2.1/Address
+ufokn:Address rdf:type owl:Class .
+
+###  http://schema.ufokn.org/core/v2.1/StreetAddress
+ufokn:StreetAddress rdf:type owl:Class ;
+		rdfs:subClassOf ufokn:Address ;
+		owl:disjointWith ufokn:UnitAddress.
+
+
+###  http://schema.ufokn.org/core/v2.1/UnitAddress
+ufokn:UnitAddress rdf:type owl:Class ;
+				rdfs:subClassOf ufokn:Address ,
+							[rdf:type owl:Restriction ;
+							 owl:onProperty ufokn:unitNumber ;
+                             owl:cardinality "1"^^xsd:nonNegativeInteger
+							] ,
+							[rdf:type owl:Restriction ;
+							 owl:onProperty ufokn:unitCount ;
+							 owl:hasValue "0"^^xsd:nonNegativeInteger
+							] ,
+							[rdf:type owl:Restriction ;
+							 owl:onProperty ufokn:hasAddress ;
+							 owl:allValuesFrom  ufokn:StreetAddress
+							] ;
+				owl:equivalentClass _:DefAddressWithUnit .
+
+_:DefAddressWithUnit rdfs:subClassOf ufokn:Address .
+
+[rdf:type owl:Restriction ;
+		  owl:onProperty ufokn:unitNumber ;
+          owl:someValueFrom xsd:string ] rdfs:subClassOf _:DefAddressWithUnit.
+
+
+
+###  http://schema.ufokn.org/core/v2.1/RegionOfInterest
+ufokn:RegionOfInterest rdf:type owl:Class ;
+                       rdfs:subClassOf geo:Feature ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty geo:hasGeometry ;
+                                         owl:allValuesFrom geo:Polygon
+                                       ] ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty geo:hasGeometry ;
+                                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                         owl:onClass geo:Polygon
+                                       ] ;
+                       owl:disjointWith ufokn:RiskPoint,
+										ufokn:FeatureAtRisk	.
+						
+###  http://schema.ufokn.org/core/v2.1/RelativeRiskPointLocation
+ufokn:RelativeRiskPointLocation rdf:type owl:Class ;
+                                rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                  owl:onProperty ufokn:locationForRiskPoint ;
+                                                  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                  owl:onClass ufokn:RiskPoint
+                                                ] .
+
+
+###  http://schema.ufokn.org/core/v2.1/RiskPoint
+ufokn:RiskPoint rdf:type owl:Class ;
+                rdfs:subClassOf geo:Feature ,
+								sosa:FeatureOfInterest ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty geo:hasGeometry ;
+                                  owl:allValuesFrom ufokn_geo:Point_EPSG-5070
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty geo:hasGeometry ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass ufokn_geo:Point_EPSG-5070
+                                ] .
+
+
+###  http://www.opengis.net/spec/geosparql/1.0#Feature
+geo:Feature rdf:type owl:Class .
+
+
+###  http://www.opengis.net/spec/geosparql/1.0#Geometry
+geo:Geometry rdf:type owl:Class .
+
+
+###  http://www.opengis.net/spec/geosparql/1.0#Point
+geo:Point rdf:type owl:Class ;
+          rdfs:subClassOf geo:Geometry .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( ufokn:DataSource
+                ufokn:RelativeRiskPointLocation
+                geo:Feature
+                geo:Geometry
+				ufokn_geo:SpatialReferenceSystem
+				ufokn:Address
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( ufokn:FeatureAtRisk
+                ufokn:RegionOfInterest
+                ufokn:RiskPoint
+              )
+] .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+ufokn:MSdataSource rdf:type ufokn:DataSource. 
+ufokn:OAdataSource rdf:type ufokn:DataSource. 
+ufokn:OSMdataSource rdf:type ufokn:DataSource. 
