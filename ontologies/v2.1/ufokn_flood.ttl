@@ -108,6 +108,10 @@ ufokn_fl:maxDepth rdf:type owl:DatatypeProperty ;
 ###  http://schema.ufokn.org/flood/v2.1#FloodLevelObservation
 ufokn_fl:FloodLevelObservation rdf:type owl:Class ;
 							   rdfs:subClassOf sosa:Observation.
+
+###  http://schema.ufokn.org/flood/v2.1#CriticalFloodObservation
+ufokn_fl:CriticalFloodObservation rdf:type owl:Class ;
+								  rdfs:subClassOf ufokn_fl:FloodLevelObservation.
 							   
 ###  http://www.w3.org/2006/time#TemporalEntity
 time:TemporalEntity rdf:type owl:Class .
