@@ -24,7 +24,7 @@
 																  <http://orcid.org/0000-0002-9070-3169> ;
                                                   dcterms:description "Part of the UFOKN ontology for describing dependencies between utility assets."@en-us ;
                                                   dcterms:issued "2021-04-12"^^xsd:date ;
-                                                  dcterms:modified "2023-10-15"^^xsd:date ;
+                                                  dcterms:modified "2024-02-27"^^xsd:date ;
                                                   dcterms:publisher <http://ufokn.org> ;
                                                   dcterms:source "https://raw.githubusercontent.com/UFOKN/Knowledge-Graph/master/ontologies/v2.1/ufokn_utility_connection.ttl"^^<xsd:anyURI> ;
                                                   dcterms:title "Utility Connection Pattern of the UFOKN Ontology"@en-us ;
@@ -429,6 +429,25 @@ ufokn_c:UtilityAsset rdf:type owl:Class ;
                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                 owl:onClass ufokn_c:UtilityType
                               ] .
+
+
+### http://schema.ufokn.org/utility-connection/v2.1/CriticallyOutUtilityAsset
+### This is designed to simplify queries, removing the need to create a UNION of flooded assets and flood-impacted assets
+ufokn_c:CriticallyOutUtilityAsset rdf:type owl:Class ;
+                                  rdfs:subClassOf ufokn_c:UtilityAsset ;
+								  owl:equivalentClass [ rdf:type owl:Restriction ;
+								                        owl:onProperty rdf:type ;
+														owl:hasValue ufokn_c:UtilityAsset
+													  ] ;
+								  owl:equivalentClass [ rdf:type owl:Restriction ;
+								                        owl:onProperty _:utilityAssetHasCritFloodObs ;
+														owl:hasValue ufokn_fl:CriticalFloodObservation
+													  ] .
+
+
+### This property exists only for the ufokn_c:CriticallyOutUtilityAsset class
+_:utilityAssetHasCritFloodObs rdf:type owl:ObjectProperty ;
+                              owl:propertyChainAxiom (ufokn:hasRiskPoint ufokn_fl:hasFloodLevelObservation rdf:type) .
 
 
 ###  http://schema.ufokn.org/utility-connection/v2.1/UtilityProvider
