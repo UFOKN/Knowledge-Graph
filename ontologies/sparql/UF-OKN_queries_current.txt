@@ -1,0 +1,153 @@
+# The queries below are in reverse order of how they were originally created
+# Therefore, the most complex ones come first
+# Note that some lines have been commented out of some queries
+#    There may be two different queries that can be run by changing what is commented
+#    There may be functionality that is not yet supported in the ontology
+
+
+
+### enable-GeoSPARQL ###
+# Enables the GeoSPARQL plugin in GraphDB so indexed predicate operations work
+
+PREFIX geoSparql: <http://www.ontotext.com/plugins/geosparql#>
+
+INSERT DATA { [] geoSparql:enabled "true" . }
+
+
+
+### Preprocess UtilityServiceAreas ###
+# Find all features in UtilityServiceAreas
+#    Including any UtilityAssets
+#    Write appropriate ?service ufokn_c:serves ?feature triples to a new graph
+
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2.1/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+INSERT {
+	GRAPH <http://schema.ufokn.org/data/cincinnati-serves> {
+		?service ufokn_c:serves ?feature .
+	}
+}
+WHERE {
+    ?servicearea rdf:type ufokn_c:UtilityServiceArea .
+	?service ufokn_c:servesArea ?servicearea .
+    ?servicearea geo:sfIntersects ?riskpoint .
+    ?feature ufokn:hasRiskPoint ?riskpoint .
+}
+
+
+
+### Preprocess flooded RiskPoints ###
+# Find all UtilityAssets with riskpoints that have flood level data
+#    Check if minNonZero (flood depth) > criticalDepth
+#    If so, write new triple setting the flood level data as a CriticalFloodObservation
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2.1/>
+PREFIX ufokn_fl: <http://schema.ufokn.org/flood/v2.1/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2.1/>
+
+INSERT {
+	GRAPH <http://schema.ufokn.org/data/cincinnati-crit-flood-obs> {
+		?floodObs rdf:type ufokn_fl:CriticalFloodObservation .
+	}
+}
+WHERE {
+    ?utilityAsset rdf:type ufokn_c:UtilityAsset ;
+                  ufokn:hasRiskPoint ?riskpoint .
+    ?riskpoint ufokn_fl:hasFloodLevelObservation ?floodObs .
+    ?floodObs ufokn_fl:minNonZero ?floodDepth .
+    ?riskpoint ufokn:criticalDepth ?critDepth .
+    FILTER(?floodDepth > ?critDepth)
+}
+
+
+
+### Find flooded utility assets and flood-affected utility assets, then cascade to features
+# Find all flooded utility assets
+# Add all flood-affected utility assets
+# Find all features directly affected by any flood or flood-affected utility asset
+# For each feature:
+#    Identify a root cause (only one, not all)
+#    Identify a local cause (may be the same or different, may not be the only one)
+#    Add identifying and locational information
+#    Add flood data if the feature is flooded
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2.1/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2.1/>
+PREFIX ufokn_fl: <http://schema.ufokn.org/flood/v2.1/>
+
+SELECT ?far ?uid ?key ?value ?utilityAsset ?uatype ?uawkt ?rootasset ?rootuid ?rootkey ?rootvalue ?rootwkt ?streetnum ?street ?city ?state ?zip ?blockgroup ?wkt ?minnonzero ?maxdepth ?firstfloodtime ?maxfloodtime WHERE
+{
+	?utilityAsset rdf:type ufokn_c:CriticallyOutUtilityAsset ;
+	              ufokn_c:assetOfTypeRequiredBy ?far ;
+				  ufokn_c:assetCriticallyServes ?far ;
+				  ufokn_c:ofUtilityType ?uatype ;
+				  ufokn:hasRiskPoint ?uariskpoint .
+	?uariskpoint geo:asWKT ?uawkt .
+
+	?rootasset rdf:type ufokn_c:UtilityAsset ;
+			   ufokn_c:assetCriticallyServesTC ?utilityAsset ;
+			   ufokn:id ?rootuid ;
+			   ufokn:key ?rootkey ;
+			   ufokn:value ?rootvalue ;
+			   ufokn:hasRiskPoint ?rootriskpoint .
+	?rootriskpoint geo:asWKT ?rootwkt ;
+				   ufokn_fl:hasFloodLevelObservation ?floodObs .
+
+	?far ufokn:id ?uid ;
+		ufokn:key ?key ;
+		ufokn:value ?value ;
+		ufokn:fips_block_group ?blockgroup ;
+		ufokn:hasAddress ?address ;
+		ufokn:hasRiskPoint ?rp .
+	?rp geo:asWKT ?wkt .
+	?address ufokn:streetNumber ?streetnum ;
+			ufokn:street ?street ;
+			ufokn:city ?city ;
+			ufokn:state ?state ;
+			ufokn:postcode ?zip .
+	OPTIONAL
+	{
+		?rp ufokn_fl:hasFloodLevelObservation ?floodlevel .
+		?floodlevel ufokn_fl:firstFloodTime ?firstfloodtime ;
+					ufokn_fl:minNonZero ?minnonzero ;
+					ufokn_fl:maxFloodTime ?maxfloodtime ;
+					ufokn_fl:maxDepth ?maxdepth .
+	}
+} GROUP BY ?far ?uid ?key ?value ?utilityAsset ?uatype ?uawkt ?rootasset ?rootuid ?rootkey ?rootvalue ?rootwkt ?streetnum ?street ?city ?state ?zip ?blockgroup ?wkt ?minnonzero ?maxdepth ?firstfloodtime ?maxfloodtime
+ 
+
+
+### requiresUtilityType ###
+# Returns UtilityAsset serving FeatureAtRisk where UtilityAsset ofUtilityType and FeatureAtRisk requiresUtilityType
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2.1/>
+
+SELECT * WHERE
+{ 
+    ?asset rdf:type ufokn_c:UtilityAsset .
+    ?asset ufokn_c:assetServes ?far .
+    ?asset ufokn_c:ofUtilityType ?utiltype .
+    ?far ufokn_c:requiresUtilityType ?utiltype .
+}
+
+
+
+### Look for duplicate UFOKN-IDs ###
+# Returns each UFOKN-ID and its COUNT if there are more than 1
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2.1/>
+
+SELECT ?uid (COUNT(?uid) as ?count) WHERE {
+    ?far rdf:type ufokn:FeatureAtRisk .
+    ?far ufokn:id ?uid .
+}
+GROUP BY ?uid
+HAVING(?count > 1)
