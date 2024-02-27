@@ -26,8 +26,8 @@
                                                   dcterms:issued "2021-04-12"^^xsd:date ;
                                                   dcterms:modified "2023-10-15"^^xsd:date ;
                                                   dcterms:publisher <http://ufokn.org> ;
-                                                  dcterms:source "https://raw.githubusercontent.com/UFOKN/Knowledge-Graph/master/ontologies/v2.1/ufokn-utility-connection.ttl"^^<xsd:anyURI> ;
-                                                  dcterms:title "Utility Connection Pattnern of the UFOKN Ontology"@en-us ;
+                                                  dcterms:source "https://raw.githubusercontent.com/UFOKN/Knowledge-Graph/master/ontologies/v2.1/ufokn_utility_connection.ttl"^^<xsd:anyURI> ;
+                                                  dcterms:title "Utility Connection Pattern of the UFOKN Ontology"@en-us ;
                                                   rdfs:label "Utility Connection Pattern of the UFOKN Ontology"@en-us ;
                                                   owl:versionInfo "2.1"@en-us .
 
@@ -239,7 +239,7 @@ ufokn_c:assetOfTypeRequiredBy rdf:type owl:ObjectProperty ;
 
 ### defined property that picks out the assetServes relations where the serving asset is required by the served asset and thus if the serving asset fails, the served asset experiences a critical outage
 ### Notice that this is not enough to infer that something criticallyServes something else because this is the opposite direction: everything that criticallyServes something else must be in the two relationships assetServes and assetOfTypeRequiredBy but when these two relationships are met, it may or may not suffice. 
-### This requires a custom rule: (x assetServes y( ^ (x assetOfTypeRequiredBy y) -> x assetCriticallyServes y
+### This requires a custom rule: (x assetServes y) ^ (x assetOfTypeRequiredBy y) -> x assetCriticallyServes y
 ###  http://schema.ufokn.org/utility-connection/v2.1/assetCriticallyServes
 ufokn_c:assetCriticallyServes rdf:type owl:ObjectProperty ;
 					rdfs:subPropertyOf ufokn_c:assetServes, 
@@ -247,7 +247,7 @@ ufokn_c:assetCriticallyServes rdf:type owl:ObjectProperty ;
 								ufokn_c:assetCriticallyServesTC .
 
 
-### Transitive closure of the assetServes relation
+### Transitive closure of the assetCriticallyServes relation
 ###  http://schema.ufokn.org/utility-connection/v2.1/assetCriticallyServesTC
 ufokn_c:assetCriticallyServesTC rdf:type owl:ObjectProperty ,
 							   owl:TransitiveProperty .

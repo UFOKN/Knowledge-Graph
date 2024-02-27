@@ -24,7 +24,7 @@
                                     dcterms:issued "2021-12-15"^^xsd:date ;
                                     dcterms:modified "2023-10-15"^^xsd:date ;
                                     dcterms:publisher <http://ufokn.org> ;
-                                    dcterms:source "https://github.com/UFOKN/Knowledge-Graph/ontologies/v2.1/core.ttl"^^<xsd:anyURI> ;
+                                    dcterms:source "https://raw.githubusercontent.com/UFOKN/Knowledge-Graph/master/ontologies/v2.1/ufokn_core.ttl"^^<xsd:anyURI> ;
                                     dcterms:title "Core of the UFOKN Ontology"@en-us ;
                                     rdfs:label "Risk points and events of the UFOKN Ontology"@en-us ;
                                     owl:versionInfo "2.1"@en-us .
