@@ -23,7 +23,7 @@
                                     dcterms:creator <http://orcid.org/0000-0002-9070-3169>;
                                     dcterms:description "Part of the UFOKN ontology for tracking flood event data."@en-us ;
                                     dcterms:issued "2023-05-23"^^xsd:date ;
-                                    dcterms:modified "2023-10-15"^^xsd:date ;
+                                    dcterms:modified "2024-02-27"^^xsd:date ;
                                     dcterms:publisher <http://ufokn.org> ;
                                     dcterms:source "https://raw.githubusercontent.com/UFOKN/Knowledge-Graph/master/ontologies/v2.1/ufokn_flood.ttl"^^<xsd:anyURI> ;
                                     dcterms:title "Flood event data for the UFOKN Ontology"@en-us ;

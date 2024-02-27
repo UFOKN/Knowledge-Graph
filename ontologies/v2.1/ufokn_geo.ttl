@@ -17,7 +17,7 @@
                                    dcterms:creator <http://orcid.org/0000-0002-5331-5052> ;
                                    dcterms:description "Part of the UFOKN ontology for describing features and their geometry."@en-us ;
                                    dcterms:issued "2022-02-02"^^xsd:date ;
-                                   dcterms:modified "2023-10-15"^^xsd:date ;
+                                   dcterms:modified "2024-02-27"^^xsd:date ;
                                    dcterms:publisher <http://ufokn.org> ;
                                    dcterms:source "https://raw.githubusercontent.com/UFOKN/Knowledge-Graph/master/ontologies/v2.1/ufokn_geo.ttl"^^<xsd:anyURI> ;
                                    dcterms:title "Spatial part of the UFOKN Ontology"@en-us ;

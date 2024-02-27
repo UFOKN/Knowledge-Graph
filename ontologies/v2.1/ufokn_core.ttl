@@ -22,7 +22,7 @@
 													 <http://orcid.org/0000-0003-4486-9448> ;
                                      dcterms:description "Part of the UFOKN ontology for describing infrastructure at risk due to flooding events."@en-us ;
                                      dcterms:issued "2021-12-15"^^xsd:date ;
-                                     dcterms:modified "2023-10-15"^^xsd:date ;
+                                     dcterms:modified "2024-02-27"^^xsd:date ;
                                      dcterms:publisher <http://ufokn.org> ;
                                      dcterms:source "https://github.com/UFOKN/Knowledge-Graph/ontologies/v2.1/core.ttl"^^<xsd:anyURI> ;
                                      dcterms:title "Core of the UFOKN Ontology"@en-us ;
