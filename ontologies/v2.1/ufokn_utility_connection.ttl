@@ -431,25 +431,6 @@ ufokn_c:UtilityAsset rdf:type owl:Class ;
                               ] .
 
 
-### http://schema.ufokn.org/utility-connection/v2.1/CriticallyOutUtilityAsset
-### This is designed to simplify queries, removing the need to create a UNION of flooded assets and flood-impacted assets
-ufokn_c:CriticallyOutUtilityAsset rdf:type owl:Class ;
-                                  rdfs:subClassOf ufokn_c:UtilityAsset ;
-								  owl:equivalentClass [ rdf:type owl:Restriction ;
-								                        owl:onProperty rdf:type ;
-														owl:hasValue ufokn_c:UtilityAsset
-													  ] ;
-								  owl:equivalentClass [ rdf:type owl:Restriction ;
-								                        owl:onProperty _:utilityAssetHasCritFloodObs ;
-														owl:hasValue ufokn_fl:CriticalFloodObservation
-													  ] .
-
-
-### This property exists only for the ufokn_c:CriticallyOutUtilityAsset class
-_:utilityAssetHasCritFloodObs rdf:type owl:ObjectProperty ;
-                              owl:propertyChainAxiom (ufokn:hasRiskPoint ufokn_fl:hasFloodLevelObservation rdf:type) .
-
-
 ###  http://schema.ufokn.org/utility-connection/v2.1/UtilityProvider
 ufokn_c:UtilityProvider rdf:type owl:Class ;
                  owl:disjointWith ufokn_c:UtilityService .
