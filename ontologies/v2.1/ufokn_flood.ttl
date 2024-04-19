@@ -23,7 +23,7 @@
                                     dcterms:creator <http://orcid.org/0000-0002-9070-3169>;
                                     dcterms:description "Part of the UFOKN ontology for tracking flood event data."@en-us ;
                                     dcterms:issued "2023-05-23"^^xsd:date ;
-                                    dcterms:modified "2024-02-27"^^xsd:date ;
+                                    dcterms:modified "2024-04-18"^^xsd:date ;
                                     dcterms:publisher <http://ufokn.org> ;
                                     dcterms:source "https://raw.githubusercontent.com/UFOKN/Knowledge-Graph/master/ontologies/v2.1/ufokn_flood.ttl"^^<xsd:anyURI> ;
                                     dcterms:title "Flood event data for the UFOKN Ontology"@en-us ;
@@ -74,7 +74,17 @@ ufokn_fl:hasFloodLevelObservation rdf:type owl:ObjectProperty ;
 								  rdfs:subPropertyOf sosa:hasFeatureOfInterest ;
 								  rdfs:domain ufokn:RiskPoint ;
 								  rdfs:range ufokn_fl:FloodLevelObservation .
-								  
+
+### http://schema.ufokn.org/flood/v2.1#hasCriticalFloodObservation
+### Added to shorten queries for COSIT paper
+### If we want to keep this long term, it should be defined more consistently with the rest of the ontology
+###    e.g., hasFloodLevelObservation and hasCriticalFloodObservation have different domains
+### Note the domain is commented out - with it in all FaR are inferred as UA
+ufokn_fl:hasCriticalFloodObservation rdf:type owl:ObjectProperty ;
+									 owl:propertyChainAxiom ( ufokn:hasRiskPoint ufokn_fl:hasFloodLevelObservation ) ;
+#									 rdfs:domain ufokn:UtilityAsset ;
+									 rdfs:range ufokn_fl:CriticalFloodObservation .
+
 ###  http://schema.ufokn.org/flood/v2.1#firstFloodTime
 ufokn_fl:firstFloodTime rdf:type owl:ObjectProperty ;
                         rdfs:domain ufokn_fl:FloodLevelObservation ;
