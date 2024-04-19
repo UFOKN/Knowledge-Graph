@@ -6,6 +6,64 @@
 
 
 
+### Find flooded utility assets and flood-affected utility assets, then cascade to features (Pre-COSIT version)
+# Find all flooded utility assets
+# Add all flood-affected utility assets
+# Find all features directly affected by any flood or flood-affected utility asset
+# For each feature:
+#    Identify a root cause (only one, not all)
+#    Identify a local cause (may be the same or different, may not be the only one)
+#    Add identifying and locational information
+#    Add flood data if the feature is flooded
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ufokn: <http://schema.ufokn.org/core/v2.1/>
+PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2.1/>
+PREFIX ufokn_fl: <http://schema.ufokn.org/flood/v2.1/>
+
+SELECT ?far ?uid ?key ?value ?utilityAsset ?uaType ?uaWKT ?rootAsset ?rootUId ?rootKey ?rootValue ?rootWKT ?streetNum ?street ?city ?state ?zip ?blockGroup ?wkt ?minNonZero ?maxDepth ?firstFloodTime ?maxFloodTime WHERE
+{
+	?utilityAsset rdf:type ufokn_c:UtilityAsset ;
+				  ufokn_c:assetCriticallyServes ?far ;
+				  ufokn_c:ofUtilityType ?uaType ;
+				  ufokn:hasRiskPoint ?uaRiskPoint .
+	?uaRiskPoint geo:asWKT ?uaWKT .
+
+	?rootAsset rdf:type ufokn_c:UtilityAsset ;
+			   ufokn_c:assetCriticallyServesTC ?utilityAsset ;
+			   ufokn:id ?rootUId ;
+			   ufokn:key ?rootKey ;
+			   ufokn:value ?rootValue ;
+			   ufokn:hasRiskPoint ?rootRiskPoint .
+	?rootRiskPoint geo:asWKT ?rootWKT ;
+				   ufokn_fl:hasFloodLevelObservation ?floodObs .
+	?floodObs rdf:type ufokn_fl:CriticalFloodObservation .
+
+	?far ufokn:id ?uid ;
+		 ufokn:key ?key ;
+		 ufokn:value ?value ;
+		 ufokn:fips_block_group ?blockGroup ;
+		 ufokn:hasAddress ?address ;
+		 ufokn:hasRiskPoint ?rp .
+	?rp geo:asWKT ?wkt .
+	?address ufokn:streetNumber ?streetNum ;
+			 ufokn:street ?street ;
+			 ufokn:city ?city ;
+			 ufokn:state ?state ;
+			 ufokn:postcode ?zip .
+	OPTIONAL
+	{
+		?rp ufokn_fl:hasFloodLevelObservation ?floodLevel .
+		?floodLevel ufokn_fl:firstFloodTime ?firstFloodTime ;
+					ufokn_fl:minNonZero ?minNonZero ;
+					ufokn_fl:maxFloodTime ?maxFloodTime ;
+					ufokn_fl:maxDepth ?maxDepth .
+	}
+} GROUP BY ?far ?uid ?key ?value ?utilityAsset ?uaType ?uaWKT ?rootAsset ?rootUId ?rootKey ?rootValue ?rootWKT ?streetNum ?street ?city ?state ?zip ?blockGroup ?wkt ?minNonZero ?maxDepth ?firstFloodTime ?maxFloodTime
+
+
+
 ### Find affected assets, features, and data (OLD version) ###
 # Find all utility assets affected by the flood
 # Find all features affected by those utility assets (finds too many?)

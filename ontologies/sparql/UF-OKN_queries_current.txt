@@ -74,6 +74,7 @@ WHERE {
 #    Identify a local cause (may be the same or different, may not be the only one)
 #    Add identifying and locational information
 #    Add flood data if the feature is flooded
+# This version uses the ufokn_fl:hasCriticalFloodObservation relation to clarify/shorten the ?rootasset portion of the query
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -81,47 +82,45 @@ PREFIX ufokn: <http://schema.ufokn.org/core/v2.1/>
 PREFIX ufokn_c: <http://schema.ufokn.org/utility-connection/v2.1/>
 PREFIX ufokn_fl: <http://schema.ufokn.org/flood/v2.1/>
 
-SELECT ?far ?uid ?key ?value ?utilityAsset ?uaType ?uaWKT ?rootAsset ?rootUId ?rootKey ?rootValue ?rootWKT ?streetNum ?street ?city ?state ?zip ?blockGroup ?wkt ?minNonZero ?maxDepth ?firstFloodTime ?maxFloodTime WHERE
+SELECT ?far ?uid ?key ?value ?utilityAsset ?uatype ?uawkt ?rootasset ?rootuid ?rootkey ?rootvalue ?rootwkt ?streetnum ?street ?city ?state ?zip ?blockgroup ?wkt ?minnonzero ?maxdepth ?firstfloodtime ?maxfloodtime WHERE
 {
 	?utilityAsset rdf:type ufokn_c:UtilityAsset ;
-	              ufokn_c:assetOfTypeRequiredBy ?far ;
 				  ufokn_c:assetCriticallyServes ?far ;
-				  ufokn_c:ofUtilityType ?uaType ;
-				  ufokn:hasRiskPoint ?uaRiskPoint .
-	?uaRiskPoint geo:asWKT ?uaWKT .
+				  ufokn_c:ofUtilityType ?uatype ;
+				  ufokn:hasRiskPoint ?uariskpoint .
+	?uariskpoint geo:asWKT ?uawkt .
 
-	?rootAsset rdf:type ufokn_c:UtilityAsset ;
+	?rootasset rdf:type ufokn_c:UtilityAsset ;
 			   ufokn_c:assetCriticallyServesTC ?utilityAsset ;
-			   ufokn:id ?rootUId ;
-			   ufokn:key ?rootKey ;
-			   ufokn:value ?rootValue ;
-			   ufokn:hasRiskPoint ?rootRiskPoint .
-	?rootRiskPoint geo:asWKT ?rootWKT ;
-				   ufokn_fl:hasFloodLevelObservation ?floodObs ;
-	?floodObs rdf:type ufokn_fl:CriticalFloodObservation .
+			   ufokn:id ?rootuid ;
+			   ufokn:key ?rootkey ;
+			   ufokn:value ?rootvalue ;
+			   ufokn_fl:hasCriticalFloodObservation ?floodObs ;
+			   ufokn:hasRiskPoint ?rootriskpoint .
+	?rootriskpoint geo:asWKT ?rootwkt .
 
 	?far ufokn:id ?uid ;
 		 ufokn:key ?key ;
 		 ufokn:value ?value ;
-		 ufokn:fips_block_group ?blockGroup ;
+		 ufokn:fips_block_group ?blockgroup ;
 		 ufokn:hasAddress ?address ;
 		 ufokn:hasRiskPoint ?rp .
 	?rp geo:asWKT ?wkt .
-	?address ufokn:streetNumber ?streetNum ;
+	?address ufokn:streetNumber ?streetnum ;
 			 ufokn:street ?street ;
 			 ufokn:city ?city ;
 			 ufokn:state ?state ;
 			 ufokn:postcode ?zip .
 	OPTIONAL
 	{
-		?rp ufokn_fl:hasFloodLevelObservation ?floodLevel .
-		?floodLevel ufokn_fl:firstFloodTime ?firstFloodTime ;
-					ufokn_fl:minNonZero ?minNonZero ;
-					ufokn_fl:maxFloodTime ?maxFloodTime ;
-					ufokn_fl:maxDepth ?maxDepth .
+		?rp ufokn_fl:hasFloodLevelObservation ?floodlevel .
+		?floodlevel ufokn_fl:firstFloodTime ?firstfloodtime ;
+					ufokn_fl:minNonZero ?minnonzero ;
+					ufokn_fl:maxFloodTime ?maxfloodtime ;
+					ufokn_fl:maxDepth ?maxdepth .
 	}
-} GROUP BY ?far ?uid ?key ?value ?utilityAsset ?uaType ?uaWKT ?rootAsset ?rootUId ?rootKey ?rootValue ?rootWKT ?streetNum ?street ?city ?state ?zip ?blockGroup ?wkt ?minNonZero ?maxDepth ?firstFloodTime ?maxFloodTime
- 
+} GROUP BY ?far ?uid ?key ?value ?utilityAsset ?uatype ?uawkt ?rootasset ?rootuid ?rootkey ?rootvalue ?rootwkt ?streetnum ?street ?city ?state ?zip ?blockgroup ?wkt ?minnonzero ?maxdepth ?firstfloodtime ?maxfloodtime
+
 
 
 ### requiresUtilityType ###
